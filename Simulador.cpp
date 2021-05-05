@@ -1,5 +1,14 @@
 #include "Simulador.hpp"
 #include "defTipo.hpp"
+#include <iostream>
+#include<cmath>
+
+double arred(double x){
+	x = x * 100;
+	int aux = round(x);
+	
+	return ((double)aux/100.0);
+}
 
 //-----------------------------------------	TSimulador.cpp -----------------------------------------//
 
@@ -51,9 +60,10 @@ Simulador::~Simulador(){
 bool Simulador::execute(int acao, int dist, int gen){
 		/*	
 			*Ação
-		1 -- vira 45º
-		2 -- vira -45º	
-		3 -- vira 90º	
+		0 -- vira 45º
+		1 -- vira -45º	
+		2 -- vira 90º
+		3 -- vira -90º // 270	
 		4 -- anda p/ frente dist cm 
 		*/			
 		switch (acao) 
@@ -74,11 +84,21 @@ bool Simulador::execute(int acao, int dist, int gen){
 				break;
 
 			case 3 :
+				/** Bloco Rotacionar -90° **/
+				ang = ((int)ang + 270) % 360;
+				break;
+				
+			case 4 :
 				if(sensor(dist, ang, gen) == 0){
 					/** Mover para frente dist cm	 M = 1	**/
-					posX = posX + dist * cos(ang * PI / 180.0); // (ang / 360) * 2PI
-					posY = posY + dist * sin(ang * PI / 180.0);
-				}
+					posX = posX + dist * arred(cos(ang * PI / 180.0)); // (ang / 360) * 2PI
+					posY = posY + dist * arred(sin(ang * PI / 180.0));
+				/*	std::cout<<"posX:"<<posX<<std::endl;
+					std::cout<<"posY:"<<posY<<std::endl;
+					std::cout<<"COSENO:"<<cos(ang * PI / 180.0)* dist<<std::endl;
+					std::cout<<"SENO:"<<sin(ang * PI / 180.0) * dist<<std::endl; */
+					
+					}
 				else
 					return false;
 				break;
@@ -87,9 +107,10 @@ bool Simulador::execute(int acao, int dist, int gen){
 		return true;			
 }// execute
 
+
 //-----------------	readSensor -----------------//
 double* Simulador::readSensor(int dist, int gen){
-	double *sensores = new double[4]; // ALTERAR CASO TIVER MAIS SENSORES!!
+	double *sensores = new double[6]; // ALTERAR CASO TIVER MAIS SENSORES!!
 	sensores[0] = sensor(dist, ang - 45, gen); 		// direita
 	sensores[1] = sensor(dist, ang, gen);			// frontal
 	sensores[2] = sensor(dist, ang + 45, gen); 		// esquerda
@@ -98,6 +119,8 @@ double* Simulador::readSensor(int dist, int gen){
 	else
 		sensores[3] = 0;						// cima
 	
+	sensores[4] = sensor(dist, ang - 90, gen); //novos 2 sensores
+	sensores[5] = sensor(dist, ang + 90, gen); //sensor esquerda 
 	return sensores;
 }//readSensor
 
@@ -105,8 +128,8 @@ double* Simulador::readSensor(int dist, int gen){
 int Simulador::sensor (int dist, int ang, int gen){
 	double anguloRad = ang * PI / 180.0;
 	int distancia = dist + raio; // Somar o raio pq posX e posY sao o centro do robô
-	int x = posX + distancia*cos(anguloRad);
-	int y = posY + distancia*sin(anguloRad);
+	int x = posX + distancia*arred(cos(anguloRad));
+	int y = posY + distancia*arred(sin(anguloRad));
 		 
 	if( x >= tamX || x <= 0 || y >= tamY || y <= 0 ) // Verifica se a posicao está dentro do tablado
 		return 1;	
@@ -181,8 +204,16 @@ bool Simulador::isBase(){
 	 return false;
 }//isBase
 
+
+
+
 //-----------------	getPosX -----------------//
 int Simulador::getPosX(){
+	/*std:cout<<"DENTRO DA FUNÇÃO POSX"<<std::endl;
+	std::cout<<"posX:"<<posX<<std::endl;
+	std::cout<<"posY:"<<posY<<std::endl;
+	std::cout<<"ANGULO:"<<ang <<std::endl;
+	//std::cout<<"SENO:"<<sin(ang * PI / 180.0) * dist<<std::endl; */
 	return posX;
 }//getPosX
 

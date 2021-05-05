@@ -1,0 +1,73 @@
+# Project: algGen_real
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
+WINDRES  = windres.exe
+OBJ      = algGen.o defValor.o estatistica.o fitness.o geracao.o reproducao.o salvArq.o selecao.o util_funcions.o TEsn.o nr_ran.o Randon.o main.o Simulador.o main-old.o main-teste.o
+LINKOBJ  = algGen.o defValor.o estatistica.o fitness.o geracao.o reproducao.o salvArq.o selecao.o util_funcions.o TEsn.o nr_ran.o Randon.o main.o Simulador.o main-old.o main-teste.o
+LIBS     = -L"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -g3
+INCS     = -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+BIN      = algGen_real.exe
+CXXFLAGS = $(CXXINCS) -g3
+CFLAGS   = $(INCS) -g3
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+algGen.o: algGen.cpp
+	$(CPP) -c algGen.cpp -o algGen.o $(CXXFLAGS)
+
+defValor.o: defValor.cpp
+	$(CPP) -c defValor.cpp -o defValor.o $(CXXFLAGS)
+
+estatistica.o: estatistica.cpp
+	$(CPP) -c estatistica.cpp -o estatistica.o $(CXXFLAGS)
+
+fitness.o: fitness.cpp
+	$(CPP) -c fitness.cpp -o fitness.o $(CXXFLAGS)
+
+geracao.o: geracao.cpp
+	$(CPP) -c geracao.cpp -o geracao.o $(CXXFLAGS)
+
+reproducao.o: reproducao.cpp
+	$(CPP) -c reproducao.cpp -o reproducao.o $(CXXFLAGS)
+
+salvArq.o: salvArq.cpp
+	$(CPP) -c salvArq.cpp -o salvArq.o $(CXXFLAGS)
+
+selecao.o: selecao.cpp
+	$(CPP) -c selecao.cpp -o selecao.o $(CXXFLAGS)
+
+util_funcions.o: util_funcions.cpp
+	$(CPP) -c util_funcions.cpp -o util_funcions.o $(CXXFLAGS)
+
+TEsn.o: TEsn.cpp
+	$(CPP) -c TEsn.cpp -o TEsn.o $(CXXFLAGS)
+
+nr_ran.o: nr_ran.cpp
+	$(CPP) -c nr_ran.cpp -o nr_ran.o $(CXXFLAGS)
+
+Randon.o: Randon.cpp
+	$(CPP) -c Randon.cpp -o Randon.o $(CXXFLAGS)
+
+main.o: main.cpp
+	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+
+Simulador.o: Simulador.cpp
+	$(CPP) -c Simulador.cpp -o Simulador.o $(CXXFLAGS)
+
+main-old.o: main-old.cpp
+	$(CPP) -c main-old.cpp -o main-old.o $(CXXFLAGS)
+
+main-teste.o: main-teste.cpp
+	$(CPP) -c main-teste.cpp -o main-teste.o $(CXXFLAGS)

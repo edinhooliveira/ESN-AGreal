@@ -31,6 +31,7 @@ class Simulador
 		int getPosX();
 		int getPosY();
 		int getAngle();
+		//int sensor (int dist, int ang, int gen);
 		
 };// class simulador
 #endif // SIMULADOR_HPP

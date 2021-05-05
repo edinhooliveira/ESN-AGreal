@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000001000000
-UnitCount=17
+UnitCount=22
 
 [VersionInfo]
 Major=1
@@ -190,16 +190,6 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit20]
-FileName=ESN\TEsn.cpp
-CompileCpp=1
-Folder=ESN
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
 [Unit16]
 FileName=Randon.cpp
 CompileCpp=1
@@ -221,9 +211,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit18]
-FileName=TEsn.hpp
+FileName=main.cpp
 CompileCpp=1
-Folder=ESN
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -231,7 +221,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit19]
-FileName=Simulador.hpp
+FileName=Simulador.cpp
 CompileCpp=1
 Folder=
 Compile=1
@@ -244,6 +234,36 @@ BuildCmd=
 FileName=nr_ran.hpp
 CompileCpp=1
 Folder=Random
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit20]
+FileName=ESN.hpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit21]
+FileName=main-old.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit22]
+FileName=main-teste.cpp
+CompileCpp=1
+Folder=
 Compile=1
 Link=1
 Priority=1000

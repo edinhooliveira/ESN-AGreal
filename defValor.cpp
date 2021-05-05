@@ -12,9 +12,9 @@ Randon *randon;
 ESN *esn;
 
 // Parametros ESN
-int inputSize = 4;
+int inputSize = 4; //mais sensores
 int repSize = 50;
-int outputSize = 4;
+int outputSize = 4; //mais ações
 double spectral_radius_d = 0.95;
 double con_density = 0.15; 
 

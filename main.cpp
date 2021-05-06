@@ -85,7 +85,7 @@ int main(void) {
 			
 			printSensor(simulador);
 			/*
-			for(int j = 0; j < 6; j ++){	
+			for(int j = 0; j < 4; j ++){	
 				// cout<< "Sensor " << j <<": "<< sensores[j] << endl;
 				cout<< "Sensor " << j <<": "<< *(sensores + j) << endl;
 			} */
@@ -97,7 +97,7 @@ int main(void) {
 			myfile << simulador->getAngle()<<','; //angulo
 			
 			//Adiciona ao arquivo .csv os valores do sensores
-			for(int j = 0; j < 6; j++){
+			for(int j = 0; j < 4; j++){
 				myfile << sensores[j]<<',';	
 			}
 			myfile <<"\n";		
@@ -136,7 +136,7 @@ void printSensor(Simulador *simulador){
 	
 	//cout << "FUNÇÃO PRINT SENSORES" <<endl;
 	cout <<"SENSORES" <<endl;
-	for(int j = 0; j < 6; j ++){
+	for(int j = 0; j < 4; j ++){
 		
 		cout<< "Sensor " << j <<": "<< *(sensores + j) << endl;
 	

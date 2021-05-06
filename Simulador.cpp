@@ -110,7 +110,7 @@ bool Simulador::execute(int acao, int dist, int gen){
 
 //-----------------	readSensor -----------------//
 double* Simulador::readSensor(int dist, int gen){
-	double *sensores = new double[6]; // ALTERAR CASO TIVER MAIS SENSORES!!
+	double *sensores = new double[4]; // ALTERAR CASO TIVER MAIS SENSORES!!
 	sensores[0] = sensor(dist, ang - 45, gen); 		// direita
 	sensores[1] = sensor(dist, ang, gen);			// frontal
 	sensores[2] = sensor(dist, ang + 45, gen); 		// esquerda
@@ -119,8 +119,8 @@ double* Simulador::readSensor(int dist, int gen){
 	else
 		sensores[3] = 0;						// cima
 	
-	sensores[4] = sensor(dist, ang - 90, gen); //novos 2 sensores
-	sensores[5] = sensor(dist, ang + 90, gen); //sensor esquerda 
+	//sensores[4] = sensor(dist, ang - 90, gen); //novos 2 sensores
+	//sensores[5] = sensor(dist, ang + 90, gen); //sensor esquerda 
 	return sensores;
 }//readSensor
 

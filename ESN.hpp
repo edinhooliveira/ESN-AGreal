@@ -14,6 +14,7 @@
 #include "defTipo.hpp"
 #include "util_funcions.cpp"
 
+
 class ESNbp {
 	private:
 		int n_inp;															// number of units in the input layer
@@ -46,6 +47,7 @@ class ESNbp {
 		//void addTrainSet(int *sol, double *d); // Add example to the training dataset
 		void addTrainSet(double *sol, double *d); 
 };
+
 
 /******************************************************************************\
 *								Constructor									   *
@@ -105,6 +107,7 @@ ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, int n_train_par, doubl
 	 	
 }
 
+
 /******************************************************************************\
 *								 Destructor									   *
 \******************************************************************************/
@@ -121,8 +124,6 @@ ESNbp::~ESNbp(void){
 	delete [] hid_neurons;
 
 }  
-
-
 
 
 /**********************************************************************************************\
@@ -145,8 +146,6 @@ void ESNbp::ESNActivationHid(double *x, double *h_new){
 		h_new[n_hid]=1.0;									// bias
 		
 }
-
-
 
 
 /*****************************************************************************************************************************\

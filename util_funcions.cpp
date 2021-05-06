@@ -87,6 +87,7 @@ double *aloc_vectord(int lines)
 /******************************************************************************\
 *								Dynamic Allocation: Vector of individuals						 *
 \******************************************************************************/
+
 individuo *aloc_vectorind(int lines)
 {
 	individuo *vector;

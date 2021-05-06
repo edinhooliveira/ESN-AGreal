@@ -38,7 +38,9 @@
 //	int conjunto_stab[50];
 //	int nrRodadas = 10;
 //	int size_stab = 50;
-//	for(int k = 0; k < nrRodadas; k++ ) {
+//	
+
+//for(int k = 0; k < nrRodadas; k++ ) {
 //		
 //	//int nrMov  = 10;
 //	//int movimentos[nrMov];

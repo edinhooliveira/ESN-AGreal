@@ -8,6 +8,7 @@
 #include "TEsn.hpp"
 
 
+
 /* Definicao dos tipos de dados */
 typedef double alelo; 						// tipo de dado que os alelos podem assumir 
 typedef struct estrutura_individuo {
@@ -76,5 +77,10 @@ void salv_traj(int **pos, int n, int nroExec);
 
 //ESN
 double largEig(double **M, int l , int c);
+
+
+//ESN - EDER
+
+
 
 #endif // DEFTIPO_HPP

@@ -18,6 +18,8 @@ int outputSize = 4; //mais ações
 double spectral_radius_d = 0.95;
 double con_density = 0.15; 
 
+int size_stab = 10;
+
 // Parametros da simulacao
 int nroMaxExec = 25;								// numero de repeticoes do AG
 int maxGen = 2200;									// numero maximo de geracoes 

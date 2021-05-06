@@ -66,31 +66,20 @@ int main(void) {
 		
 		
 		/*Movimentação teste, saindo da posição (20,20) e dar uma volta completa na área e voltar para a posição inicial. */
-		int acoes[nrMov] = {4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,};
-		int acao;
+		double acoes[nrMov] = {4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,};
+		double acao;
 		for(int i = 0; i < nrMov; i++ ) {
 			//acao = random_int(0, 4); //gera uma ação aleatória
-			acao = acoes[i];
-			cout << "Acao: " << acao << endl;	
+			acao = acoes[i];		
 			simulador->execute(acao, 10 , 0); //valor do dist não está alterando a posição
 			
-			posicoesX[i] = simulador->getPosX();
-			posicoesY[i] = simulador->getPosY();
-			
-			cout << "movimentos: " << i << endl;
-			cout << "posicoesX: " << posicoesX[i] << endl;
-			cout << "posicoesY: " << posicoesY[i]<< endl;
-			cout << "getAngle: "  << simulador->getAngle() << endl;
-			
-			sensores = simulador->readSensor(10, gen); //distancia medida sensor = 10
-			
+			cout << "Movimento: " << i << endl;
+			cout << "Acao: " << acao << endl;
+			printRobot(simulador);
+			sensores = simulador->readSensor(10, gen); //distancia medida sensor = 10	
 			printSensor(simulador);
-			/*
-			for(int j = 0; j < 4; j ++){	
-				// cout<< "Sensor " << j <<": "<< sensores[j] << endl;
-				cout<< "Sensor " << j <<": "<< *(sensores + j) << endl;
-			} */
 			
+						
 			//Adiciona ao arquivo .csv os valores de Posição e angulo do robô
 			myfile << i<<','; //indice
 			myfile << *posicoesX + i<<','; //posicao X
@@ -109,26 +98,15 @@ int main(void) {
 			if( i <= size_stab) { //definir tamanho de estabilização
 				ESN->ESNstab(sensores); //conjunto de estabilização, utilizado para "inicializar"
 			} else if( i <= size_stab + 100){ //size_stab + tam_conj_treinamento
-				ESN->addTrainSet(sensores, movimentos); 
+				ESN->addTrainSet(sensores, acoes); 
 			}	
 	
-	}
-	
-	ESN->ESNTrain();	
 		}
+		ESN->ESNTrain();
+			
+	}	
 		
-	if( i <= size_stab) { //definir tamanho de estabilização
-		ESN->ESNstab(sensores); //conjunto de estabilização, utilizado para "inicializar"
-	} else if( i <= size_stab + 100){ //size_stab + tam_conj_treinamento
-		ESN->addTrainSet(sensores, movimentos); 
-	}
-	
-	}
-	
-	ESN->ESNTrain();
 		
-	
-	}
 
 	myfile.close();
 	
@@ -146,7 +124,7 @@ void printRobot(Simulador *simulador) {
 		cout <<"POSICAO" <<endl;
 		cout << "posicao X: " << simulador->getPosX() << endl;
 		cout << "posicao Y: " << simulador->getPosY() << endl;
-		cout << "getAngle: "  << simulador->getAngle() << endl;
+		cout << "Angulo: "  << simulador->getAngle() << endl;
 		cout<< endl;
 	
 }

@@ -241,7 +241,7 @@ void ESNbp::ESNTrain(void){
 /*****************************************************************************\
 *		Add example to the training dataset 			                	  *	
 \*****************************************************************************/
-// void ESNbp::addTrainSet(int *x, double *d){
+//void ESNbp::addTrainSet(int *x, double *d){
 void ESNbp::addTrainSet(double *x, double *d){
     
 	// Inputs: store solution in X

@@ -1,8 +1,9 @@
 #include <iostream>
 #include "defTipo.hpp"
 #include "Simulador.hpp"
-#include <iostream>
 #include <fstream>
+#include "ESN.hpp"
+
 
 
 
@@ -19,8 +20,8 @@ int main(void) {
 	int gen = 0;
 	
 	
-	int conjunto_stab[50];
-	int nrRodadas = 10;
+	int conjunto_stab[10];
+	int nrRodadas = 100;//500
 	int size_stab = 10; //50
 	
 	std::ofstream myfile;
@@ -36,7 +37,7 @@ int main(void) {
 	
 		
 		//Declaração da Rede Neural
-		//ESNbp *ESN = new ESNbp(inputSize, repSize, outputSize, nrMov, con_density, spectral_radius_d, size_stab); //size_stab?
+		ESNbp *ESN = new ESNbp(inputSize, repSize, outputSize, nrMov, con_density, spectral_radius_d, size_stab); //size_stab?
 	
 		
 		cout <<"RODADA: " << rodadaAtual << endl;
@@ -100,11 +101,31 @@ int main(void) {
 			for(int j = 0; j < 4; j++){
 				myfile << sensores[j]<<',';	
 			}
+			myfile << *(movimentos + i);
 			myfile <<"\n";		
 			
 			cout<< endl;		
-				
+			
+			if( i <= size_stab) { //definir tamanho de estabilização
+				ESN->ESNstab(sensores); //conjunto de estabilização, utilizado para "inicializar"
+			} else if( i <= size_stab + 100){ //size_stab + tam_conj_treinamento
+				ESN->addTrainSet(sensores, movimentos); 
+			}	
+	
+	}
+	
+	ESN->ESNTrain();	
 		}
+		
+	if( i <= size_stab) { //definir tamanho de estabilização
+		ESN->ESNstab(sensores); //conjunto de estabilização, utilizado para "inicializar"
+	} else if( i <= size_stab + 100){ //size_stab + tam_conj_treinamento
+		ESN->addTrainSet(sensores, movimentos); 
+	}
+	
+	}
+	
+	ESN->ESNTrain();
 		
 	
 	}

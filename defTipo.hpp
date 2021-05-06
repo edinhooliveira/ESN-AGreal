@@ -5,7 +5,9 @@
 #define DEFTIPO_HPP
 
 #include "Randon.hpp"
-#include "TEsn.hpp"
+//#include "TEsn.hpp"
+//#include "ESN.hpp"
+
 
 
 
@@ -42,7 +44,7 @@ extern bool hipermutacao;								// true: hipermutacao ; false: sem hipermutacao
 extern int tamCiclo;									// tamanho do ciclo de hipermutação
 extern double taxaR;									//porcentagem de acrescimo na taxa de mutação
 extern bool cicloHipermutacao;							//determina se acabou de ocorrer um ciclo de hipermutação
-extern ESN *esn;
+//extern ESN *esn; //comentei para teste
 extern Randon *randon;
 extern int inputSize, repSize, outputSize; 				//Parametros ESN
 extern double spectral_radius_d, con_density; 			//Parametros ESN
@@ -58,8 +60,18 @@ double *aloc_vectord(int lines);
 individuo *aloc_vectorind(int lines);
 int *aloc_vectori(int lines); //nova função 
 int **aloc_matrixi(int lines , int collums); //nova função
+void desaloc_matrixi(int **Matrix , int lines); //nova função
 double **aloc_matrixd(int lines , int collums);
 void desaloc_matrixd(double **Matrix , int lines);
+void transpose(double **Mt, double **M , int l , int c); //nova função
+void multMatrix(double **M, double **A, int l_A, int c_A, double **B, int l_B, int c_B); //nova função
+void multMatrixVect(double *y, double **A, int l_A, int c_A, double *x, int l_x); //nova função
+double multVect(double *x, double *y, int l); //nova função
+double **inverse(double **M_inv, int l, double **M); //nova função
+
+
+
+
 int random_int(int L_range, int H_range);
 double random_dou(void);
 void estatistica( populacao *pop , int gen );

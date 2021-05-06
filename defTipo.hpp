@@ -56,6 +56,8 @@ void impressao(populacao *pop , int gen);
 double calcFitness(alelo *indiv, int gen);
 double *aloc_vectord(int lines);
 individuo *aloc_vectorind(int lines);
+int *aloc_vectori(int lines); //nova função 
+int **aloc_matrixi(int lines , int collums); //nova função
 double **aloc_matrixd(int lines , int collums);
 void desaloc_matrixd(double **Matrix , int lines);
 int random_int(int L_range, int H_range);

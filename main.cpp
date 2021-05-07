@@ -116,8 +116,10 @@ int main(void) {
 		}
 		cout<< "* * FIM RODADA: " << rodadaAtual << " * *" << endl;   
 		
+		cout<< "SEPARANDO CONJUNTO DE ESTABILIZAÇÃO" << endl;
 		if( rodadaAtual <= size_stab) { //definir tamanho de estabilização
 			ESN->ESNstab(sensores); //conjunto de estabilização, utilizado para "inicializar"
+			cout << rodadaAtual << "/t";
 		} else if( rodadaAtual > size_stab){ //size_stab + tam_conj_treinamento
 			ESN->addTrainSet(sensores, acoes); 
 		}
@@ -165,8 +167,6 @@ void printSensor(Simulador *simulador){
 }
 
 
-
-
 //			//código estabilização
 //			if(mov <= size_stab) { //definir tamanho de estabilização
 //				//ESN->ESNstab(sensores); //conjunto de estabilização, utilizado para "inicializar"
@@ -209,12 +209,6 @@ void printSensor(Simulador *simulador){
 
 
 
-
-
-
-
-
-
 //
 //	//separar conjunto para estabilização
 //	for(int i; i < size_stab; i++){
@@ -227,5 +221,40 @@ void printSensor(Simulador *simulador){
 //	
 //	ESN->addTrainSet(sensores, outputs); 
 //	
+
+
+
+//MOVIMENTAÇÃO UTILIZANDO SENSORES
+
+//		cout<<"MOVIMENTO: " << i <<endl;
+//		
+//		if(sensores[0] == 0 && sensores[1] == 0 && sensores[2] == 0){
+//			simulador->execute(4, 10 , 0); // anda pra frente o valor do dist
+//			printRobot(simulador);
+//			*(movimentos + i) = 4;
+//			cout<<"ACAO: " << *(movimentos + i)<<endl;
+//			printSensor(simulador);
+//		} else if (sensores[0] == 1 && sensores[2] == 0){
+//			simulador->execute(0, 10 , 0); // anda pra esquerda o valor do dist
+//			printRobot(simulador);
+//			*(movimentos + i) = 0;
+//			cout<<"ACAO: " << *(movimentos + i)<<endl;
+//			printSensor(simulador);
+//			*(movimentos + i) = 0;
+//		} else if (sensores[0] == 0 && sensores[2] == 1){
+//			simulador->execute(1, 10 , 0); // anda pra esquerda o valor do dist
+//			printRobot(simulador);
+//			*(movimentos + i) = 1;
+//			cout<<"ACAO: " << *(movimentos + i)<<endl;
+//			printSensor(simulador);
+//			*(movimentos + i) = 1;
+//		} else if(sensores[1] == 1 ){
+//			simulador->execute(0, 10 , 0); // anda pra esquerda o valor do dist
+//			printRobot(simulador);
+//			*(movimentos + i) = 0;
+//			cout<<"ACAO: " << *(movimentos + i)<<endl;
+//			printSensor(simulador);
+//			*(movimentos + i) = 0;
+//		}
 
 

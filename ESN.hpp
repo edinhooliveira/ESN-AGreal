@@ -153,8 +153,6 @@ void ESNbp::ESNActivationHid(double *x, double *h_new){
 \*****************************************************************************************************************************/
 void ESNbp::ESNstab(double *x){   
 	double *h_new;
-	   
-   
     
 	h_new=aloc_vectord(n_hid+1);
 
@@ -163,7 +161,6 @@ void ESNbp::ESNstab(double *x){
 	for (int j=0;j<n_hid;j++)
 		hid_neurons[j].h=h_new[j];
 		 
-
 	delete [] h_new; 
       
 }

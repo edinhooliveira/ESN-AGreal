@@ -213,7 +213,7 @@ void ESNbp::ESNTrain(void){
 		
 	// Computing outputs of the hidden layer (reservoir) for all inputs of the training set 
 	ESNpreTrain(H);	
-	printTrainSet(H);	    		 		 		 	   
+	//printTrainSet(H);	    		 		 		 	   
     // Regularized pseudoinverse of H    
 	transpose(Ht, H, n_train, n_hid1);   								// Ht: transpose of H
 	multMatrix(HtH, Ht, n_hid1, n_train, H, n_train, n_hid1);			// HtH: Ht*H

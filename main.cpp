@@ -18,9 +18,9 @@ int main(void) {
 	int gen = 0;
 	
 	double** conjunto_stab;
-	int nrRodadas = 10;//500
+	int nrRodadas = 5;//500
 	int size_stab = 5; //50
-	int nrMov = 67; //10
+	int nrMov = 100;  //67-volta completa
 	
 	std::ofstream myfile;
 	myfile.open ("robot-data.csv");
@@ -66,21 +66,54 @@ int main(void) {
 			acoes[i] = 0;//random_int(0, 4);
 		}*/
 		
+		
+		
+		
 		//ESN 
 		ESNbp *ESN = new ESNbp(inputSize, repSize, outputSize, nrMov, con_density, spectral_radius_d, size_stab); //size_stab?
 		//ESNbp(int n_inp_par, int n_hid_par, int n_out_par, int n_train_par, double con_density, double spectral_radius_d, int size_stab)
 	
-		
+				
 		/*Movimentação teste, saindo da posição (20,20) e dar uma volta completa na área e voltar para a posição inicial. */
-		double acoes[nrMov] = {4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4};
+		//double acoes[nrMov] = {4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4};
 		double acao;
 		for(int mov = 0; mov < nrMov; mov++ ) {
 			//acao = random_int(0, 4); //gera uma ação aleatória
-			acao = acoes[mov];		
-			simulador->execute(acao, 10 , 0); 
+			//acao = acoes[mov];		
+			//simulador->execute(acao, 10 , 0);
+						
+		//MOVIMENTAÇÃO AUTOMÁTICA UTILIZANDO SENSORES
+		
+			if(sensores[0] == 0 && sensores[1] == 0 && sensores[2] == 0){
+				simulador->execute(4, 10 , 0); // anda pra frente o valor do dist
+				printRobot(simulador);
+				*(movimentos + mov) = 4;
+				cout<<"ACAO: " << *(movimentos + mov)<<endl;
+				printSensor(simulador);
+			} else if (sensores[0] == 1 && sensores[2] == 0){
+				simulador->execute(2, 10 , 0); // anda pra esquerda o valor do dist
+				printRobot(simulador);
+				*(movimentos + mov) = 2;
+				cout<<"ACAO: " << *(movimentos + mov)<<endl;
+				printSensor(simulador);
+			} else if (sensores[0] == 0 && sensores[2] == 1){
+				simulador->execute(3, 10 , 0); // anda pra direita o valor do dist
+				printRobot(simulador);
+				*(movimentos + mov) = 3;
+				cout<<"ACAO: " << *(movimentos + mov)<<endl;
+				printSensor(simulador);
+			} else if(sensores[1] == 1 ){
+				simulador->execute(2, 10 , 0); // anda pra esquerda o valor do dist
+				printRobot(simulador);
+				*(movimentos + mov) = 2;
+				cout<<"ACAO: " << *(movimentos + mov)<<endl;
+				printSensor(simulador);
+			}
+				
 			
 			cout << "Movimento: " << mov << endl;
-			cout << "Acao: " << acao << endl;
+			//cout << "Acao: " << acao << endl;
+			cout << "Acao: " << *(movimentos + mov) << endl;
 			printRobot(simulador);
 			sensores = simulador->readSensor(10, gen); //distancia medida sensor = 10	
 			printSensor(simulador);
@@ -101,10 +134,10 @@ int main(void) {
 			}
 			
 			//myfile << *(movimentos + mov); //Ação
-			myfile << acao; //Ação
+			//myfile << acao; //Ação
+			myfile << *(movimentos + mov); //Ação
 			myfile <<"\n";		
 			
-
 			
 			//cout << (rodadaAtual+1) * (mov)  <<  endl;
         	inputs[(rodadaAtual+1) * (mov+1)] = simulador->readSensor(10, gen);
@@ -116,16 +149,16 @@ int main(void) {
 		}
 		cout<< "* * FIM RODADA: " << rodadaAtual << " * *" << endl;   
 		
-		cout<< "SEPARANDO CONJUNTO DE ESTABILIZAÇÃO" << endl;
-		if( rodadaAtual <= size_stab) { //definir tamanho de estabilização
-			ESN->ESNstab(sensores); //conjunto de estabilização, utilizado para "inicializar"
-			cout << rodadaAtual << "/t";
-		} else if( rodadaAtual > size_stab){ //size_stab + tam_conj_treinamento
-			ESN->addTrainSet(sensores, acoes); 
-		}
+//		cout<< "SEPARANDO CONJUNTO DE ESTABILIZAÇÃO" << endl;
+//		if( rodadaAtual <= size_stab) { //definir tamanho de estabilização
+//			ESN->ESNstab(sensores); //conjunto de estabilização, utilizado para "inicializar"
+//			cout << rodadaAtual << "/t";
+//		} else if( rodadaAtual > size_stab){ //size_stab + tam_conj_treinamento
+//			ESN->addTrainSet(sensores, movimentos); 
+//		}
 		
-		cout<<"TREINAMENTO"<<endl;
-		ESN->ESNTrain();
+//		cout<<"TREINAMENTO"<<endl;
+//		ESN->ESNTrain();
 		
 			
 		//ESN->ESNTrain();		
@@ -160,10 +193,9 @@ void printSensor(Simulador *simulador){
 	//cout << "FUNÇÃO PRINT SENSORES" <<endl;
 	cout <<"SENSORES" <<endl;
 	for(int j = 0; j < 4; j ++){
-		
-		cout<< "Sensor " << j <<": "<< *(sensores + j) << endl;
-	
+		cout<< "Sensor " << j <<": "<< *(sensores + j) << endl;	
 	}
+		cout<< endl;
 }
 
 
@@ -224,37 +256,6 @@ void printSensor(Simulador *simulador){
 
 
 
-//MOVIMENTAÇÃO UTILIZANDO SENSORES
 
-//		cout<<"MOVIMENTO: " << i <<endl;
-//		
-//		if(sensores[0] == 0 && sensores[1] == 0 && sensores[2] == 0){
-//			simulador->execute(4, 10 , 0); // anda pra frente o valor do dist
-//			printRobot(simulador);
-//			*(movimentos + i) = 4;
-//			cout<<"ACAO: " << *(movimentos + i)<<endl;
-//			printSensor(simulador);
-//		} else if (sensores[0] == 1 && sensores[2] == 0){
-//			simulador->execute(0, 10 , 0); // anda pra esquerda o valor do dist
-//			printRobot(simulador);
-//			*(movimentos + i) = 0;
-//			cout<<"ACAO: " << *(movimentos + i)<<endl;
-//			printSensor(simulador);
-//			*(movimentos + i) = 0;
-//		} else if (sensores[0] == 0 && sensores[2] == 1){
-//			simulador->execute(1, 10 , 0); // anda pra esquerda o valor do dist
-//			printRobot(simulador);
-//			*(movimentos + i) = 1;
-//			cout<<"ACAO: " << *(movimentos + i)<<endl;
-//			printSensor(simulador);
-//			*(movimentos + i) = 1;
-//		} else if(sensores[1] == 1 ){
-//			simulador->execute(0, 10 , 0); // anda pra esquerda o valor do dist
-//			printRobot(simulador);
-//			*(movimentos + i) = 0;
-//			cout<<"ACAO: " << *(movimentos + i)<<endl;
-//			printSensor(simulador);
-//			*(movimentos + i) = 0;
-//		}
 
 

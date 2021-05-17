@@ -12,9 +12,6 @@
 #include <cstdlib>
 #include <stdio.h>
 #include "defTipo.hpp"
-#include <iostream>
-using namespace std; 
-// modificacao R
 
 class ESNbp {
 	private:
@@ -37,7 +34,6 @@ class ESNbp {
 		
 		void ESNActivationHid(double *x, double *h_new); 					// Generate the activations of the neurons in the hidden layer (reservoir) 	
 		void ESNpreTrain(double **H); 										// ESN Pre-trainnning: generate the activations of the neurons of hidden layer for all training examples
-		void ESNActivationOut(double *x, double *h, double *y); 			// Generate the activations of the neurons in the output layer 
 	public:		
 		int i_train;														// index of the example in the training set	
 		int n_stab;										    				// number of interations for the stabilizing period 
@@ -48,10 +44,6 @@ class ESNbp {
 		void ESNTrain(void); 												// ESN Training 	
 		//void addTrainSet(int *sol, double *d); // Add example to the training dataset
 		void addTrainSet(double *sol, double *d); 
-		void printESN(void);												// Print ESN
-		void printESNOperation(double *x, double *h, double *y);			// Print ESN operation information	
-		void printTrainSet(double **H);										// Print Training Set	
-		void ESNoutput(double *x, double *y); 								// Output (y) of the neural netwok for input x 
 };
 
 
@@ -75,41 +67,38 @@ ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, int n_train_par, doubl
 		
 	// Memory Allocation
 	X=aloc_matrixi(n_train,n_inp);	
-	W_in=aloc_matrixd (n_inp+1,n_hid);		
+	W_in=aloc_matrixd (n_hid+1,n_inp);		
 	W=aloc_matrixd (n_hid,n_hid);
-	W_out=aloc_matrixd (n_hid+1,n_out);
+	W_out=aloc_matrixd (n_out,n_hid+1);
 	D=aloc_matrixd(n_train,n_out);
 	hid_neurons= new neuron_rec [n_hid]; 
 
 	// Neurons - Hidden Layer (Reservoir)
-	for (int j=0;j<n_hid;j++){
+	for (int i=0;i<n_hid;i++){
 		// Input weights
-		for (int i=0;i<n_inp+1;i++)
+		for (int j=0;j<n_inp+1;j++)
 			W_in[i][j]=(max_W-min_W)*random_dou () + min_W;						// random number between min_W and max_W					
 		// Initializing Recurrences
-		hid_neurons[j].rec=aloc_vectori(n_hid);
-		hid_neurons[j].n_rec=0;	
-		hid_neurons[j].h=0.0;		
+		hid_neurons[i].rec=aloc_vectori (n_hid);
+		hid_neurons[i].n_rec=0;
+		for (int j=0;j<n_hid;j++)
+			W[i][j]=0.0;	
 	}
 	// Recurrences
 	for (int i=0;i<n_hid;i++){
-		for (int j=0;j<n_hid;j++){
+		for (int j=0;j<n_inp;j++){
 			if (random_dou()<con_density){
 				hid_neurons[i].rec[ hid_neurons[i].n_rec ]=j;
 				hid_neurons[i].n_rec=hid_neurons[i].n_rec+1;
 				W[i][j]=(max_W-min_W)*random_dou () + min_W;					// random number between min_W and max_W	
-			}
-			else{
-				W[i][j]=0.0;
 			}				
 		}	
 	}
 	// Scaling W to spectral_radius_d W	
 	spectral_radius=largEig(W, n_hid, n_hid);									// Computing the spectral radius of W_temp
-	if (!isnan(spectral_radius))
-		for (int i=0;i<n_hid;i++)
-			for (int j=0;j<n_hid;j++)
-				W[i][j]=spectral_radius_d * W[i][j] / spectral_radius;				// Normalizing W to desired spectral radius (Scaling W to spectral_radius_d (1/spectral_radius) W)
+	for (int i=0;i<n_hid;i++)
+		for (int j=0;j<n_hid;j++)
+			W[i][j]=spectral_radius_d * W[i][j] / spectral_radius;				// Normalizing W to desired spectral radius (Scaling W to spectral_radius_d (1/spectral_radius) W)
 
 
 
@@ -125,9 +114,9 @@ ESNbp::~ESNbp(void){
 	// Memory Desallocation
 	desaloc_matrixi(X,n_train);
 	desaloc_matrixd(D,n_train);
-	desaloc_matrixd (W_in, n_inp+1);
+	desaloc_matrixd (W_in, n_hid);
 	desaloc_matrixd (W, n_hid);
-	desaloc_matrixd (W_out,n_hid+1);
+	desaloc_matrixd (W_out,n_out);
 	for (int i=0;i<n_hid;i++)
 		delete [] hid_neurons[i].rec;
 	delete [] hid_neurons;
@@ -142,51 +131,18 @@ void ESNbp::ESNActivationHid(double *x, double *h_new){
 		int k;
 		double u;	      
         
-		for (int j=0;j<n_hid;j++){
+		for (int i=0;i<n_hid;i++){
 			u=0.0;
-			for (int i=0;i<n_inp+1;i++)
-				u += x[i] * W_in[i][j];	
-			for (int i=0 ; i<hid_neurons[j].n_rec ; i++){
-				k=hid_neurons[j].rec[i]; 
-				u += hid_neurons[k].h * W[k][i];
+			for (int j=0;j<n_inp+1;j++)
+				u += x[j] * W_in[i][j];
+			for (int j=0 ; j<hid_neurons[i].n_rec ; j++){
+				k=hid_neurons[i].rec[j]; 
+				u += hid_neurons[k].h * W[i][k];
 			}
-			h_new[j]=tanh(1.0*u);							// Tangent hiperbolic with half-slope a=2						          			
+			h_new[i]=tanh(1.0*u);							// Tangent hiperbolic with half-slope a=2						          			
 		}
 		h_new[n_hid]=1.0;									// bias
 		
-}
-
-/**********************************************************************************************\
-*		Generate the activations of the neurons in the output layer 	   					   *
-\**********************************************************************************************/
-void ESNbp::ESNActivationOut(double *x, double *h, double *y){
-		double u;	      
-        
-	for (int j=0;j<n_out;j++){
-			u=0.0;
-			for (int i=0;i<n_hid+1;i++)
-				u += h[i] * W_out[i][j];
-			y[j]=u;							// linear
-	}	
-	
-}
-
-
-/******************************************************************************\
-*					 Output (y) of the neural netwok for input x 			   *
-\******************************************************************************/
-void ESNbp::ESNoutput(double *x, double *y){
-	double *h_new;
-	
-	h_new=aloc_vectord(n_hid+1);
-			
-	ESNActivationHid(x, h_new);				// compute the hidden layer (reservoir) activations
-	ESNActivationOut(x, h_new,y);					// compute the output layer activations
-	//printESNOperation(x,h_new,y);
-	for (int j=0;j<n_hid;j++)
-		hid_neurons[j].h=h_new[j];
-		 
-	delete [] h_new; 
 }
 
 
@@ -221,7 +177,8 @@ void ESNbp::ESNpreTrain(double **H){
 	for (int n=0;n<n_train;n++) {
 		for (int i=0;i<n_inp;i++)	
 			x[i]=X[n][i];				
-		x[n_inp] = 1;
+
+		x[n_inp + 1] = 1;
 		
 		ESNActivationHid(x, h_new);			// compute the hidden layer (reservoir) activations
 		for (int j=0;j<n_hid;j++){	
@@ -230,6 +187,7 @@ void ESNbp::ESNpreTrain(double **H){
 		}
 		H[n][n_hid]=1.0;					// bias
 	}
+	
 	 
 	delete [] x;  
 	delete [] h_new; 
@@ -237,42 +195,40 @@ void ESNbp::ESNpreTrain(double **H){
 }
 
 
-
-	
 /*****************************************************************************************************************************\
 *	ESN Training 			   																							  	  *
 \*****************************************************************************************************************************/
 void ESNbp::ESNTrain(void){
-	int n_hidn;
+	int n_hid1;
 	double **H, **Ht, **HtH, **HtH_i, **H_pinv;
   	     	
-   	n_hidn=n_hid+1;			// number of hidden neurons + 1  	
+  	n_hid1=n_hid+1;			// number of hidden neurons + 1  	
   
   	// Memory Allocation  	   
-  	H=aloc_matrixd(n_train,n_hidn);				// matrix with the activations of the n_hid neurons of hidden layer during the trainning
-	Ht=aloc_matrixd(n_hidn,n_train); 
-	HtH=aloc_matrixd(n_hidn,n_hidn); 
-    HtH_i=aloc_matrixd(n_hidn,n_hidn); 
-    H_pinv=aloc_matrixd(n_hidn,n_train); 
+  	H=aloc_matrixd(n_train,n_hid1);				// matrix with the activations of the n_hid neurons of hidden layer during the trainning
+	Ht=aloc_matrixd(n_hid1,n_train); 
+	HtH=aloc_matrixd(n_hid1,n_hid1); 
+    HtH_i=aloc_matrixd(n_hid1,n_hid1); 
+    H_pinv=aloc_matrixd(n_hid1,n_train); 
 		
 	// Computing outputs of the hidden layer (reservoir) for all inputs of the training set 
 	ESNpreTrain(H);	
 	//printTrainSet(H);	    		 		 		 	   
     // Regularized pseudoinverse of H    
-	transpose(Ht, H, n_train, n_hidn);   								// Ht: transpose of H
-	multMatrix(HtH, Ht, n_hidn, n_train, H, n_train, n_hidn);			// HtH: Ht*H
-	inverse(HtH_i, n_hidn, HtH);										// HtH_i: inverse of HtH 
-    multMatrix(H_pinv, HtH_i, n_hidn, n_hidn, Ht, n_hidn, n_train);		// H_pinv: Pseudo-inverse 
+	transpose(Ht, H, n_train, n_hid1);   								// Ht: transpose of H
+	multMatrix(HtH, Ht, n_hid1, n_train, H, n_train, n_hid1);			// HtH: Ht*H
+    inverse(HtH_i, n_hid1, HtH);										// HtH_i: inverse of HtH 
+    multMatrix(H_pinv, HtH_i, n_hid1, n_hid1, Ht, n_hid1, n_train);		// H_pinv: Pseudo-inverse    
 	// Computing W_out 
-    multMatrix(W_out, H_pinv, n_hidn, n_train, D, n_train, n_out);
+    multMatrix(W_out, H_pinv, n_hid1, n_train, D, n_train, n_out);
 	//printESN();
 	    
 	// Memory Desallocation
+    desaloc_matrixd(Ht,n_hid1); 
+    desaloc_matrixd(HtH,n_hid1); 
+    desaloc_matrixd(HtH_i,n_hid1);
+    desaloc_matrixd(H_pinv,n_hid1);
 	desaloc_matrixd (H,n_train);
-    desaloc_matrixd(Ht,n_hidn); 
-    desaloc_matrixd(HtH,n_hidn); 
-    desaloc_matrixd(HtH_i,n_hidn);
-    desaloc_matrixd(H_pinv,n_hidn);
 	   
 }
 
@@ -293,93 +249,5 @@ void ESNbp::addTrainSet(double *x, double *d){
 	}
 			  	
 	i_train++;
-	
-}
-
-
-/******************************************************************************\
-*								Print ESN information														   *
-\******************************************************************************/
-void ESNbp::printESN(void){
-	
-	cout<< "Echo State Network: "<<endl;
-	cout<<" Number of Inputs: "<<n_inp<<endl;
-	cout<<" Number of Neurons in Hidden Layer (reservoir): "<<n_hid<<endl;
-	cout<<" Number of Outputs: "<<n_out<<endl;
-	
-	cout<<" Hidden Layer: "<<endl;
-	for (int j=0;j<n_hid;j++){
-			cout<<" Neuron: " <<j<<endl;
-			cout<<"  W_in: ";	
-			for (int i=0;i<n_inp+1;i++)
-					cout<< W_in[i][j] << ", ";
-			cout<<endl;
-			cout<<"  W: ";	
-			for (int i=0;i<n_hid;i++)
-					cout<< W[i][j] << ", ";
-			cout<<endl;
-	}
-
-	cout<<" Output Layer: "<<endl;
-	for (int j=0;j<n_out;j++){
-			cout<<" Neuron: " <<j<<endl;
-			cout<<"  W_out: ";	
-			for (int i=0;i<n_hid+1;i++)
-					cout<< W_out[i][j] << ", ";
-			cout<<endl;
-	}
-	system("pause");
-}
-
-
-/******************************************************************************\
-*								Print ESN operation information			   	   *
-\******************************************************************************/
-void ESNbp::printESNOperation(double *x, double *h, double *y){
-	
-	cout<< "Echo State Network: "<<endl;
-	cout<<" Inputs: "<<endl;
-	for (int i=0;i<n_inp;i++)		
-		cout<< x[i] << ", ";
-	cout<<endl;
-	cout<<" Activation of the Hidden Neurons: "<<endl;
-	for (int j=0;j<n_hid+1;j++)
-		cout<< h[j] << ", ";
-	cout<<endl;
-	cout<<" Outputs: "<<endl;
-	for (int i=0;i<n_out;i++)
-		cout<< y[i] << ", ";
-	cout<<endl;
-	system("pause");
-	
-}
-
-
-/******************************************************************************\
-*								Print Training Set						   		*
-\******************************************************************************/
-void ESNbp::printTrainSet(double **H){
-	
-	cout<< "Training Set: "<<endl;
-	for (int n=0;n<n_train;n++){
-			cout<<" Example: " <<n<<endl;
-
-			cout<<"  Input: ";	
-			for (int i=0;i<n_inp;i++)	
-				cout<<" "<< X[n][i];						
-			cout<<endl;
-			
-			cout<<"  Activation of the hidden neurons: ";	
-			for (int j=0;j<n_hid+1;j++)
-				cout<<" "<< H[n][j];
-			cout<<endl;
-			
-			cout<<"  Desired Output: ";	
-			for (int j=0;j<n_out;j++)
-					cout<<" "<< D[n][j];
-			cout<<endl;
-			cout<<endl;
-	}
-	system("pause");
 	
 }

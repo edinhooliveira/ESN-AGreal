@@ -57,13 +57,13 @@ Simulador::~Simulador(){
 /*
 * retuen true: mov executado com sucesso, false caso contrário
 */
- // modificacao R
 bool Simulador::execute(int acao, int dist, int gen){
 		/*	
 			*Ação
-		1 -- vira 45º
-		2 -- vira -45º	
-		3 -- vira 90º	
+		0 -- vira 45º
+		1 -- vira -45º	
+		2 -- vira 90º
+		3 -- vira -90º // 270	
 		4 -- anda p/ frente dist cm 
 		*/			
 		switch (acao) 
@@ -84,11 +84,21 @@ bool Simulador::execute(int acao, int dist, int gen){
 				break;
 
 			case 3 :
+				/** Bloco Rotacionar -90° **/
+				ang = ((int)ang + 270) % 360;
+				break;
+				
+			case 4 :
 				if(sensor(dist, ang, gen) == 0){
 					/** Mover para frente dist cm	 M = 1	**/
-					posX = posX + dist * cos(ang * PI / 180.0); // (ang / 360) * 2PI
-					posY = posY + dist * sin(ang * PI / 180.0);
-				}
+					posX = posX + dist * arred(cos(ang * PI / 180.0)); // (ang / 360) * 2PI
+					posY = posY + dist * arred(sin(ang * PI / 180.0));
+				/*	std::cout<<"posX:"<<posX<<std::endl;
+					std::cout<<"posY:"<<posY<<std::endl;
+					std::cout<<"COSENO:"<<cos(ang * PI / 180.0)* dist<<std::endl;
+					std::cout<<"SENO:"<<sin(ang * PI / 180.0) * dist<<std::endl; */
+					
+					}
 				else
 					return false;
 				break;
@@ -96,8 +106,6 @@ bool Simulador::execute(int acao, int dist, int gen){
 		
 		return true;			
 }// execute
-
-
 
 
 //-----------------	readSensor -----------------//

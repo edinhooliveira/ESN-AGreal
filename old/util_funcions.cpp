@@ -416,7 +416,7 @@ double **inverse(double **M_inv, int l, double **M)
 
 	// Change: adding a regularization term in the diagonal of M	
 	for (j=0;j<l;j++) {
-		M[j][j] = M[j][j]+50*EPS1;   // modificacao R
+		M[j][j] = M[j][j]+EPS1;
 	}
 
 	col = aloc_vectord(l);

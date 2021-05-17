@@ -32,7 +32,7 @@ int main(void) {
 	int gen = 0;
 	
 	//double** conjunto_stab;
-	int nrRodadas = 20;//500  // modificacao R
+	int nrRodadas = 2;//500  // modificacao R
 	int size_stab = 50; //50  // modificacao R
 	int nrMov = 500; //10  // modificacao R
 	
@@ -143,7 +143,7 @@ int main(void) {
 		cout<<"TREINAMENTO"<<endl;
 		ESN->ESNTrain();
 		//ESN->printTrainSet();
-		ESN->printESN();	
+		//ESN->printESN();	
 	}	
 	myfile.close();
 	cout<< endl;	

@@ -98,8 +98,6 @@ bool Simulador::execute(int acao, int dist, int gen){
 }// execute
 
 
-
-
 //-----------------	readSensor -----------------//
 double* Simulador::readSensor(int dist, int gen){
 	double *sensores = new double[4]; // ALTERAR CASO TIVER MAIS SENSORES!!

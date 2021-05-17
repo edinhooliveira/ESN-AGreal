@@ -4,8 +4,8 @@
 CPP      = g++.exe -D__DEBUG__
 CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = algGen.o defValor.o estatistica.o fitness.o geracao.o reproducao.o salvArq.o selecao.o util_funcions.o TEsn.o nr_ran.o Randon.o main.o Simulador.o main-old.o main-teste.o Untitled1.o
-LINKOBJ  = algGen.o defValor.o estatistica.o fitness.o geracao.o reproducao.o salvArq.o selecao.o util_funcions.o TEsn.o nr_ran.o Randon.o main.o Simulador.o main-old.o main-teste.o Untitled1.o
+OBJ      = algGen.o defValor.o estatistica.o fitness.o geracao.o reproducao.o salvArq.o selecao.o util_funcions.o TEsn.o nr_ran.o Randon.o main.o Simulador.o main-old.o
+LINKOBJ  = algGen.o defValor.o estatistica.o fitness.o geracao.o reproducao.o salvArq.o selecao.o util_funcions.o TEsn.o nr_ran.o Randon.o main.o Simulador.o main-old.o
 LIBS     = -L"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -g3
 INCS     = -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
@@ -68,6 +68,3 @@ Simulador.o: Simulador.cpp
 
 main-old.o: main-old.cpp
 	$(CPP) -c main-old.cpp -o main-old.o $(CXXFLAGS)
-
-main-teste.o: main-teste.cpp
-	$(CPP) -c main-teste.cpp -o main-teste.o $(CXXFLAGS)

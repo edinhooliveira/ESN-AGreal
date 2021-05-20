@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include "defTipo.hpp"
 #include <iostream>
+#include "util_funcions.cpp"
 using namespace std; 
 // modificacao R
 
@@ -52,6 +53,15 @@ class ESNbp {
 		void printESNOperation(double *x, double *h, double *y);			// Print ESN operation information	
 		void printTrainSet(double **H);										// Print Training Set	
 		void ESNoutput(double *x, double *y); 								// Output (y) of the neural netwok for input x 
+		
+		//modificação Eder
+		
+		double** getWin (); //* retorna a matriz Win, contendo os pesos da camada de entrada
+		void setWin (double **weight); //* define os pesos de Win, pesos da camada de entrada
+		double** getW (); //* retorna a matriz W, contendo os pesos do repositório
+		void setW (double **weight); // define os pesos de W, pesos do repositório
+		void setResWeight (double *weight); //* weight[] é o novo vetor de pesos do reservatório para a camada de saída atualizado pelo AG
+		
 };
 
 
@@ -71,8 +81,7 @@ ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, int n_train_par, doubl
 	n_train=n_train_par;
 	i_train=0;
 	
- 
-		
+ 		
 	// Memory Allocation
 	X=aloc_matrixi(n_train,n_inp);	
 	W_in=aloc_matrixd (n_inp+1,n_hid);		
@@ -135,6 +144,87 @@ ESNbp::~ESNbp(void){
 }  
 
 
+
+/******************************************************************************\
+*								 Constructor2									   *
+\******************************************************************************/
+
+//ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius_d, double con_density){
+//	
+//	double spectral_radius, min_W=-0.6, max_W=0.6;
+//
+//	// Parameters of the ESN
+//	n_inp=n_inp_par;
+//	n_hid=n_hid_par;						// number of hidden neurons
+//	n_out=n_out_par;
+//	n_stab=size_stab;
+//		
+//	// Parameters of the datasets
+//	n_train=n_train_par;
+//	i_train=0;
+//	
+// 		
+//	// Memory Allocation
+//	X=aloc_matrixi(n_train,n_inp);	
+//	W_in=aloc_matrixd (n_inp+1,n_hid);		
+//	W=aloc_matrixd (n_hid,n_hid);
+//	W_out=aloc_matrixd (n_hid+1,n_out);
+//	D=aloc_matrixd(n_train,n_out);
+//	hid_neurons= new neuron_rec [n_hid]; 
+//
+//	// Neurons - Hidden Layer (Reservoir)
+//	for (int j=0;j<n_hid;j++){
+//		// Input weights
+//		for (int i=0;i<n_inp+1;i++)
+//			W_in[i][j]=(max_W-min_W)*random_dou () + min_W;						// random number between min_W and max_W					
+//		// Initializing Recurrences
+//		hid_neurons[j].rec=aloc_vectori(n_hid);
+//		hid_neurons[j].n_rec=0;	
+//		hid_neurons[j].h=0.0;		
+//	}
+//	// Recurrences
+//	for (int i=0;i<n_hid;i++){
+//		for (int j=0;j<n_hid;j++){
+//			if (random_dou()<con_density){
+//				hid_neurons[i].rec[ hid_neurons[i].n_rec ]=j;
+//				hid_neurons[i].n_rec=hid_neurons[i].n_rec+1;
+//				W[i][j]=(max_W-min_W)*random_dou () + min_W;					// random number between min_W and max_W	
+//			}
+//			else{
+//				W[i][j]=0.0;
+//			}				
+//		}	
+//	}
+//	// Scaling W to spectral_radius_d W	
+//	spectral_radius=largEig(W, n_hid, n_hid);									// Computing the spectral radius of W_temp
+//	if (!isnan(spectral_radius))
+//		for (int i=0;i<n_hid;i++)
+//			for (int j=0;j<n_hid;j++)
+//				W[i][j]=spectral_radius_d * W[i][j] / spectral_radius;				// Normalizing W to desired spectral radius (Scaling W to spectral_radius_d (1/spectral_radius) W)
+//
+//
+// 	
+//}
+
+/******************************************************************************\
+*								 Destructor2								   *
+\******************************************************************************/
+//ESNbp::~ESNbp(void){	
+//
+//	// Memory Desallocation
+//	desaloc_matrixi(X,n_train);
+//	desaloc_matrixd(D,n_train);
+//	desaloc_matrixd (W_in, n_inp+1);
+//	desaloc_matrixd (W, n_hid);
+//	desaloc_matrixd (W_out,n_hid+1);
+//	for (int i=0;i<n_hid;i++)
+//		delete [] hid_neurons[i].rec;
+//	delete [] hid_neurons;
+//
+//}  
+
+
+
 /**********************************************************************************************\
 *		Generate the activations of the neurons in the hidden layer (reservoir) 			   *
 \**********************************************************************************************/
@@ -189,6 +279,26 @@ void ESNbp::ESNoutput(double *x, double *y){
 	delete [] h_new; 
 }
 
+//copiando o método e alterando nome
+/******************************************************************************\
+*					 Output (y) of the neural netwok for input x 			   *
+\******************************************************************************/
+//void ESNbp::execute(double *x, double *y){
+//	double *h_new;
+//	
+//	h_new=aloc_vectord(n_hid+1);
+//			
+//	ESNActivationHid(x, h_new);				// compute the hidden layer (reservoir) activations
+//	ESNActivationOut(x, h_new,y);					// compute the output layer activations
+//	//printESNOperation(x,h_new,y);
+//	for (int j=0;j<n_hid;j++)
+//		hid_neurons[j].h=h_new[j];
+//		 
+//	delete [] h_new; 
+//}
+
+
+
 
 /*****************************************************************************************************************************\
 *	ESN Stabilization Period			          																			  *
@@ -237,8 +347,6 @@ void ESNbp::ESNpreTrain(double **H){
 }
 
 
-
-	
 /*****************************************************************************************************************************\
 *	ESN Training 			   																							  	  *
 \*****************************************************************************************************************************/
@@ -287,7 +395,7 @@ void ESNbp::addTrainSet(double *x, double *d){
 	for (int i=0;i<n_inp;i++)
 		X[i_train][i]=x[i];
 			  
-	// Desired output (mudar para colocar acoes 
+	// Desired output (mudar para colocar acoes) 
 	for (int j=0;j<n_out;j++){
 	  	D[i_train][j]=d[j];				// perturbation resulted in success
 	}
@@ -383,3 +491,64 @@ void ESNbp::printTrainSet(double **H){
 	system("pause");
 	
 }
+
+//-----------------	setResWeight -----------------//
+/* 
+* weight[] é o vetor de pesos do reservatório para a camada de saída
+*/
+void ESNbp::setResWeight (double *weight)
+{	
+	for(int i = 0; i < n_out; i++); //alteração de outputSize para n_out
+		for(int j = 0; j < n_hid + 1; j++) //alteração de repSize para n_hid
+			W_out[i][j] = weight[i*n_hid_par + j];	//alteração de repSize para n_hid	e Wout para W_out
+						
+	for(int i = 0; i < n_hid; i++) //alteração de repSize para n_hid	
+		recorrence[i] = 0;
+			
+}//setResWeight
+
+//-----------------	getWin -----------------//
+/*
+* retorna a matriz Win, contendo os pesos da camada de entrada
+*/
+double** ESNbp::getWin ()
+{
+	return W_in; //alteração de Win para W_in
+	
+}//getWin
+
+//-----------------	setWin -----------------//
+/*
+* define os pesos de Win, pesos da camada de entrada
+*/
+void ESNbp::setWin (double **weight)
+{
+	for(int i = 0; i < n_hid; i++) //alteração de repSize para n_hid	
+		delete W_in[i]; //alteração de Win para W_in
+	delete W_in; //alteração de Win para W_in
+	
+	W_in = weight;
+}//setWin
+
+
+//-----------------	getW -----------------//
+/*
+* retorna a matriz W, contendo os pesos do repositório
+*/
+double** ESNbp::getW ()
+{
+	return W;
+}//getW
+
+//-----------------	setWin -----------------//
+/*
+* define os pesos de W, pesos do repositório
+*/
+void ESNbp::setW (double **weight)
+{
+	for(int i = 0; i < n_hid; i++) //alteração de repSize para n_hid	
+		delete W[i];
+	delete W;
+	
+	W = weight;
+}//setW

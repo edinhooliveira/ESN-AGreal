@@ -1,8 +1,7 @@
-#include <iostream>
 #include "defTipo.hpp"
 #include "Simulador.hpp"
+#include <iostream>
 #include <fstream>
-#include "ESN.hpp"
 
 using namespace std;
 
@@ -265,7 +264,8 @@ int main(void) {
 		srand(nroExec+1);									// semente para gerar os numeros aleatorios
 		//esn = new ESN(inputSize, repSize, outputSize, spectral_radius_d, con_density);
         //Adicionando a nova Rede Neural no AG
-        esn = new ESNbp(inputSize, repSize, outputSize, spectral_radius_d, con_density);
+        ESNbp *esn = new ESNbp(inputSize, repSize, outputSize, spectral_radius_d, con_density);
+        
         
 		algGen(nroExec, op);
 		

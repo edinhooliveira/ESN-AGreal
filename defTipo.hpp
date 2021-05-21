@@ -1,17 +1,15 @@
 /******************************************************************************\
 *								 Definicoes							 *
 \******************************************************************************/
-#ifndef DEFTIPO_HPP
-#define DEFTIPO_HPP
+#pragma once
+//#ifndef DEFTIPO_HPP
+//#define DEFTIPO_HPP
 
-
-#include "Randon.hpp"
 #include "util_funcions.cpp"
-
-//#include "TEsn.hpp"
+#include "Randon.hpp"
+#include "individuo.hpp"
 #include "ESN.hpp"
 
-#include "individuo.hpp"
 
 
 ///* Definicao dos tipos de dados */
@@ -48,7 +46,6 @@ extern int tamCiclo;									// tamanho do ciclo de hipermutação
 extern double taxaR;									//porcentagem de acrescimo na taxa de mutação
 extern bool cicloHipermutacao;							//determina se acabou de ocorrer um ciclo de hipermutação
 extern ESNbp *esn; //comentei para teste
-//extern ESNbp *esn; //comentei para teste
 extern Randon *randon;
 extern int inputSize, repSize, outputSize; 				//Parametros ESN
 extern double spectral_radius_d, con_density; 			//Parametros ESN
@@ -99,8 +96,4 @@ double largEig(double **M, int l , int c);
 
 //ESN - EDER
 
-
-
-
-
-#endif // DEFTIPO_HPP
+//#endif // DEFTIPO_HPP

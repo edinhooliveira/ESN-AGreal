@@ -3,7 +3,7 @@
 \******************************************************************************/
 #include "defTipo.hpp"
 #include "Simulador.hpp"
-//#include "ESN.hpp"
+
 
 /******************************************************************************\
 *								Calculo Fitness Simulador					 *
@@ -14,14 +14,15 @@ double calcFitnessSimulador(alelo *indiv, int gen)
 	double *mov; // Acao tomada
 	double *in; // Leituras dos sensores
 	Simulador *simulador = new Simulador(120,200, dynamicEnvironment, maxGen, gen);
-	//ESNbp *esn;
+	ESNbp *esn;
 	
 	//Pesos do repositório -> saída
 	esn->setResWeight(indiv); 
 
 	for(int i = 0, j = batterry; i < numMov && j > 0; i++, j--){ // Enquanto ainda tenho mov para realizar (i < numMov) e ainda tenho bateria (j > 0)
 		in = simulador->readSensor(10, gen);			
-		mov = esn->Execute(in);				//Verifica a saída da ESN de acordo com a entrada
+		//mov = esn->Execute(in);				//Verifica a saída da ESN de acordo com a entrada
+		esn->ESNoutput(in, mov); 
 		
 		//Define qual movimento vai ser executado (movimento correspondete ao neuronio de maior ativação)
 		int aux = 0; // Maior saída é a 0
@@ -61,6 +62,7 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 	double *mov;
 	double *in;
 	Simulador *simulador = new Simulador(120,200, dynamicEnvironment, maxGen, gen);
+	ESNbp *esn;
 
 	//Pesos do repositório
 	esn->setResWeight(indiv); 

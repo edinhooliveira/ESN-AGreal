@@ -1,7 +1,6 @@
 /******************************************************************************\
 *								Funcoes diversas						 *
 \******************************************************************************/
-//#include "defTipo.hpp"
 #include "individuo.hpp"
 #include <iostream>
 #include <cstdlib>
@@ -495,3 +494,5 @@ int sign_int(double x)
 	else
         return (0);
 }
+
+

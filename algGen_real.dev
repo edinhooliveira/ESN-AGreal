@@ -250,8 +250,17 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit21]
-FileName=main-old.cpp
+[Unit23]
+FileName=Untitled1.txt
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit22]
+FileName=individuo.hpp
 CompileCpp=1
 Folder=
 Compile=1
@@ -260,8 +269,9 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit23]
-FileName=Untitled1.txt
+[Unit21]
+FileName=individuo.hpp
+CompileCpp=1
 Folder=
 Compile=1
 Link=1

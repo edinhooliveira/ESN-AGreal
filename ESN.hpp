@@ -7,16 +7,13 @@
 *			Research Center for Information Technology GMD Technical Report, 148(34), 1					*
 
 \*******************************************************************************************************/
+#ifndef ESN_HPP
+#define ESN_HPP
+
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
 #include <stdio.h>
-#include "defTipo.hpp"
-
-//#ifndef ESN_HPP
-//#define ESN_HPP
-
-//#include "util_funcions.cpp"
 
 using namespace std; 
 // modificacao R
@@ -486,9 +483,11 @@ void ESNbp::printTrainSet(double **H){
 */
 void ESNbp::setResWeight (double *weight)
 {	
-	for(int i = 0; i < n_hid + 1; i++); //alteração de outputSize para n_out
+	for(int i = 0; i < n_hid + 1; i++) //alteração de outputSize para n_out
 		for(int j = 0; j < n_out; j++) //alteração de repSize para n_hid
 			W_out[i][j] = weight[i*n_hid + j];	//alteração de repSize para n_hid	e Wout para W_out
+			
+
 						
 	// não faz sentido alterar o valor das recorrências obtidas no treinamento
 	//for(int i = 0; i < n_hid; i++) //alteração de repSize para n_hid	
@@ -545,4 +544,4 @@ void ESNbp::setW (double **weight)
 	W = weight;
 }//setW
 
-//#endif ESN_HPP
+#endif //ESN_HPP

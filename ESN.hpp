@@ -7,13 +7,17 @@
 *			Research Center for Information Technology GMD Technical Report, 148(34), 1					*
 
 \*******************************************************************************************************/
-
+#include <iostream>
 #include <cmath>
 #include <cstdlib>
 #include <stdio.h>
 #include "defTipo.hpp"
-#include <iostream>
-#include "util_funcions.cpp"
+
+//#ifndef ESN_HPP
+//#define ESN_HPP
+
+//#include "util_funcions.cpp"
+
 using namespace std; 
 // modificacao R
 
@@ -44,6 +48,9 @@ class ESNbp {
 		int n_stab;										    				// number of interations for the stabilizing period 
 		int n_train;														// size of the current training set  
 		ESNbp(int n_inp_par, int n_hid_par, int n_out_par, int n_train_par, double con_density, double spectral_radius_d, int size_stab);
+		//NOVO CONSTRUTOR
+		ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius_d, double con_density); //novo construtor
+		
 	    ~ESNbp(void);
 		void ESNstab(double *sol);												// ESN Stabilization Period	
 		void ESNTrain(void); 												// ESN Training 	
@@ -148,81 +155,62 @@ ESNbp::~ESNbp(void){
 /******************************************************************************\
 *								 Constructor2									   *
 \******************************************************************************/
+ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius_d, double con_density){
+	
+	double spectral_radius, min_W=-0.6, max_W=0.6;
 
-//ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius_d, double con_density){
-//	
-//	double spectral_radius, min_W=-0.6, max_W=0.6;
-//
-//	// Parameters of the ESN
-//	n_inp=n_inp_par;
-//	n_hid=n_hid_par;						// number of hidden neurons
-//	n_out=n_out_par;
-//	n_stab=size_stab;
-//		
-//	// Parameters of the datasets
-//	n_train=n_train_par;
-//	i_train=0;
-//	
-// 		
-//	// Memory Allocation
-//	X=aloc_matrixi(n_train,n_inp);	
-//	W_in=aloc_matrixd (n_inp+1,n_hid);		
-//	W=aloc_matrixd (n_hid,n_hid);
-//	W_out=aloc_matrixd (n_hid+1,n_out);
-//	D=aloc_matrixd(n_train,n_out);
-//	hid_neurons= new neuron_rec [n_hid]; 
-//
-//	// Neurons - Hidden Layer (Reservoir)
-//	for (int j=0;j<n_hid;j++){
-//		// Input weights
-//		for (int i=0;i<n_inp+1;i++)
-//			W_in[i][j]=(max_W-min_W)*random_dou () + min_W;						// random number between min_W and max_W					
-//		// Initializing Recurrences
-//		hid_neurons[j].rec=aloc_vectori(n_hid);
-//		hid_neurons[j].n_rec=0;	
-//		hid_neurons[j].h=0.0;		
-//	}
-//	// Recurrences
-//	for (int i=0;i<n_hid;i++){
-//		for (int j=0;j<n_hid;j++){
-//			if (random_dou()<con_density){
-//				hid_neurons[i].rec[ hid_neurons[i].n_rec ]=j;
-//				hid_neurons[i].n_rec=hid_neurons[i].n_rec+1;
-//				W[i][j]=(max_W-min_W)*random_dou () + min_W;					// random number between min_W and max_W	
-//			}
-//			else{
-//				W[i][j]=0.0;
-//			}				
-//		}	
-//	}
-//	// Scaling W to spectral_radius_d W	
-//	spectral_radius=largEig(W, n_hid, n_hid);									// Computing the spectral radius of W_temp
-//	if (!isnan(spectral_radius))
-//		for (int i=0;i<n_hid;i++)
-//			for (int j=0;j<n_hid;j++)
-//				W[i][j]=spectral_radius_d * W[i][j] / spectral_radius;				// Normalizing W to desired spectral radius (Scaling W to spectral_radius_d (1/spectral_radius) W)
-//
-//
-// 	
-//}
+	// Parameters of the ESN
+	n_inp=n_inp_par;
+	n_hid=n_hid_par;						// number of hidden neurons
+	n_out=n_out_par;
+	//n_stab=size_stab;
+		
+	// Parameters of the datasets
+	//n_train=n_train_par;
+	//i_train=0;
+	
+ 		
+	// Memory Allocation
+	X=aloc_matrixi(n_train,n_inp);	
+	W_in=aloc_matrixd (n_inp+1,n_hid);		
+	W=aloc_matrixd (n_hid,n_hid);
+	W_out=aloc_matrixd (n_hid+1,n_out);
+	D=aloc_matrixd(n_train,n_out);
+	hid_neurons= new neuron_rec [n_hid]; 
 
-/******************************************************************************\
-*								 Destructor2								   *
-\******************************************************************************/
-//ESNbp::~ESNbp(void){	
-//
-//	// Memory Desallocation
-//	desaloc_matrixi(X,n_train);
-//	desaloc_matrixd(D,n_train);
-//	desaloc_matrixd (W_in, n_inp+1);
-//	desaloc_matrixd (W, n_hid);
-//	desaloc_matrixd (W_out,n_hid+1);
-//	for (int i=0;i<n_hid;i++)
-//		delete [] hid_neurons[i].rec;
-//	delete [] hid_neurons;
-//
-//}  
+	// Neurons - Hidden Layer (Reservoir)
+	for (int j=0;j<n_hid;j++){
+		// Input weights
+		for (int i=0;i<n_inp+1;i++)
+			W_in[i][j]=(max_W-min_W)*random_dou () + min_W;						// random number between min_W and max_W					
+		// Initializing Recurrences
+		hid_neurons[j].rec=aloc_vectori(n_hid);
+		hid_neurons[j].n_rec=0;	
+		hid_neurons[j].h=0.0;		
+	}
+	// Recurrences
+	for (int i=0;i<n_hid;i++){
+		for (int j=0;j<n_hid;j++){
+			if (random_dou()<con_density){
+				hid_neurons[i].rec[ hid_neurons[i].n_rec ]=j;
+				hid_neurons[i].n_rec=hid_neurons[i].n_rec+1;
+				W[i][j]=(max_W-min_W)*random_dou () + min_W;					// random number between min_W and max_W	
+			}
+			else{
+				W[i][j]=0.0;
+			}				
+		}	
+	}
+	// Scaling W to spectral_radius_d W	
+	spectral_radius=largEig(W, n_hid, n_hid);									// Computing the spectral radius of W_temp
+	if (!isnan(spectral_radius))
+		for (int i=0;i<n_hid;i++)
+			for (int j=0;j<n_hid;j++)
+				W[i][j]=spectral_radius_d * W[i][j] / spectral_radius;				// Normalizing W to desired spectral radius (Scaling W to spectral_radius_d (1/spectral_radius) W)
 
+
+ 	
+}
 
 
 /**********************************************************************************************\
@@ -498,14 +486,18 @@ void ESNbp::printTrainSet(double **H){
 */
 void ESNbp::setResWeight (double *weight)
 {	
-	for(int i = 0; i < n_out; i++); //alteração de outputSize para n_out
-		for(int j = 0; j < n_hid + 1; j++) //alteração de repSize para n_hid
-			W_out[i][j] = weight[i*n_hid_par + j];	//alteração de repSize para n_hid	e Wout para W_out
+	for(int i = 0; i < n_hid + 1; i++); //alteração de outputSize para n_out
+		for(int j = 0; j < n_out; j++) //alteração de repSize para n_hid
+			W_out[i][j] = weight[i*n_hid + j];	//alteração de repSize para n_hid	e Wout para W_out
 						
-	for(int i = 0; i < n_hid; i++) //alteração de repSize para n_hid	
-		recorrence[i] = 0;
+	// não faz sentido alterar o valor das recorrências obtidas no treinamento
+	//for(int i = 0; i < n_hid; i++) //alteração de repSize para n_hid	
+	//	neuron_rec->rec[i] = 0; //recorrence substituido por hid_neurons
 			
 }//setResWeight
+
+
+
 
 //-----------------	getWin -----------------//
 /*
@@ -552,3 +544,5 @@ void ESNbp::setW (double **weight)
 	
 	W = weight;
 }//setW
+
+//#endif ESN_HPP

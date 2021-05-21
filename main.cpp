@@ -28,15 +28,6 @@ int programaUsuario(double *sensores) {
 
 
 /******************************************************************************\
-*								 Algoritmo Genetico							 *
-\******************************************************************************/
-#include "defTipo.hpp"
-#include <cstdlib>
-#include <iostream>
-
-using namespace std;
-
-/******************************************************************************\
 *				  	Impressao na tela							 			 *
 \******************************************************************************/
 void impressao(populacao *pop , int gen) {
@@ -121,7 +112,6 @@ void algGen (int nroExec, int op) {
 
 
 int main(void) {
-
 	
 	bool dynamicEnvironment = false;
 	int maxGen = 1;
@@ -276,6 +266,7 @@ int main(void) {
 		//esn = new ESN(inputSize, repSize, outputSize, spectral_radius_d, con_density);
         //Adicionando a nova Rede Neural no AG
         esn = new ESNbp(inputSize, repSize, outputSize, spectral_radius_d, con_density);
+        
 		algGen(nroExec, op);
 		
 		delete esn;

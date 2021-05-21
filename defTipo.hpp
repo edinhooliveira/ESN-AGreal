@@ -4,31 +4,32 @@
 #ifndef DEFTIPO_HPP
 #define DEFTIPO_HPP
 
+
 #include "Randon.hpp"
+#include "util_funcions.cpp"
+
 //#include "TEsn.hpp"
-//#include "ESN.hpp"
-//#include "ESN.hpp"
-//#include "util_funcions.cpp"
+#include "ESN.hpp"
+
+#include "individuo.hpp"
 
 
-
-
-/* Definicao dos tipos de dados */
-typedef double alelo; 						// tipo de dado que os alelos podem assumir 
-typedef struct estrutura_individuo {
-			alelo *cromossomo;				// cromossomo
-			double fitness;					// funcao de avaliacao	
-			int pai1 , pai2 ;				// indice dos pais 	
-} individuo;
-
-typedef struct {
-			individuo *indiv;
-			double somaFitness;
-			double mediaFitness;
-			double maxFitness;
-			int melhorIndividuo;
-			int melhorIndividuo2;			
-} populacao;
+///* Definicao dos tipos de dados */
+//typedef double alelo; 						// tipo de dado que os alelos podem assumir 
+//typedef struct estrutura_individuo {
+//			alelo *cromossomo;				// cromossomo
+//			double fitness;					// funcao de avaliacao	
+//			int pai1 , pai2 ;				// indice dos pais 	
+//} individuo;
+//
+//typedef struct {
+//			individuo *indiv;
+//			double somaFitness;
+//			double mediaFitness;
+//			double maxFitness;
+//			int melhorIndividuo;
+//			int melhorIndividuo2;			
+//} populacao;
 
 
 /* Definicao da variaveis globais */
@@ -46,7 +47,8 @@ extern bool hipermutacao;								// true: hipermutacao ; false: sem hipermutacao
 extern int tamCiclo;									// tamanho do ciclo de hipermutação
 extern double taxaR;									//porcentagem de acrescimo na taxa de mutação
 extern bool cicloHipermutacao;							//determina se acabou de ocorrer um ciclo de hipermutação
-//extern ESN *esn; //comentei para teste
+extern ESNbp *esn; //comentei para teste
+//extern ESNbp *esn; //comentei para teste
 extern Randon *randon;
 extern int inputSize, repSize, outputSize; 				//Parametros ESN
 extern double spectral_radius_d, con_density; 			//Parametros ESN

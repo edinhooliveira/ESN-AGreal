@@ -1,7 +1,8 @@
 /******************************************************************************\
 *								Funcoes diversas						 *
 \******************************************************************************/
-#include "defTipo.hpp"
+//#include "defTipo.hpp"
+#include "individuo.hpp"
 #include <iostream>
 #include <cstdlib>
 #include <cmath>

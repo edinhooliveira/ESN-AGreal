@@ -3,6 +3,7 @@
 \******************************************************************************/
 #include "defTipo.hpp"
 #include "Simulador.hpp"
+//#include "ESN.hpp"
 
 /******************************************************************************\
 *								Calculo Fitness Simulador					 *
@@ -13,6 +14,7 @@ double calcFitnessSimulador(alelo *indiv, int gen)
 	double *mov; // Acao tomada
 	double *in; // Leituras dos sensores
 	Simulador *simulador = new Simulador(120,200, dynamicEnvironment, maxGen, gen);
+	//ESNbp *esn;
 	
 	//Pesos do repositório -> saída
 	esn->setResWeight(indiv); 

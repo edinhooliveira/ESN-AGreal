@@ -93,53 +93,53 @@
 //*				  	main							 			 *
 //\******************************************************************************/
 //
-//int main(void) {
-//
-//	int nroExec, num_ind;
-//
-//	arq_media_fitness = new double [maxGen+1];
-//	arq_melhor_fitness = new double [maxGen+1];
-//	popVelha.indiv = new individuo [tamPop];
-//	popNova.indiv = new individuo [tamPop];
-//	for (num_ind = 0; num_ind < tamPop; num_ind++){
-//		popVelha.indiv[num_ind].cromossomo = new double [lcrom];
-//		popNova.indiv[num_ind].cromossomo = new double [lcrom];
-//	}
-//	arq_melhor_individuo = aloc_matrixd(maxGen+1,lcrom);	
-//		
-//	// Execucao	
-//	cout<<"***** Algoritmo Genetico *****"<<endl;
-//	int op = menu();
-//	
-//	for(nroExec = 0; nroExec < nroMaxExec; nroExec++) {	
-//		// Visualizacao
-//		cout<<"\tExecucao: "<<nroExec<<endl<<endl;
-//		randon = new Randon(1,nroExec+1);					// semente para gerar os numeros aleatorios
-//		srand(nroExec+1);									// semente para gerar os numeros aleatorios
-//		esn = new ESN(inputSize, repSize, outputSize, spectral_radius_d, con_density);
-//		algGen(nroExec, op);
-//		
-//		delete esn;
-//		delete randon;								// chama a execucao do AG para uma semente aleatoria
-//	}//for
-//
-//	// Desalocacao de Memoria
-//	delete [] arq_media_fitness;
-//	delete [] arq_melhor_fitness;
-//	for (num_ind=0; num_ind<tamPop; num_ind++){	
-//		delete [] popVelha.indiv[num_ind].cromossomo;
-//		delete [] popNova.indiv[num_ind].cromossomo;
-//	}
-//	delete [] popVelha.indiv;
-//	delete [] popNova.indiv;
-//	desaloc_matrixd(arq_melhor_individuo,maxGen+1);
-//
-//	// Visualizacao 
-//	cout<<"\tFim do programa!"<<endl;
-//
-//	system("pause");
-// 	
-//	return 0;
-//}//main
+////int main(void) {
+////
+////	int nroExec, num_ind;
+////
+////	arq_media_fitness = new double [maxGen+1];
+////	arq_melhor_fitness = new double [maxGen+1];
+////	popVelha.indiv = new individuo [tamPop];
+////	popNova.indiv = new individuo [tamPop];
+////	for (num_ind = 0; num_ind < tamPop; num_ind++){
+////		popVelha.indiv[num_ind].cromossomo = new double [lcrom];
+////		popNova.indiv[num_ind].cromossomo = new double [lcrom];
+////	}
+////	arq_melhor_individuo = aloc_matrixd(maxGen+1,lcrom);	
+////		
+////	// Execucao	
+////	cout<<"***** Algoritmo Genetico *****"<<endl;
+////	int op = menu();
+////	
+////	for(nroExec = 0; nroExec < nroMaxExec; nroExec++) {	
+////		// Visualizacao
+////		cout<<"\tExecucao: "<<nroExec<<endl<<endl;
+////		randon = new Randon(1,nroExec+1);					// semente para gerar os numeros aleatorios
+////		srand(nroExec+1);									// semente para gerar os numeros aleatorios
+////		esn = new ESN(inputSize, repSize, outputSize, spectral_radius_d, con_density);
+////		algGen(nroExec, op);
+////		
+////		delete esn;
+////		delete randon;								// chama a execucao do AG para uma semente aleatoria
+////	}//for
+////
+////	// Desalocacao de Memoria
+////	delete [] arq_media_fitness;
+////	delete [] arq_melhor_fitness;
+////	for (num_ind=0; num_ind<tamPop; num_ind++){	
+////		delete [] popVelha.indiv[num_ind].cromossomo;
+////		delete [] popNova.indiv[num_ind].cromossomo;
+////	}
+////	delete [] popVelha.indiv;
+////	delete [] popNova.indiv;
+////	desaloc_matrixd(arq_melhor_individuo,maxGen+1);
+////
+////	// Visualizacao 
+////	cout<<"\tFim do programa!"<<endl;
+////
+////	system("pause");
+//// 	
+////	return 0;
+////}//main
 //
 

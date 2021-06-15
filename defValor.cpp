@@ -4,21 +4,22 @@
 
 #include "defTipo.hpp"
 
+
 /* Definicao da variaveis globais */
 populacao popVelha , popNova;		
 double *arq_media_fitness, *arq_melhor_fitness; 	// dados para serem gravados
 double **arq_melhor_individuo;						// dados para serem gravados
 Randon *randon;
-ESNbp *esn;
+//ESN *esn;
 
 // Parametros ESN
 int inputSize = 4; //mais sensores
 int repSize = 50;
 int outputSize = 4; //mais ações
 double spectral_radius_d = 0.95;
-double con_density = 0.15;
+double con_density = 0.15; 
 
-int size_stab = 10; //modificação Eder
+//int size_stab = 10; //modificação Eder
 
 // Parametros da simulacao
 int nroMaxExec = 25;								// numero de repeticoes do AG
@@ -50,3 +51,5 @@ int numMov = 300;
 int batterry = 80;
 bool dynamicEnvironment = true;
 int numSimulacao = 10;
+
+

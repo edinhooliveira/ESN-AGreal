@@ -1,19 +1,19 @@
 /*******************************************************************************************************\
-*					Class: Echo State Network (ESN) 	  			 		  			*
-.    																		*
+*					Class: Echo State Network (ESN) 	  			 		  			                *
+.    																	                             	*
 *   for ESN, see:																					 	*
 *		Jaeger, H. (2001). The “echo state” approach to analysing and training 							*
 *			recurrent neural networks-with an erratum note. Bonn, Germany: German National 				*
 *			Research Center for Information Technology GMD Technical Report, 148(34), 1					*
 
 \*******************************************************************************************************/
-#ifndef ESN_HPP
-#define ESN_HPP
 
-#include <iostream>
 #include <cmath>
 #include <cstdlib>
 #include <stdio.h>
+#include "defTipo.hpp"
+#include <iostream>
+
 
 using namespace std; 
 // modificacao R
@@ -421,7 +421,7 @@ void ESNbp::printESN(void){
 					cout<< W_out[i][j] << ", ";
 			cout<<endl;
 	}
-	system("pause");
+	//system("pause"); //comentado para teste
 }
 
 
@@ -479,9 +479,9 @@ void ESNbp::printTrainSet(double **H){
 
 //-----------------	setResWeight -----------------//
 /* 
-* weight[] é o vetor de pesos do reservatório para a camada de saída
+* W_out[][] é a matriz de pesos do reservatório para a camada de saída
 */
-void ESNbp::setResWeight (double *weight)
+void ESNbp::setResWeight (double *weight) //modificação Eder
 {	
 	for(int i = 0; i < n_hid + 1; i++) //alteração de outputSize para n_out
 		for(int j = 0; j < n_out; j++) //alteração de repSize para n_hid
@@ -544,4 +544,3 @@ void ESNbp::setW (double **weight)
 	W = weight;
 }//setW
 
-#endif //ESN_HPP

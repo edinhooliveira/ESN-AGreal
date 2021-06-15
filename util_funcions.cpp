@@ -1,7 +1,7 @@
 /******************************************************************************\
 *								Funcoes diversas						 *
 \******************************************************************************/
-#include "individuo.hpp"
+#include "defTipo.hpp"
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
@@ -55,7 +55,7 @@ double **aloc_matrixd(int lines , int collums)
 
 
 /******************************************************************************\
-*								Dynamic Allocation: Vector of Integers						 *
+*								Dynamic Allocation: Vector of Integers					 *
 \******************************************************************************/
 int *aloc_vectori(int lines)
 {
@@ -69,7 +69,7 @@ int *aloc_vectori(int lines)
 	return vector;
 }
 /******************************************************************************\
-*								Dynamic Allocation: Vector of Doubles						 *
+*								Dynamic Allocation: Vector of Doubles					 *
 \******************************************************************************/
 double *aloc_vectord(int lines)
 {
@@ -85,7 +85,7 @@ double *aloc_vectord(int lines)
 
 
 /******************************************************************************\
-*								Dynamic Allocation: Vector of individuals						 *
+*								Dynamic Allocation: Vector of individuals				 *
 \******************************************************************************/
 
 individuo *aloc_vectorind(int lines)
@@ -101,7 +101,7 @@ individuo *aloc_vectorind(int lines)
 }
 
 /******************************************************************************\
-*								 Dynamic Desallocation: Matrix of Integers					 *
+*								 Dynamic Desallocation: Matrix of Integers				 *
 \******************************************************************************/
 void desaloc_matrixi(int **Matrix , int lines)
 {
@@ -130,7 +130,7 @@ void desaloc_matrixd(double **Matrix , int lines)
 
 
 /******************************************************************************\
-*								 Random Integer between L_range and H_range			 *
+*								 Random Integer between L_range and H_range			     *
 \******************************************************************************/
 int random_int(int L_range, int H_range)
 {
@@ -494,5 +494,4 @@ int sign_int(double x)
 	else
         return (0);
 }
-
 

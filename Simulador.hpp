@@ -1,7 +1,7 @@
 //Author Rafael Del Lama
  
 //-----------------------------------------	TSimulador.hpp -----------------------------------------//
-
+#pragma once
 #ifndef SIMULADOR_HPP
 #define SIMULADOR_HPP
 #include <cmath>

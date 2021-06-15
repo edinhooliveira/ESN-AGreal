@@ -1,33 +1,34 @@
 /******************************************************************************\
 *								 Definicoes							 *
 \******************************************************************************/
-#pragma once
-//#ifndef DEFTIPO_HPP
-//#define DEFTIPO_HPP
+#ifndef DEFTIPO_HPP
+#define DEFTIPO_HPP
 
-#include "util_funcions.cpp"
 #include "Randon.hpp"
-#include "individuo.hpp"
-#include "ESN.hpp"
 
 
+//#include "TEsn.hpp"
+//#include "ESN.hpp"
+//#include "individuo.hpp"
+//#include "ESN.hpp"
 
-///* Definicao dos tipos de dados */
-//typedef double alelo; 						// tipo de dado que os alelos podem assumir 
-//typedef struct estrutura_individuo {
-//			alelo *cromossomo;				// cromossomo
-//			double fitness;					// funcao de avaliacao	
-//			int pai1 , pai2 ;				// indice dos pais 	
-//} individuo;
-//
-//typedef struct {
-//			individuo *indiv;
-//			double somaFitness;
-//			double mediaFitness;
-//			double maxFitness;
-//			int melhorIndividuo;
-//			int melhorIndividuo2;			
-//} populacao;
+
+/* Definicao dos tipos de dados */
+typedef double alelo; 						// tipo de dado que os alelos podem assumir 
+typedef struct estrutura_individuo {
+			alelo *cromossomo;				// cromossomo
+			double fitness;					// funcao de avaliacao	
+			int pai1 , pai2 ;				// indice dos pais 	
+} individuo;
+
+typedef struct {
+			individuo *indiv;
+			double somaFitness;
+			double mediaFitness;
+			double maxFitness;
+			int melhorIndividuo;
+			int melhorIndividuo2;			
+} populacao;
 
 
 /* Definicao da variaveis globais */
@@ -45,8 +46,9 @@ extern bool hipermutacao;								// true: hipermutacao ; false: sem hipermutacao
 extern int tamCiclo;									// tamanho do ciclo de hipermutação
 extern double taxaR;									//porcentagem de acrescimo na taxa de mutação
 extern bool cicloHipermutacao;							//determina se acabou de ocorrer um ciclo de hipermutação
-extern ESNbp *esn; //comentei para teste
 extern Randon *randon;
+
+//extern ESNbp *esn; //comentei para teste
 extern int inputSize, repSize, outputSize; 				//Parametros ESN
 extern double spectral_radius_d, con_density; 			//Parametros ESN
 extern int numMov, batterry, numSimulacao;				//Parametros Simulação
@@ -59,12 +61,17 @@ void impressao(populacao *pop , int gen);
 double calcFitness(alelo *indiv, int gen);
 double *aloc_vectord(int lines);
 individuo *aloc_vectorind(int lines);
+
 int *aloc_vectori(int lines); //nova função 
+
 int **aloc_matrixi(int lines , int collums); //nova função
 void desaloc_matrixi(int **Matrix , int lines); //nova função
+
 double **aloc_matrixd(int lines , int collums);
 void desaloc_matrixd(double **Matrix , int lines);
+
 void transpose(double **Mt, double **M , int l , int c); //nova função
+
 void multMatrix(double **M, double **A, int l_A, int c_A, double **B, int l_B, int c_B); //nova função
 void multMatrixVect(double *y, double **A, int l_A, int c_A, double *x, int l_x); //nova função
 double multVect(double *x, double *y, int l); //nova função
@@ -96,4 +103,4 @@ double largEig(double **M, int l , int c);
 
 //ESN - EDER
 
-//#endif // DEFTIPO_HPP
+#endif // DEFTIPO_HPP

@@ -3,6 +3,7 @@
 #include <iostream>
 #include<cmath>
 
+
 double arred(double x){
 	x = x * 100;
 	int aux = round(x);
@@ -52,6 +53,7 @@ Simulador::Simulador(int tamX, int tamY, int raio, int posX, int posY, int ang, 
 //-----------------	~simulador -----------------//
 Simulador::~Simulador(){
 }//destrutor
+
 
 //-----------------	execute -----------------//
 /*
@@ -187,14 +189,13 @@ int Simulador::sensor (int dist, int ang, int gen){
 	return 0;
 }//sensor
 
+
 //-----------------	isBase -----------------//
 bool Simulador::isBase(){
 	 if(posX < 30 && posY < 30)
 		return true;
 	 return false;
 }//isBase
-
-
 
 
 //-----------------	getPosX -----------------//

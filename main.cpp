@@ -6,9 +6,26 @@
 
 using namespace std;
 
-//Protótipo das funções de print
-void printRobot(Simulador *simulador);
-void printSensor(Simulador *simulador);
+//Funções de Print
+void printRobot(Simulador *simulador) {
+		//cout << "Ação: " <<  << endl;
+		//cout << "FUNÇÃO PRINT SIMULADOR" <<endl;
+		cout <<"POSICAO" <<endl;
+		cout << "posicao X: " << simulador->getPosX() << endl;
+		cout << "posicao Y: " << simulador->getPosY() << endl;
+		cout << "Angulo: "  << simulador->getAngle() << endl;
+		cout<< endl;	
+}
+
+void printSensor(Simulador *simulador){
+	
+	double *sensores = simulador->readSensor(10,0);
+	cout <<"SENSORES" <<endl;
+	for(int j = 0; j < 4; j ++){
+		cout<< "Sensor " << j <<": "<< *(sensores + j) << endl;
+	}
+}
+
 
 // modificacao R
 int programaUsuario(double *sensores) {
@@ -25,7 +42,6 @@ int programaUsuario(double *sensores) {
 		acao=2;				
 	return acao;
 }
-
 
 
 /******************************************************************************\
@@ -303,26 +319,6 @@ int main(void) {
 	return 0;
 }//main
 
-//Funções de Print
-void printRobot(Simulador *simulador) {
-		//cout << "Ação: " <<  << endl;
-		//cout << "FUNÇÃO PRINT SIMULADOR" <<endl;
-		cout <<"POSICAO" <<endl;
-		cout << "posicao X: " << simulador->getPosX() << endl;
-		cout << "posicao Y: " << simulador->getPosY() << endl;
-		cout << "Angulo: "  << simulador->getAngle() << endl;
-		cout<< endl;	
-}
-
-
-void printSensor(Simulador *simulador){
-	
-	double *sensores = simulador->readSensor(10,0);
-	cout <<"SENSORES" <<endl;
-	for(int j = 0; j < 4; j ++){
-		cout<< "Sensor " << j <<": "<< *(sensores + j) << endl;
-	}
-}
 
 
 

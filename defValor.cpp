@@ -10,7 +10,7 @@ populacao popVelha , popNova;
 double *arq_media_fitness, *arq_melhor_fitness; 	// dados para serem gravados
 double **arq_melhor_individuo;						// dados para serem gravados
 Randon *randon;
-//ESN *esn;
+ESNbp *esn;
 
 // Parametros ESN
 int inputSize = 4; //mais sensores

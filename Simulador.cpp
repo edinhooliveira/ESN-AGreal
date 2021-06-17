@@ -1,7 +1,7 @@
 #include "Simulador.hpp"
 #include "defTipo.hpp"
-#include <iostream>
-#include<cmath>
+//#include <iostream>
+//#include<cmath>
 
 
 double arred(double x){

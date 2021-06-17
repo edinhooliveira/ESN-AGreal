@@ -3,7 +3,6 @@
 #include <iostream>
 #include <fstream>
 
-
 using namespace std;
 
 //Funções de Print
@@ -25,7 +24,7 @@ void printSensor(Simulador *simulador){
 		cout<< "Sensor " << j <<": "<< *(sensores + j) << endl;
 	}
 }
-
+ 
 
 // modificacao R
 int programaUsuario(double *sensores) {

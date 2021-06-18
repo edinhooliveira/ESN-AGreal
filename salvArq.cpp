@@ -1,5 +1,5 @@
 /******************************************************************************\
-*				  				 Grava dados nos arquivos de saida 							 *
+*				  				 Grava dados nos arquivos de saida 				*
 \******************************************************************************/
 #include "defTipo.hpp"
 #include <iostream>
@@ -120,7 +120,8 @@ void salv_esn(int nroExec)
 	{
 		//Salva pesos camada de entrada - Win
 		double **Win = esn->getWin();
-		//esn->printESN();
+		cout<<"ESN"<< endl;
+		esn->printESN();
 		for(int i = 0; i < repSize; i++)
 			for(int j = 0; j < inputSize + 1; j++)
 				fprintf(ESN_arq, "%lf ",Win[i][j]); 
@@ -142,6 +143,7 @@ void salv_esn(int nroExec)
 	else
 		cout << "\nErro ao abrir o arquivo esn.dat!" << endl;
 }
+
 
 //-----------------------------------------------------------------------/
 void salv_traj(int **pos, int n, int nroExec){

@@ -7,13 +7,12 @@ using namespace std;
 
 //Funções de Print
 void printRobot(Simulador *simulador) {
-		//cout << "Ação: " <<  << endl;
-		//cout << "FUNÇÃO PRINT SIMULADOR" <<endl;
-		cout <<"POSICAO" <<endl;
-		cout << "posicao X: " << simulador->getPosX() << endl;
-		cout << "posicao Y: " << simulador->getPosY() << endl;
-		cout << "Angulo: "  << simulador->getAngle() << endl;
-		cout<< endl;	
+		
+	cout <<"POSICAO" <<endl;
+	cout << "posicao X: " << simulador->getPosX() << endl;
+	cout << "posicao Y: " << simulador->getPosY() << endl;
+	cout << "Angulo: "  << simulador->getAngle() << endl;
+	cout<< endl;	
 }
 
 void printSensor(Simulador *simulador){
@@ -130,15 +129,15 @@ void algGen (int nroExec, int op) {
 
 int main(void) {
 	
-	bool dynamicEnvironment = false;
-	int maxGen = 1;
+	//bool dynamicEnvironment = false;
+	//int maxGen = 10; //1
 	int gen = 0;
 	
 	
 	//Parametros do Treinamento da ESN
 	//double** conjunto_stab;
-	int nrRodadas = 2;//500  // modificacao R
-	int size_stab = 50; //50  // modificacao R
+	int nrRodadas = 100;//500  // modificacao R
+	//int size_stab = 50; //50  // modificacao R
 	int nrMov = 500; //10  // modificacao R
 	
 	//ESN - Treinamento	
@@ -190,13 +189,10 @@ int main(void) {
 		ESNbp *esn = new ESNbp(inputSize, repSize, outputSize, nrMov-size_stab-1, con_density, spectral_radius_d, size_stab);  // modificacao R
 		//ESNbp(int n_inp_par, int n_hid_par, int n_out_par, int n_train_par, double con_density, double spectral_radius_d, int size_stab)
 	
-		/*Movimentação teste, saindo da posição (20,20) e dar uma volta completa na área e voltar para a posição inicial. */
-		//double acoes[nrMov] = {4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4}; // modificacao R
-		
+	
 		int acao;
 		double acao_v[4];
 		for(int mov = 0; mov < nrMov; mov++ ) {
-			//acao = random_int(0, 4); //gera uma ação aleatória
 			//acao = acoes[mov];	 // modificacao R
 			acao = programaUsuario(sensores);	// modificacao R
 			// simulador->execute(acao, 10 , 0); // // modificacao R
@@ -246,7 +242,7 @@ int main(void) {
 				for(int j = 0; j < outputSize; j++)
 					acao_v[j]=0.0;
 				acao_v[acao]=1.0;
-				
+
 				esn->addTrainSet(sensores, acao_v); // modificacao R
 			} 		
 		}
@@ -255,20 +251,21 @@ int main(void) {
 		esn->ESNTrain();
 		
 		if(rodadaAtual == nrRodadas-1){
-			//esn->printESN()
+			esn->printESN();
 			cout<< "GRAVANDO NO ARQUIVO"<<endl;
-			salv_esn(rodadaAtual);
+			//salv_esn(rodadaAtual);
 			
 		}
-		//ESN->printTrainSet();
-		//ESN->printESN();	
+		//esn->printTrainSet();
+		//esn->printESN();
+		//salv_esn(rodadaAtual);	
+		cout<<"Fim ESN"<<endl;
 	}
 	
-	salv_esn(1);
+
 	
-	
-	//ALGORITMO GENÉTICO
-		
+//	//ALGORITMO GENÉTICO
+//		
 //	int nroExec, num_ind;
 //
 //	arq_media_fitness = new double [maxGen+1];
@@ -310,11 +307,11 @@ int main(void) {
 //
 //	// Visualizacao 
 //	//cout<<"\tFim do programa!"<<endl;
-	
-	
+		
 	cout<< endl;	
 	cout<<"\tFim do programa!"<<endl;
  	
+	system("pause");
 	return 0;
 }//main
 

@@ -449,26 +449,24 @@ void ESNbp::setResWeight (double *weight) //modificação Eder
 
 //-----------------	getWout -----------------//
 
+double** ESNbp::getWout (void){
+	
+	return W_out;
+}
+
 //criar metodo para pegar dados da camada de saída
 
 //-----------------	getWin -----------------//
 /*
 * retorna a matriz Win, contendo os pesos da camada de entrada
 */
-double** ESNbp::getWin ()
+double** ESNbp::getWin (void)
 {
-	cout<<"ENTROU NO GETWIN " << endl;
-		for (int j=0;j<n_hid;j++){
-			cout<<" Neuron: " <<j<<endl;
-			cout<<"  W_in: ";	
-			for (int i=0;i<n_inp+1;i++)
-					cout<< W_in[i][j] << ", ";
-			cout<<endl;
-			cout<<"  W: ";	
-			for (int i=0;i<n_hid;i++)
-					cout<< W[i][j] << ", ";
-			cout<<endl;
-		}
+	cout<<"Entrou no getWin" << endl;
+
+	//printESN();
+
+
 
 
 	return W_in; //alteração de Win para W_in

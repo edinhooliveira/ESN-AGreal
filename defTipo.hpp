@@ -10,6 +10,7 @@
 
 
 
+
 /* Definicao dos tipos de dados */
 typedef double alelo; 						// tipo de dado que os alelos podem assumir 
 typedef struct estrutura_individuo {

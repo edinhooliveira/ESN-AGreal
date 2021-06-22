@@ -59,12 +59,12 @@ class ESNbp {
 		void ESNoutput(double *x, double *y); 								// Output (y) of the neural netwok for input x 
 		
 		//modificação Eder
-		double** getWin (); //* retorna a matriz Win, contendo os pesos da camada de entrada
+		double** getWin (void); //* retorna a matriz Win, contendo os pesos da camada de entrada
 		void setWin (double **weight); //* define os pesos de Win, pesos da camada de entrada
-		double** getW (); //* retorna a matriz W, contendo os pesos do repositório
+		double** getW (void); //* retorna a matriz W, contendo os pesos do repositório
 		void setW (double **weight); // define os pesos de W, pesos do repositório
 		void setResWeight (double *weight); //* weight[] é o novo vetor de pesos do reservatório para a camada de saída atualizado pelo AG
-		
+		double** getWout (void);  //* retorna a matriz Win, contendo os pesos da camada de saída
 };
 
 #endif // ESNbp_HPP

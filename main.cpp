@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 
+
 using namespace std;
 
 //Funções de Print
@@ -123,11 +124,17 @@ void algGen (int nroExec, int op) {
 	arq_saida( nroExec);					// salva dados
 }
 
+
+
+
+
 /******************************************************************************\
 *				  	main							 			 			  *
 \******************************************************************************/
 
 int main(void) {
+
+	
 	
 	//bool dynamicEnvironment = false;
 	//int maxGen = 10; //1
@@ -136,7 +143,7 @@ int main(void) {
 	
 	//Parametros do Treinamento da ESN
 	//double** conjunto_stab;
-	int nrRodadas = 100;//500  // modificacao R
+	int nrRodadas = 2;//500  // modificacao R
 	//int size_stab = 50; //50  // modificacao R
 	int nrMov = 500; //10  // modificacao R
 	
@@ -178,18 +185,10 @@ int main(void) {
 		//int *acoes = new int [nrMov];
 		double *sensores = simulador->readSensor(10,0);
 		
-
-		/*
-		//Loop para gerar movimentação aleatória do robô
-		for(int i = 0; i < nrMov; i++ ) {
-			acoes[i] = 0;//random_int(0, 4);
-		}*/
-		
 		//ESN 
 		ESNbp *esn = new ESNbp(inputSize, repSize, outputSize, nrMov-size_stab-1, con_density, spectral_radius_d, size_stab);  // modificacao R
 		//ESNbp(int n_inp_par, int n_hid_par, int n_out_par, int n_train_par, double con_density, double spectral_radius_d, int size_stab)
-	
-	
+		
 		int acao;
 		double acao_v[4];
 		for(int mov = 0; mov < nrMov; mov++ ) {
@@ -250,22 +249,23 @@ int main(void) {
 		cout<<"TREINAMENTO"<<endl;
 		esn->ESNTrain();
 		
-		if(rodadaAtual == nrRodadas-1){
-			esn->printESN();
-			cout<< "GRAVANDO NO ARQUIVO"<<endl;
-			//salv_esn(rodadaAtual);
+		//if(rodadaAtual == nrRodadas-1){
+			//esn->printESN();	
+
 			
-		}
+		//	salv_esn(nrRodadas);	
+		//}
 		//esn->printTrainSet();
 		//esn->printESN();
-		//salv_esn(rodadaAtual);	
+		//salv_esn(rodadaAtual);
+	
 		cout<<"Fim ESN"<<endl;
 	}
+	salv_esn(99);
 	
-
 	
 //	//ALGORITMO GENÉTICO
-//		
+		
 //	int nroExec, num_ind;
 //
 //	arq_media_fitness = new double [maxGen+1];
@@ -281,13 +281,13 @@ int main(void) {
 //	// Execucao	
 //	cout<<"***** Algoritmo Genetico *****"<<endl;
 //	int op = menu();
-//	
+//	//int op = 0;
 //	for(nroExec = 0; nroExec < nroMaxExec; nroExec++) {	
 //		// Visualizacao
 //		cout<<"\tExecucao: "<<nroExec<<endl<<endl;
 //		randon = new Randon(1,nroExec+1);					// semente para gerar os numeros aleatorios
 //		srand(nroExec+1);									// semente para gerar os numeros aleatorios
-//		esn = new ESNbp(inputSize, repSize, outputSize, spectral_radius_d, con_density);
+//		//esn = new ESNbp(inputSize, repSize, outputSize, spectral_radius_d, con_density);
 //		algGen(nroExec, op);
 //		
 //		delete esn;

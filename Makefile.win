@@ -6,12 +6,12 @@ CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
 OBJ      = algGen.o defValor.o estatistica.o fitness.o geracao.o reproducao.o salvArq.o selecao.o util_funcions.o TEsn.o nr_ran.o Randon.o main.o Simulador.o ESN.o
 LINKOBJ  = algGen.o defValor.o estatistica.o fitness.o geracao.o reproducao.o salvArq.o selecao.o util_funcions.o TEsn.o nr_ran.o Randon.o main.o Simulador.o ESN.o
-LIBS     = -L"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -g3
+LIBS     = -L"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -pg -g3
 INCS     = -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
 BIN      = algGen_real.exe
-CXXFLAGS = $(CXXINCS) -g3
-CFLAGS   = $(INCS) -g3
+CXXFLAGS = $(CXXINCS) -pg -g3
+CFLAGS   = $(INCS) -pg -g3
 RM       = rm.exe -f
 
 .PHONY: all all-before all-after clean clean-custom

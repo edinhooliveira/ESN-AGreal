@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
-#include <unistd.h>
+//#include <unistd.h>
 
 using namespace std; 
 
@@ -13,7 +13,7 @@ char nameDir[] = "output";
 
 void arq_saida(int nroExec)
 {
-	//mkdir(nameDir);
+//	mkdir(nameDir);
 	
 	int i;
 	FILE *Fit_arq,*Melfit_arq;
@@ -115,26 +115,23 @@ void salv_esn(int nroExec)
 	
 	sprintf(nome,"%s/esn_%d.dat", nameDir, nroExec); 
 	ESN_arq = fopen(nome, "wt");
-
+	
 	if(ESN_arq != NULL)
 	{
+		cout<<"ESN-SalvArq.cpp: " << esn << endl;
 		//Salva pesos camada de entrada - Win
-		double **Win = esn->getWin();
-		cout<<"TESTE"<<endl;
-		cout<<"ESN"<< endl;
-		esn->printESN();
-		for(int i = 0; i < repSize; i++) //trocar por repSize
-			for(int j = 0; j < inputSize + 1; j++) 
-				fprintf(ESN_arq, "%lf ",Win[i][j]);
+		double **Win = esn->getWin(); //Entra no getWin e não sai e finaliza o programa		
+		for(int i = 0; i < repSize; i++)
+			for(int j = 0; j < inputSize + 1; j++)
+				fprintf(ESN_arq, "%lf ",Win[i][j]); 
 					
-		
 		fprintf(ESN_arq, "\n\n");
+		
 		//Salva pesos do reservatório - W
-		double **W = esn->getW();
+		double **W = esn->getW();		
 		for(int i = 0; i < repSize; i++)
 			for(int j = 0; j < repSize; j++)
-				fprintf(ESN_arq, "%lf ",W[i][j]);
-						 
+				fprintf(ESN_arq, "%lf ",W[i][j]); 
 	
 		int closeResult = fclose(ESN_arq);
 		if(closeResult == 0)
@@ -146,7 +143,6 @@ void salv_esn(int nroExec)
 	else
 		cout << "\nErro ao abrir o arquivo esn.dat!" << endl;
 }
-
 
 //-----------------------------------------------------------------------/
 void salv_traj(int **pos, int n, int nroExec){
@@ -240,7 +236,6 @@ void ler_esn(int nroExec)
 	
 	fclose(ESN_arq);
 }
-
 //-----------------------------------------------------------------------/
 void apaga_arquivos(int nroExec)
 {

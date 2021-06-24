@@ -9,7 +9,7 @@
 \*******************************************************************************************************/
 
 //-----------------------------------------	ESN.hpp -----------------------------------------//
-#pragma once
+
 #ifndef ESNbp_HPP
 #define ESNbp_HPP
 
@@ -40,14 +40,10 @@ class ESNbp {
 		int n_stab;										    				// number of interations for the stabilizing period 
 		int n_train;														// size of the current training set  
 		
-		
 		ESNbp(); //construtor vazio
-		
 		ESNbp(int n_inp_par, int n_hid_par, int n_out_par, int n_train_par, double con_density, double spectral_radius_d, int size_stab);
-		
 		//NOVO CONSTRUTOR
 		ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius_d, double con_density); //novo construtor
-		
 	    ~ESNbp(void); //destrutor
 		void ESNstab(double *sol);												// ESN Stabilization Period	
 		void ESNTrain(void); 												// ESN Training 	
@@ -59,12 +55,12 @@ class ESNbp {
 		void ESNoutput(double *x, double *y); 								// Output (y) of the neural netwok for input x 
 		
 		//modificação Eder
-		double** getWin (void); //* retorna a matriz Win, contendo os pesos da camada de entrada
-		void setWin (double **weight); //* define os pesos de Win, pesos da camada de entrada
-		double** getW (void); //* retorna a matriz W, contendo os pesos do repositório
-		void setW (double **weight); // define os pesos de W, pesos do repositório
-		void setResWeight (double *weight); //* weight[] é o novo vetor de pesos do reservatório para a camada de saída atualizado pelo AG
-		double** getWout (void);  //* retorna a matriz Win, contendo os pesos da camada de saída
+		double** getWin(); //* retorna a matriz Win, contendo os pesos da camada de entrada
+		void setWin(double **weight); //* define os pesos de Win, pesos da camada de entrada
+		double** getW(); //* retorna a matriz W, contendo os pesos do repositório
+		void setW(double **weight); // define os pesos de W, pesos do repositório
+		void setResWeight(double *weight); //* weight[] é o novo vetor de pesos do reservatório para a camada de saída atualizado pelo AG
+		double** getWout();  //* retorna a matriz Win, contendo os pesos da camada de saída
 };
 
 #endif // ESNbp_HPP

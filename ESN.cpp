@@ -463,11 +463,15 @@ double** ESNbp::getWout (void){
 double** ESNbp::getWin (void)
 {
 	cout<<"Entrou no getWin" << endl;
-
-	//printESN();
-
-
-
+	
+//	for (int j=0;j<n_hid;j++){
+//			cout<<" Neuron: " <<j<<endl;
+//			cout<<"  W_in: ";	
+//			for (int i=0;i<n_inp+1;i++){
+//				cout<< W_in[i][j] << ", ";
+//			}
+//			cout<<endl;
+//	}
 
 	return W_in; //alteração de Win para W_in
 	
@@ -493,6 +497,7 @@ void ESNbp::setWin (double **weight)
 */
 double** ESNbp::getW ()
 {
+	cout<<"Entrou no getW" << endl;
 	return W;
 }//getW
 

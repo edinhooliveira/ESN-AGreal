@@ -1,10 +1,11 @@
 #include "defTipo.hpp"
 #include "Simulador.hpp"
+#include <cstdlib>
 #include <iostream>
-#include <fstream>
-
+//#include <fstream>
 
 using namespace std;
+
 
 //Funções de Print
 void printRobot(Simulador *simulador) {
@@ -143,18 +144,13 @@ int main(void) {
 	
 	//Parametros do Treinamento da ESN
 	//double** conjunto_stab;
-	int nrRodadas = 2;//500  // modificacao R
+	int nrRodadas = 10;//500  // modificacao R
 	//int size_stab = 50; //50  // modificacao R
-	int nrMov = 500; //10  // modificacao R
+	int nrMov = 100;//500 //10  // modificacao R
 	
 	//ESN - Treinamento	
 	double** inputs = new double*[nrMov * nrRodadas];
 	double* outputs = new double[nrMov * nrRodadas];
-	
-	
-	//inicialização do arquivo
-	std::ofstream myfile;
-	myfile.open ("robot-data.csv"); //arquivo com dados do treinamnento
 	
 	
 	//TREINAMENTO DA ESN
@@ -185,10 +181,11 @@ int main(void) {
 		//int *acoes = new int [nrMov];
 		double *sensores = simulador->readSensor(10,0);
 		
-		//ESN 
-		ESNbp *esn = new ESNbp(inputSize, repSize, outputSize, nrMov-size_stab-1, con_density, spectral_radius_d, size_stab);  // modificacao R
+		//Declaração da Rede Neural
+		/*ESNbp * */
+		esn = new ESNbp(inputSize, repSize, outputSize, nrMov-size_stab-1, con_density, spectral_radius_d, size_stab);  // modificacao R
 		//ESNbp(int n_inp_par, int n_hid_par, int n_out_par, int n_train_par, double con_density, double spectral_radius_d, int size_stab)
-		
+		//esn = new ESN(inputSize, repSize, outputSize, spectral_radius_d, con_density);
 		int acao;
 		double acao_v[4];
 		for(int mov = 0; mov < nrMov; mov++ ) {
@@ -207,22 +204,6 @@ int main(void) {
 			sensores = simulador->readSensor(10, 0); //distancia medida sensor = 10	// modificacao R
 			printSensor(simulador);
 									
-			//Adiciona ao arquivo .csv os valores de Posição e angulo do robô
-			myfile << rodadaAtual <<','; //Rodada Atual
-			myfile << mov <<','; //movimento
-			myfile << simulador->getPosX() <<','; //posicao X
-			myfile << simulador->getPosY() <<','; //posicao Y
-			myfile << simulador->getAngle()<<','; //angulo
-			
-			//Adiciona ao arquivo .csv os valores do sensores
-			for(int j = 0; j < 4; j++){
-				myfile << sensores[j]<<',';	
-			}
-			
-			//myfile << *(movimentos + mov); //Ação
-			myfile << acao; //Ação
-			myfile <<"\n";		
-			
 			//cout << (rodadaAtual+1) * (mov)  <<  endl;
         	//inputs[(rodadaAtual+1) * (mov+1)] = simulador->readSensor(10, gen); // modificacao R
         	inputs[(rodadaAtual+1) * (mov+1)] = sensores; // modificacao R
@@ -245,24 +226,19 @@ int main(void) {
 				esn->addTrainSet(sensores, acao_v); // modificacao R
 			} 		
 		}
-		cout<< "* * FIM RODADA: " << rodadaAtual << " * *" << endl;   
+		cout<< "* * FIM RODADA: " << rodadaAtual << " * *" << endl;
+		cout<<endl;   
 		cout<<"TREINAMENTO"<<endl;
-		esn->ESNTrain();
+		cout<<endl;
+		esn->ESNTrain();			
 		
-		//if(rodadaAtual == nrRodadas-1){
-			//esn->printESN();	
-
-			
-		//	salv_esn(nrRodadas);	
-		//}
-		//esn->printTrainSet();
-		//esn->printESN();
-		//salv_esn(rodadaAtual);
-	
-		cout<<"Fim ESN"<<endl;
+		if(rodadaAtual == nrRodadas - 1){
+			//cout<<"Fim ESN"<<endl;
+			cout<<"ESN: "<<esn<<endl;
+			//esn->printESN();
+			salv_esn(rodadaAtual);
+		}	
 	}
-	salv_esn(99);
-	
 	
 //	//ALGORITMO GENÉTICO
 		

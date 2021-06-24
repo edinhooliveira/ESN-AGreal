@@ -9,7 +9,7 @@
 \*******************************************************************************************************/
 
 //-----------------------------------------	ESN.cpp -----------------------------------------//
-
+#include <typeinfo>
 #include "ESN.hpp"
 #include "defTipo.hpp"
 #include <iostream>
@@ -449,7 +449,7 @@ void ESNbp::setResWeight (double *weight) //modificação Eder
 
 //-----------------	getWout -----------------//
 
-double** ESNbp::getWout (void){
+double** ESNbp::getWout (){
 	
 	return W_out;
 }
@@ -460,21 +460,9 @@ double** ESNbp::getWout (void){
 /*
 * retorna a matriz Win, contendo os pesos da camada de entrada
 */
-double** ESNbp::getWin (void)
+double** ESNbp::getWin ()
 {
-	cout<<"Entrou no getWin" << endl;
-	
-//	for (int j=0;j<n_hid;j++){
-//			cout<<" Neuron: " <<j<<endl;
-//			cout<<"  W_in: ";	
-//			for (int i=0;i<n_inp+1;i++){
-//				cout<< W_in[i][j] << ", ";
-//			}
-//			cout<<endl;
-//	}
-
-	return W_in; //alteração de Win para W_in
-	
+	return W_in; //alteração de Win para W_in	
 }//getWin
 
 //-----------------	setWin -----------------//
@@ -497,7 +485,7 @@ void ESNbp::setWin (double **weight)
 */
 double** ESNbp::getW ()
 {
-	cout<<"Entrou no getW" << endl;
+	//cout<<"Entrou no getW" << endl;
 	return W;
 }//getW
 
@@ -513,3 +501,6 @@ void ESNbp::setW (double **weight)
 	
 	W = weight;
 }//setW
+
+
+

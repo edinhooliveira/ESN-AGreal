@@ -10,8 +10,8 @@
 
 //-----------------------------------------	ESN.hpp -----------------------------------------//
 
-#ifndef ESNbp_HPP
-#define ESNbp_HPP
+#ifndef ESN_HPP
+#define ESN_HPP
 
 class ESNbp {
 	private:
@@ -61,6 +61,7 @@ class ESNbp {
 		void setW(double **weight); // define os pesos de W, pesos do repositório
 		void setResWeight(double *weight); //* weight[] é o novo vetor de pesos do reservatório para a camada de saída atualizado pelo AG
 		double** getWout();  //* retorna a matriz Win, contendo os pesos da camada de saída
-};
+		
+}; // class ESNbp
 
-#endif // ESNbp_HPP
+#endif // ESN_HPP

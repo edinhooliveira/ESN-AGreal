@@ -126,16 +126,11 @@ void algGen (int nroExec, int op) {
 }
 
 
-
-
-
 /******************************************************************************\
 *				  	main							 			 			  *
 \******************************************************************************/
 
 int main(void) {
-
-	
 	
 	//bool dynamicEnvironment = false;
 	//int maxGen = 10; //1
@@ -144,7 +139,7 @@ int main(void) {
 	
 	//Parametros do Treinamento da ESN
 	//double** conjunto_stab;
-	int nrRodadas = 10;//500  // modificacao R
+	int nrRodadas = 20;//500  // modificacao R
 	//int size_stab = 50; //50  // modificacao R
 	int nrMov = 100;//500 //10  // modificacao R
 	
@@ -230,14 +225,29 @@ int main(void) {
 		cout<<endl;   
 		cout<<"TREINAMENTO"<<endl;
 		cout<<endl;
-		esn->ESNTrain();			
+		esn->ESNTrain();
+		//esn->printESN();			
 		
 		if(rodadaAtual == nrRodadas - 1){
 			//cout<<"Fim ESN"<<endl;
 			cout<<"ESN: "<<esn<<endl;
 			//esn->printESN();
-			salv_esn(rodadaAtual);
-		}	
+			
+			
+			//salv_esn(99);
+			
+		double **Win = esn->getWin(); //Entra no getWin, não sai e finaliza o programa	e arquivo fica vazio	
+		for(int i = 0; i < repSize; i++){ //repSize
+			for(int j = 0; j < inputSize + 1; j++){ //aparentemente tem algum erro no Win 
+				//fprintf(ESN_arq, "%lf ", Win[i][j]);//Win[i][j]); //Arquivo fica vazio 
+				cout<<i<<" "<< j<<" "<< Win[i][j] << endl;	//colocando um print aqui print alguns pesos, porém apenas 25, deveriam ser 250 que aparecem no printESN()
+							
+			}
+		}
+			
+		}
+		
+			
 	}
 	
 //	//ALGORITMO GENÉTICO

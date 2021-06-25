@@ -22,6 +22,7 @@ using namespace std;
 \******************************************************************************/
 
 ESNbp::ESNbp(){
+	cout<<"Criou esn vazia" << endl;
 }
 
 /******************************************************************************\
@@ -87,8 +88,8 @@ ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, int n_train_par, doubl
 /******************************************************************************\
 *								 Destructor									   *
 \******************************************************************************/
-ESNbp::~ESNbp(void){	
-
+ESNbp::~ESNbp(void){
+	cout<<"DESALOCANDO ESN..." <<endl;
 	// Memory Desallocation
 	desaloc_matrixi(X,n_train);
 	desaloc_matrixd(D,n_train);
@@ -107,7 +108,7 @@ ESNbp::~ESNbp(void){
 //*								 Constructor2									   *
 //\******************************************************************************/
 ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius_d, double con_density){
-	
+	cout<<"CRIANDO ESN..." <<endl;
 	double spectral_radius, min_W=-0.6, max_W=0.6;
 
 	// Parameters of the ESN
@@ -120,15 +121,22 @@ ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius
 	//n_train=n_train_par;
 	//i_train=0;
 	
- 		
+ 	cout<<"ALOCANDO ESN..." <<endl;	
 	// Memory Allocation
-	X=aloc_matrixi(n_train,n_inp);	
-	W_in=aloc_matrixd (n_inp+1,n_hid);		
+	//cout<<"ALOCANDO X DA ESN..." <<endl;	
+	//X=aloc_matrixi(n_train,n_inp);
+	cout<<"ALOCANDO Win ESN..." <<endl;	
+	W_in=aloc_matrixd (n_inp+1,n_hid);
+	cout<<"ALOCANDO W ESN..." <<endl;		
 	W=aloc_matrixd (n_hid,n_hid);
+	cout<<"ALOCANDO Wout ESN..." <<endl;
 	W_out=aloc_matrixd (n_hid+1,n_out);
-	D=aloc_matrixd(n_train,n_out);
-	hid_neurons= new neuron_rec [n_hid]; 
-
+	//cout<<"ALOCANDO D ESN..." <<endl;
+	//D=aloc_matrixd(n_train,n_out);
+	cout<<"ALOCANDO Reservatorio ESN..." <<endl;
+	hid_neurons= new neuron_rec [n_hid];
+	
+	cout<<"INICIALIZANDO Reservatorio ESN..." <<endl;
 	// Neurons - Hidden Layer (Reservoir)
 	for (int j=0;j<n_hid;j++){
 		// Input weights
@@ -152,6 +160,7 @@ ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius
 			}				
 		}	
 	}
+	cout<<"ESCALANDO RAIO ESPECTRAL EM W" <<endl;
 	// Scaling W to spectral_radius_d W	
 	spectral_radius=largEig(W, n_hid, n_hid);									// Computing the spectral radius of W_temp
 	if (!isnan(spectral_radius))
@@ -189,13 +198,20 @@ void ESNbp::ESNActivationHid(double *x, double *h_new){
 *		Generate the activations of the neurons in the output layer 	   					   *
 \**********************************************************************************************/
 void ESNbp::ESNActivationOut(double *x, double *h, double *y){
-		double u;	      
-        
+	double u;	      
+    cout<<"Entrou na ESNActivationOut" <<endl;
 	for (int j=0;j<n_out;j++){
 			u=0.0;
-			for (int i=0;i<n_hid+1;i++)
+			for (int i=0;i<n_hid+1;i++){
+				cout<< "i: "<< i << " "<<"j: "<< j <<endl;
 				u += h[i] * W_out[i][j];
+				cout<<"Wout: " << W_out[i][j]<<endl;
+				
+			}
+			cout<<"ANTES" << endl;	
 			y[j]=u;							// linear
+			cout<<"DEPOIS" << endl;
+		cout<<"Terminou For na ESNActivationOut" <<endl;		
 	}	
 	
 }
@@ -206,15 +222,13 @@ void ESNbp::ESNActivationOut(double *x, double *h, double *y){
 \******************************************************************************/
 void ESNbp::ESNoutput(double *x, double *y){
 	double *h_new;
-	
 	h_new=aloc_vectord(n_hid+1);
-			
+		
 	ESNActivationHid(x, h_new);				// compute the hidden layer (reservoir) activations
 	ESNActivationOut(x, h_new,y);					// compute the output layer activations
 	//printESNOperation(x,h_new,y);
 	for (int j=0;j<n_hid;j++)
 		hid_neurons[j].h=h_new[j];
-		 
 	delete [] h_new; 
 }
 
@@ -435,11 +449,21 @@ void ESNbp::printTrainSet(double **H){
 */
 void ESNbp::setResWeight (double *weight) //modificação Eder
 {	
-	for(int i = 0; i < n_hid + 1; i++) //alteração de outputSize para n_out
-		for(int j = 0; j < n_out; j++) //alteração de repSize para n_hid
+	cout<<"Entrou no setResWeight.."<<endl;
+	//int rows =  sizeof W_out / sizeof W_out[0]; // 2 rows  
+    //int cols = sizeof W_out[0] / sizeof(double); // 5 cols
+    //cout<<"rows: "<< rows << " cols: "<< cols <<endl;
+    
+	for(int i = 0; i < n_hid + 1; i++){ //alteração de outputSize para n_out
+		for(int j = 0; j < n_out; j++){ //alteração de repSize para n_hid
+			cout<<"i: " << i << "j: "<< j<< " : ";
+			cout<<"W_out: " << W_out[i][j] << " weight: " << weight[i*n_hid + j] << endl;
+	
 			W_out[i][j] = weight[i*n_hid + j];	//alteração de repSize para n_hid	e Wout para W_out
 			
-
+		}
+	}
+	
 						
 	// não faz sentido alterar o valor das recorrências obtidas no treinamento
 	//for(int i = 0; i < n_hid; i++) //alteração de repSize para n_hid	

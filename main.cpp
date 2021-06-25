@@ -26,7 +26,6 @@ void printSensor(Simulador *simulador){
 	}
 }
  
-
 // modificacao R
 int programaUsuario(double *sensores) {
 	int acao;
@@ -61,7 +60,6 @@ void impressao(populacao *pop , int gen) {
 \******************************************************************************/
 int menu() {
 	int op;
-	return 0;
 	do 
 	{
 		cout << "\t1 - Continuar de onde parou" << endl;
@@ -75,20 +73,29 @@ int menu() {
 *				  	Inicializacao da populacao					 			 *
 \******************************************************************************/
 void inicializacao(int nroExec, int op) {
+	cout<<"Entrou em inicialização..." <<endl;
 	switch(op)
 	{
 		case 0 : //Reiniciar
 		{
 			apaga_arquivos(nroExec);
+			cout<<"tamPop" << tamPop <<endl;
 			int gene, numIndiv = 0;
 		
-			while( numIndiv < tamPop) {
+			while(numIndiv < tamPop) {
 			 	for (gene = 0; gene < lcrom; gene++) {
+			 		cout<<"numIndiv" << numIndiv;
+			 		cout<<"gene" << gene<<endl;
+			 		
 		     		popVelha.indiv[numIndiv].cromossomo[gene] = randon->nextFloat(-1,1) ; 							
 				}
+				cout<<"saiu do for" << endl;
 		        popVelha.indiv[numIndiv].fitness = calcFitness( popVelha.indiv[numIndiv].cromossomo, 0);	// Armazena Fitness do Individuo
+				cout<<"Calculou fitness"<<endl;
 				numIndiv++;
+				cout<<"numIndiv" << numIndiv;
 			}
+			cout<<"Entrando em estatistica..."<<endl;
 			estatistica( &popVelha,0);
 			break;
 		}
@@ -98,7 +105,9 @@ void inicializacao(int nroExec, int op) {
 			ler_esn(nroExec);
 			break;
 	}
+	cout<<"Entrando em Impressão da pop..." <<endl;
 	impressao(&popVelha,0);
+	cout<<"Saiu inicialização..." <<endl;
 
 }
 /******************************************************************************\
@@ -106,11 +115,11 @@ void inicializacao(int nroExec, int op) {
 \******************************************************************************/
 void algGen (int nroExec, int op) {
 	int gen = 0; 
-	
 	inicializacao(nroExec, op);				// procedimento para inicialização das variáveis e da população 
 	
 	do {
 		gen = gen + 1; 				// número de gerações 
+		cout<<"gen:" <<gen<<endl;
 		geracao(gen);
 		estatistica( &popNova , gen ); 
 
@@ -121,7 +130,7 @@ void algGen (int nroExec, int op) {
 		
 		impressao(&popVelha,gen);
 	} while ( gen < maxGen );
-	//calcTrajeto (popVelha.indiv[popVelha.melhorIndividuo].cromossomo, nroExec, gen);		//Calcula e salva a trajetoria do melhor indiv da ultima geração
+	calcTrajeto (popVelha.indiv[popVelha.melhorIndividuo].cromossomo, nroExec, gen);		//Calcula e salva a trajetoria do melhor indiv da ultima geração
 	arq_saida( nroExec);					// salva dados
 }
 
@@ -136,20 +145,17 @@ int main(void) {
 	//int maxGen = 10; //1
 	int gen = 0;
 	
-	
 	//Parametros do Treinamento da ESN
 	//double** conjunto_stab;
-	int nrRodadas = 20;//500  // modificacao R
+	int nrRodadas = 2;//500  // modificacao R
 	//int size_stab = 50; //50  // modificacao R
-	int nrMov = 100;//500 //10  // modificacao R
+	int nrMov = 500;//500 //10  // modificacao R
 	
 	//ESN - Treinamento	
 	double** inputs = new double*[nrMov * nrRodadas];
 	double* outputs = new double[nrMov * nrRodadas];
 	
-	
-	//TREINAMENTO DA ESN
-	
+	//TREINAMENTO DA ESN	
 	cout<<"***** Treinamento da ESN *****"<<endl;
 	for(int rodadaAtual = 0; rodadaAtual < nrRodadas; rodadaAtual++) {
 			
@@ -230,71 +236,66 @@ int main(void) {
 		
 		if(rodadaAtual == nrRodadas - 1){
 			//cout<<"Fim ESN"<<endl;
-			cout<<"ESN: "<<esn<<endl;
+			cout<<"ESN-TREINAMENTO: "<<esn<<endl;
 			//esn->printESN();
-			
-			
-			//salv_esn(99);
-			
-		double **Win = esn->getWin(); //Entra no getWin, não sai e finaliza o programa	e arquivo fica vazio	
-		for(int i = 0; i < repSize; i++){ //repSize
-			for(int j = 0; j < inputSize + 1; j++){ //aparentemente tem algum erro no Win 
-				//fprintf(ESN_arq, "%lf ", Win[i][j]);//Win[i][j]); //Arquivo fica vazio 
-				cout<<i<<" "<< j<<" "<< Win[i][j] << endl;	//colocando um print aqui print alguns pesos, porém apenas 25, deveriam ser 250 que aparecem no printESN()
-							
-			}
-		}
-			
+			salv_esn(99);
+			//delete esn;		
 		}
 		
-			
-	}
+		
+	} //FIM TREINAMENTO ESN
+	
+
+
 	
 //	//ALGORITMO GENÉTICO
 		
-//	int nroExec, num_ind;
-//
-//	arq_media_fitness = new double [maxGen+1];
-//	arq_melhor_fitness = new double [maxGen+1];
-//	popVelha.indiv = new individuo [tamPop];
-//	popNova.indiv = new individuo [tamPop];
-//	for (num_ind = 0; num_ind < tamPop; num_ind++){
-//		popVelha.indiv[num_ind].cromossomo = new double [lcrom];
-//		popNova.indiv[num_ind].cromossomo = new double [lcrom];
-//	}
-//	arq_melhor_individuo = aloc_matrixd(maxGen+1,lcrom);	
-//		
-//	// Execucao	
-//	cout<<"***** Algoritmo Genetico *****"<<endl;
-//	int op = menu();
-//	//int op = 0;
-//	for(nroExec = 0; nroExec < nroMaxExec; nroExec++) {	
-//		// Visualizacao
-//		cout<<"\tExecucao: "<<nroExec<<endl<<endl;
-//		randon = new Randon(1,nroExec+1);					// semente para gerar os numeros aleatorios
-//		srand(nroExec+1);									// semente para gerar os numeros aleatorios
-//		//esn = new ESNbp(inputSize, repSize, outputSize, spectral_radius_d, con_density);
-//		algGen(nroExec, op);
-//		
-//		delete esn;
-//		delete randon;								// chama a execucao do AG para uma semente aleatoria
-//	}//for
-//
-//	// Desalocacao de Memoria
-//	delete [] arq_media_fitness;
-//	delete [] arq_melhor_fitness;
-//	for (num_ind=0; num_ind<tamPop; num_ind++){	
-//		delete [] popVelha.indiv[num_ind].cromossomo;
-//		delete [] popNova.indiv[num_ind].cromossomo;
-//	}
-//	delete [] popVelha.indiv;
-//	delete [] popNova.indiv;
-//	desaloc_matrixd(arq_melhor_individuo,maxGen+1);
-//
-//	// Visualizacao 
-//	//cout<<"\tFim do programa!"<<endl;
+	int nroExec, num_ind;
+
+	arq_media_fitness = new double [maxGen+1];
+	arq_melhor_fitness = new double [maxGen+1];
+	popVelha.indiv = new individuo [tamPop];
+	popNova.indiv = new individuo [tamPop];
+	for (num_ind = 0; num_ind < tamPop; num_ind++){
+		popVelha.indiv[num_ind].cromossomo = new double [lcrom];
+		popNova.indiv[num_ind].cromossomo = new double [lcrom];
+	}
+	arq_melhor_individuo = aloc_matrixd(maxGen+1,lcrom);	
+	
+
+	// Execucao	
+	cout<<"***** Algoritmo Genetico *****"<<endl;
+	int op = menu();
+	//int op = 0;
+	for(nroExec = 0; nroExec < nroMaxExec; nroExec++) {	
+		// Visualizacao
+		cout<<"\tExecucao: "<<nroExec<<endl<<endl;
+		randon = new Randon(1,nroExec+1);					// semente para gerar os numeros aleatorios
+		srand(nroExec+1); 	// semente para gerar os numeros aleatorios
+		cout<<"ESN-AG:"<<esn << endl;								
+		//esn = new ESNbp(inputSize, repSize, outputSize, spectral_radius_d, con_density);
+		cout<<"Entra no AlgGen:" << endl;	
+		algGen(nroExec, op);
 		
-	cout<< endl;	
+		delete esn;
+		delete randon;								// chama a execucao do AG para uma semente aleatoria
+	}//for
+
+		
+
+
+	// Desalocacao de Memoria
+	delete [] arq_media_fitness;
+	delete [] arq_melhor_fitness;
+	for (num_ind=0; num_ind<tamPop; num_ind++){	
+		delete [] popVelha.indiv[num_ind].cromossomo;
+		delete [] popNova.indiv[num_ind].cromossomo;
+	}
+	delete [] popVelha.indiv;
+	delete [] popNova.indiv;
+	desaloc_matrixd(arq_melhor_individuo,maxGen+1);
+
+	// Visualizacao 
 	cout<<"\tFim do programa!"<<endl;
  	
 	system("pause");

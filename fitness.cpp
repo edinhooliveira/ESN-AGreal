@@ -3,33 +3,40 @@
 \******************************************************************************/
 #include "defTipo.hpp"
 #include "Simulador.hpp"
+#include <iostream>
 
-
+using namespace std;
 /******************************************************************************\
 *								Calculo Fitness Simulador					 *
 \******************************************************************************/
 double calcFitnessSimulador(alelo *indiv, int gen)
 {
+	cout<<"Entrou no calc de fitness:" <<endl;
 	int Fitness = 0;
-	double *mov; // Acao tomada
-	double *in; // Leituras dos sensores
+	//double *mov; // Acao tomada
+	double *mov = new double[outputSize];
+	double *in; 
+	// Leituras dos sensores
+	
 	Simulador *simulador = new Simulador(120,200, dynamicEnvironment, maxGen, gen);
-	ESNbp *esn;
+	//ESNbp *esn;
+	cout<<"ESN-CALC-FIT: "<<esn<<endl; 
 	
 	//Pesos do repositório -> saída
 	esn->setResWeight(indiv); 
+	cout<<"Saiu do ResWeight" << endl;
 
 	for(int i = 0, j = batterry; i < numMov && j > 0; i++, j--){ // Enquanto ainda tenho mov para realizar (i < numMov) e ainda tenho bateria (j > 0)
 		in = simulador->readSensor(10, gen);			
 		//mov = esn->Execute(in);				//Verifica a saída da ESN de acordo com a entrada
-		esn->ESNoutput(in, mov); 
 		
+		esn->ESNoutput(in, mov); 
+
 		//Define qual movimento vai ser executado (movimento correspondete ao neuronio de maior ativação)
 		int aux = 0; // Maior saída é a 0
 		for(int k = 1; k < outputSize; k++) // Para cada saída, se for maior q aux, substitui
 			if(mov[k] > mov[aux])
 				aux = k;
-	
 		//Se o robô bateu, finaliza a simulação
 		if(!simulador->execute(aux, 10, gen)){
 			delete mov;
@@ -44,7 +51,7 @@ double calcFitnessSimulador(alelo *indiv, int gen)
 			if(aux == 3) //mov 3 corresponde a andar para frente	
 				Fitness++;	
 	
-		delete mov;
+		//delete mov;
 		delete in;
 	}
 	
@@ -126,8 +133,11 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 double calcFitness(alelo *indiv, int gen)
 {	
 	double Fitness = 0;	
-	for(int i = 0; i < numSimulacao; i++)
+	for(int i = 0; i < numSimulacao; i++){
 		Fitness += calcFitnessSimulador(indiv, gen);
+		cout<<" " << "Fitness: " << Fitness << endl;	
+	}
+		
 
 	Fitness = Fitness / numSimulacao;
 	return Fitness;

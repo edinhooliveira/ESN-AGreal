@@ -40,6 +40,8 @@ class ESNbp {
 		int n_stab;										    				// number of interations for the stabilizing period 
 		int n_train;														// size of the current training set  
 		
+		int contador;
+		
 		ESNbp(); //construtor vazio
 		ESNbp(int n_inp_par, int n_hid_par, int n_out_par, int n_train_par, double con_density, double spectral_radius_d, int size_stab);
 		//NOVO CONSTRUTOR
@@ -53,6 +55,7 @@ class ESNbp {
 		void printESNOperation(double *x, double *h, double *y);			// Print ESN operation information	
 		void printTrainSet(double **H);										// Print Training Set	
 		void ESNoutput(double *x, double *y); 								// Output (y) of the neural netwok for input x 
+		double* execute(double *x);									// // Output (y) of the neural netwok for input x 
 		
 		//modificação Eder
 		double** getWin(); //* retorna a matriz Win, contendo os pesos da camada de entrada
@@ -61,6 +64,12 @@ class ESNbp {
 		void setW(double **weight); // define os pesos de W, pesos do repositório
 		void setResWeight(double *weight); //* weight[] é o novo vetor de pesos do reservatório para a camada de saída atualizado pelo AG
 		double** getWout();  //* retorna a matriz Win, contendo os pesos da camada de saída
+		
+		
+		//modificação 
+		double* Executar(double *in); //exe
+		double* FuncAtivacao (double x);
+		
 		
 }; // class ESNbp
 

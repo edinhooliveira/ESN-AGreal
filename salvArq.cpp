@@ -149,6 +149,49 @@ void salv_esn(int nroExec)
 		cout << "\nErro ao abrir o arquivo esn.dat!" << endl;
 }
 
+
+//-----------------------------------------------------------------------/
+void salv_esn_sup(int nroExec)
+{
+	FILE *ESN_arq;
+	char nome[64];
+	
+	sprintf(nome,"%s/esn_sup_%d.dat", nameDir, nroExec); 
+	ESN_arq = fopen(nome, "wt");
+	
+	if(ESN_arq != NULL)
+	{
+		//cout<<"ESN-SalvArq.cpp: " << esn << endl;
+		//Salva pesos camada de entrada - Win
+		//cout<<"getWin-SalvArq.cpp: " << esn->getWin() << endl;
+		double **Win = esn->getWin(); //Entra no getWin, não sai e finaliza o programa	e arquivo fica vazio	
+		for(int i = 0; i < repSize; i++){ //repSize
+			for(int j = 0; j < inputSize + 1; j++){ //aparentemente tem algum erro no Win / getWin
+				fprintf(ESN_arq, "%lf ", Win[j][i]);//Win[i][j]);
+				//cout<<i<<" "<< j<<" "<< Win[j][i] << endl;	//colocando um print aqui print alguns pesos, porém apenas 25, deveriam ser 250 que aparecem no printESN()
+							
+			}
+		}	
+				 			
+		fprintf(ESN_arq, "\n\n");
+		
+		//Salva pesos do reservatório - W
+		double **W = esn->getW();		
+		for(int i = 0; i < repSize; i++)
+			for(int j = 0; j < repSize; j++)
+				fprintf(ESN_arq, "%lf ",W[i][j]); 
+	
+		int closeResult = fclose(ESN_arq);
+		if(closeResult == 0)
+			cout << "ESN salva com sucesso!" << endl;
+		else
+			cout << "\nErro ao fechar o arquivo esn.dat!" << endl;
+	
+	}
+	else
+		cout << "\nErro ao abrir o arquivo esn.dat!" << endl;
+}
+
 //-----------------------------------------------------------------------/
 void salv_traj(int **pos, int n, int nroExec){
 //	mkdir(nameDir);

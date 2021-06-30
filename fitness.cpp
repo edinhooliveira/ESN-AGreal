@@ -14,23 +14,33 @@ double calcFitnessSimulador(alelo *indiv, int gen)
 	cout<<"Entrou no calc de fitness:" <<endl;
 	int Fitness = 0;
 	//double *mov; // Acao tomada
+	double *in; // Leituras dos sensores
+
 	double *mov = new double[outputSize];
-	double *in; 
-	// Leituras dos sensores
+	//double *in = new double[inputSize];
 	
 	Simulador *simulador = new Simulador(120,200, dynamicEnvironment, maxGen, gen);
 	//ESNbp *esn;
-	cout<<"ESN-CALC-FIT: "<<esn<<endl; 
+	//cout<<"ESN-CALC-FIT: "<<esn<<endl; 
 	
 	//Pesos do repositório -> saída
+	cout<<"Foi para setResWeight - calcFitnessSimulador" << endl;
+	cout<<"indiv: "<<indiv << endl;
 	esn->setResWeight(indiv); 
-	cout<<"Saiu do ResWeight" << endl;
+	cout<<"Saiu do setResWeight - calcFitnessSimulador" << endl;
+	cout<< endl;
 
 	for(int i = 0, j = batterry; i < numMov && j > 0; i++, j--){ // Enquanto ainda tenho mov para realizar (i < numMov) e ainda tenho bateria (j > 0)
 		in = simulador->readSensor(10, gen);			
-		//mov = esn->Execute(in);				//Verifica a saída da ESN de acordo com a entrada
+		//mov = esn->execute(in);				//Verifica a saída da ESN de acordo com a entrada
+	
+		esn->ESNoutput(in, mov);
+		cout<<"Battery: " << j << endl;
+		cout<<"numMov: " << i << endl;
+		//cout<<"Saídas da ESN: " <<endl;	
+		//cout<<"in: " << in << endl;
+		//cout<<"mov: "<< mov << endl;
 		
-		esn->ESNoutput(in, mov); 
 
 		//Define qual movimento vai ser executado (movimento correspondete ao neuronio de maior ativação)
 		int aux = 0; // Maior saída é a 0
@@ -69,10 +79,12 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 	double *mov;
 	double *in;
 	Simulador *simulador = new Simulador(120,200, dynamicEnvironment, maxGen, gen);
-	ESNbp *esn;
+	//ESNbp *esn;
 
 	//Pesos do repositório
+	cout<<"setResWeight - calcTrajeto" << endl;
 	esn->setResWeight(indiv); 
+	cout<<"Terminou setResWeight - calcTrajeto" << endl;
 	
 	int **pos;
 	pos = new int*[2];
@@ -81,13 +93,18 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 	pos[0][0] = simulador->getPosX();
 	pos[1][0] = simulador->getPosY();
 	
+	//cout<<"getPosX: "<< pos[0][0]<<endl;
+	//cout<<"getPosY: "<< pos[0][1]<<endl;
+	
+	cout<<"Antes do For -Calculo do Trajeto" << endl;
 	int i, j;
 	for(i = 0, j = batterry; i < numMov && j > 0; i++, j--){
-		in = simulador->readSensor(10, gen);		
+		in = simulador->readSensor(10, gen);
+		cout<<"Entrou do For - Calculo do Trajeto" << endl;		
 		
-		//mov = esn->Execute(in);	     //Verifica a saída da ESN de acordo com a entrada
+		//mov = esn->execute(in);	     //Verifica a saída da ESN de acordo com a entrada
 		esn->ESNoutput(in, mov);
-		
+		cout<<"Executou ESN" << endl;	
 		//Define qual movimento vai ser executado (movimento correspondete ao neuronio de maior ativação)
 		int aux = 0;
 		for(int k = 1; k < outputSize; k++)
@@ -117,7 +134,6 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 
 	salv_traj(pos, i, nroExec);
 
-
 	delete simulador;
 	delete pos[0];
 	delete pos[1];
@@ -138,7 +154,6 @@ double calcFitness(alelo *indiv, int gen)
 		cout<<" " << "Fitness: " << Fitness << endl;	
 	}
 		
-
 	Fitness = Fitness / numSimulacao;
 	return Fitness;
 }

@@ -57,7 +57,7 @@ Simulador::~Simulador(){
 
 //-----------------	execute -----------------//
 /*
-* retuen true: mov executado com sucesso, false caso contrário
+* return true: mov executado com sucesso, false caso contrário
 */
  // modificacao R
 bool Simulador::execute(int acao, int dist, int gen){

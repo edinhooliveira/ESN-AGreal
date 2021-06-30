@@ -9,8 +9,6 @@
 #include <stdlib.h>
 
 
-
-
 /* Definicao dos tipos de dados */
 typedef double alelo; 						// tipo de dado que os alelos podem assumir 
 typedef struct estrutura_individuo {
@@ -63,7 +61,6 @@ double *aloc_vectord(int lines);
 individuo *aloc_vectorind(int lines);
 
 int *aloc_vectori(int lines); //nova função 
-
 int **aloc_matrixi(int lines , int collums); //nova função
 void desaloc_matrixi(int **Matrix , int lines); //nova função
 
@@ -71,13 +68,10 @@ double **aloc_matrixd(int lines , int collums);
 void desaloc_matrixd(double **Matrix , int lines);
 
 void transpose(double **Mt, double **M , int l , int c); //nova função
-
 void multMatrix(double **M, double **A, int l_A, int c_A, double **B, int l_B, int c_B); //nova função
 void multMatrixVect(double *y, double **A, int l_A, int c_A, double *x, int l_x); //nova função
 double multVect(double *x, double *y, int l); //nova função
 double **inverse(double **M_inv, int l, double **M); //nova função
-
-
 
 
 int random_int(int L_range, int H_range);
@@ -96,6 +90,8 @@ void imigranteAleatorio();
 void calcHipermutacao(int gen);
 double calcTrajeto (alelo *indiv, int nroExec, int gen);
 void salv_traj(int **pos, int n, int nroExec);
+
+void salv_esn_sup(int nroExec);
 
 //ESN
 double largEig(double **M, int l , int c);

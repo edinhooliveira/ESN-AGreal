@@ -79,21 +79,16 @@ void inicializacao(int nroExec, int op) {
 		case 0 : //Reiniciar
 		{
 			apaga_arquivos(nroExec);
-			cout<<"tamPop" << tamPop <<endl;
 			int gene, numIndiv = 0;
 		
 			while(numIndiv < tamPop) {
 			 	for (gene = 0; gene < lcrom; gene++) {
-			 		cout<<"numIndiv" << numIndiv;
-			 		cout<<"gene" << gene<<endl;
-			 		
 		     		popVelha.indiv[numIndiv].cromossomo[gene] = randon->nextFloat(-1,1) ; 							
 				}
-				cout<<"saiu do for" << endl;
 		        popVelha.indiv[numIndiv].fitness = calcFitness( popVelha.indiv[numIndiv].cromossomo, 0);	// Armazena Fitness do Individuo
-				cout<<"Calculou fitness"<<endl;
+				cout<<"Saiu do calcFitness"<<endl;
 				numIndiv++;
-				cout<<"numIndiv" << numIndiv;
+				//system("pause");
 			}
 			cout<<"Entrando em estatistica..."<<endl;
 			estatistica( &popVelha,0);
@@ -119,19 +114,26 @@ void algGen (int nroExec, int op) {
 	
 	do {
 		gen = gen + 1; 				// número de gerações 
-		cout<<"gen:" <<gen<<endl;
+		cout<<"Entrou em Geração" <<endl;
 		geracao(gen);
-		estatistica( &popNova , gen ); 
+		cout<<"Saiu de Geração" <<endl; 
+		cout<<"Entrou em Estatistica" <<endl;
+		estatistica( &popNova , gen );
+		cout<<"Saiu de Estatistica" <<endl; 
 
 		individuo *aux;
 		aux = popVelha.indiv;
 		popVelha = popNova;
 		popNova.indiv = aux;
 		
+		cout<<"Impressão do Resultados da Exec: "<<nroExec << endl;
 		impressao(&popVelha,gen);
+		//arq_saida(nroExec);
 	} while ( gen < maxGen );
+	cout<<"Entrou no while do calcTrajeto" << endl;
 	calcTrajeto (popVelha.indiv[popVelha.melhorIndividuo].cromossomo, nroExec, gen);		//Calcula e salva a trajetoria do melhor indiv da ultima geração
-	arq_saida( nroExec);					// salva dados
+	cout<<"Salvando Arquivos do AlgGen..." <<endl;
+	arq_saida(nroExec);					// salva dados
 }
 
 
@@ -147,13 +149,14 @@ int main(void) {
 	
 	//Parametros do Treinamento da ESN
 	//double** conjunto_stab;
+	
 	int nrRodadas = 2;//500  // modificacao R
 	//int size_stab = 50; //50  // modificacao R
-	int nrMov = 500;//500 //10  // modificacao R
+	//int nrMov = 500;//500 //10  // modificacao R
 	
 	//ESN - Treinamento	
-	double** inputs = new double*[nrMov * nrRodadas];
-	double* outputs = new double[nrMov * nrRodadas];
+	double** inputs = new double*[numMov * nrRodadas]; //nrMov
+	double* outputs = new double[numMov * nrRodadas]; //nrMov
 	
 	//TREINAMENTO DA ESN	
 	cout<<"***** Treinamento da ESN *****"<<endl;
@@ -161,7 +164,7 @@ int main(void) {
 			
 		//Simulador::Simulador(int tamX, int tamY, int raio, int posX, int posY, int ang, bool dynamicEnvironment, int maxGen)
 		//Simulador *simulador = new Simulador(200, 200, 0, 20, 20, 90, dynamicEnvironment, maxGen); // modificacao R
-		Simulador *simulador = new Simulador(200,200, dynamicEnvironment, maxGen, gen); // modificacao R
+		Simulador *simulador = new Simulador(120,200, dynamicEnvironment, maxGen, gen); // modificacao R
 	
 		//Declaração da Rede Neural
 		//ESNbp *ESN = new ESNbp(inputSize, repSize, outputSize, nrMov, con_density, spectral_radius_d, size_stab); //size_stab?
@@ -176,20 +179,20 @@ int main(void) {
 		//Vetores para movimentos, posições
 		
 		//double movimentos[nrMov];
-		int *movimentos = new int [nrMov]; //definir passo a passo
-		int *posicoesX = new int [nrMov];
-		int *posicoesY = new int [nrMov];
+		int *movimentos = new int [numMov]; //definir passo a passo //nrMov
+		int *posicoesX = new int [numMov]; //nrMov
+		int *posicoesY = new int [numMov]; //nrMov
 		//int *acoes = new int [nrMov];
 		double *sensores = simulador->readSensor(10,0);
 		
 		//Declaração da Rede Neural
 		/*ESNbp * */
-		esn = new ESNbp(inputSize, repSize, outputSize, nrMov-size_stab-1, con_density, spectral_radius_d, size_stab);  // modificacao R
+		esn = new ESNbp(inputSize, repSize, outputSize, numMov-size_stab-1, con_density, spectral_radius_d, size_stab);  // modificacao R
 		//ESNbp(int n_inp_par, int n_hid_par, int n_out_par, int n_train_par, double con_density, double spectral_radius_d, int size_stab)
 		//esn = new ESN(inputSize, repSize, outputSize, spectral_radius_d, con_density);
 		int acao;
 		double acao_v[4];
-		for(int mov = 0; mov < nrMov; mov++ ) {
+		for(int mov = 0; mov < numMov; mov++ ) { //nrMov
 			//acao = acoes[mov];	 // modificacao R
 			acao = programaUsuario(sensores);	// modificacao R
 			// simulador->execute(acao, 10 , 0); // // modificacao R
@@ -232,23 +235,25 @@ int main(void) {
 		cout<<"TREINAMENTO"<<endl;
 		cout<<endl;
 		esn->ESNTrain();
-		//esn->printESN();			
+		//esn->printESN();
+		//salv_esn(rodadaAtual);
+		//salv_esn_sup(rodadaAtual);
+					
+//		if(rodadaAtual == nrRodadas - 1){
+//			//cout<<"Fim ESN"<<endl;
+//			//cout<<"ESN-TREINAMENTO: "<<esn<<endl;
+//			//esn->printESN();
+//			
+//			//salv_esn(99);
+//			
+//			//delete esn;		
+//		}
 		
-		if(rodadaAtual == nrRodadas - 1){
-			//cout<<"Fim ESN"<<endl;
-			cout<<"ESN-TREINAMENTO: "<<esn<<endl;
-			//esn->printESN();
-			salv_esn(99);
-			//delete esn;		
-		}
-		
-		
+
 	} //FIM TREINAMENTO ESN
-	
-
 
 	
-//	//ALGORITMO GENÉTICO
+	//ALGORITMO GENÉTICO
 		
 	int nroExec, num_ind;
 
@@ -262,27 +267,26 @@ int main(void) {
 	}
 	arq_melhor_individuo = aloc_matrixd(maxGen+1,lcrom);	
 	
-
 	// Execucao	
 	cout<<"***** Algoritmo Genetico *****"<<endl;
-	int op = menu();
-	//int op = 0;
+	//int op = menu();	
+	int op = 0;
+	
 	for(nroExec = 0; nroExec < nroMaxExec; nroExec++) {	
 		// Visualizacao
 		cout<<"\tExecucao: "<<nroExec<<endl<<endl;
 		randon = new Randon(1,nroExec+1);					// semente para gerar os numeros aleatorios
 		srand(nroExec+1); 	// semente para gerar os numeros aleatorios
-		cout<<"ESN-AG:"<<esn << endl;								
+		//cout<<"ESN-AG:"<<esn << endl;								
 		//esn = new ESNbp(inputSize, repSize, outputSize, spectral_radius_d, con_density);
 		cout<<"Entra no AlgGen:" << endl;	
 		algGen(nroExec, op);
+		cout<<"Saiu do AlgGen:" << endl;
 		
 		delete esn;
 		delete randon;								// chama a execucao do AG para uma semente aleatoria
 	}//for
-
-		
-
+	
 
 	// Desalocacao de Memoria
 	delete [] arq_media_fitness;

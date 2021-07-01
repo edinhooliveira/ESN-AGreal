@@ -14,8 +14,7 @@ double calcFitnessSimulador(alelo *indiv, int gen)
 	cout<<"Entrou no calc de fitness:" <<endl;
 	int Fitness = 0;
 	//double *mov; // Acao tomada
-	double *in; // Leituras dos sensores
-
+	double *in = new double[inputSize]; // Leituras dos sensores
 	double *mov = new double[outputSize];
 	//double *in = new double[inputSize];
 	
@@ -24,10 +23,9 @@ double calcFitnessSimulador(alelo *indiv, int gen)
 	//cout<<"ESN-CALC-FIT: "<<esn<<endl; 
 	
 	//Pesos do repositório -> saída
-	cout<<"Foi para setResWeight - calcFitnessSimulador" << endl;
-	cout<<"indiv: "<<indiv << endl;
+	//cout<<"Foi para setResWeight - calcFitnessSimulador" << endl;
 	esn->setResWeight(indiv); 
-	cout<<"Saiu do setResWeight - calcFitnessSimulador" << endl;
+	//cout<<"Saiu do setResWeight - calcFitnessSimulador" << endl;
 	cout<< endl;
 
 	for(int i = 0, j = batterry; i < numMov && j > 0; i++, j--){ // Enquanto ainda tenho mov para realizar (i < numMov) e ainda tenho bateria (j > 0)
@@ -37,11 +35,8 @@ double calcFitnessSimulador(alelo *indiv, int gen)
 		esn->ESNoutput(in, mov);
 		cout<<"Battery: " << j << endl;
 		cout<<"numMov: " << i << endl;
-		//cout<<"Saídas da ESN: " <<endl;	
-		//cout<<"in: " << in << endl;
-		//cout<<"mov: "<< mov << endl;
 		
-
+		
 		//Define qual movimento vai ser executado (movimento correspondete ao neuronio de maior ativação)
 		int aux = 0; // Maior saída é a 0
 		for(int k = 1; k < outputSize; k++) // Para cada saída, se for maior q aux, substitui
@@ -49,6 +44,7 @@ double calcFitnessSimulador(alelo *indiv, int gen)
 				aux = k;
 		//Se o robô bateu, finaliza a simulação
 		if(!simulador->execute(aux, 10, gen)){
+			cout<<"**Robo Bateu**"<<endl;
 			delete mov;
 			delete in;
 			break;
@@ -65,8 +61,7 @@ double calcFitnessSimulador(alelo *indiv, int gen)
 		delete in;
 	}
 	
-	delete simulador;
-		
+	delete simulador;	
 	return Fitness / (double)numMov;
 }
 
@@ -82,9 +77,9 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 	//ESNbp *esn;
 
 	//Pesos do repositório
-	cout<<"setResWeight - calcTrajeto" << endl;
+	//cout<<"setResWeight - calcTrajeto" << endl;
 	esn->setResWeight(indiv); 
-	cout<<"Terminou setResWeight - calcTrajeto" << endl;
+	//cout<<"Terminou setResWeight - calcTrajeto" << endl;
 	
 	int **pos;
 	pos = new int*[2];
@@ -113,6 +108,7 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 		
 		//Se o robô bateu, finaliza a simulação
 		if(!simulador->execute(aux, 10, gen)){
+			cout<<"Robo Bateu"<<endl;
 			delete mov;
 			delete in;
 			break;

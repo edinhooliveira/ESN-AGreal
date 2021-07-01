@@ -108,15 +108,17 @@ void inicializacao(int nroExec, int op) {
 /******************************************************************************\
 *				  	Execução Algoritimo Genetico							 			 *
 \******************************************************************************/
-void algGen (int nroExec, int op) {
+void algGen(int nroExec, int op) {
 	int gen = 0; 
 	inicializacao(nroExec, op);				// procedimento para inicialização das variáveis e da população 
 	
-	do {
+	do {	
+		
+		cout<<"Do - Geracao: " << gen << " Do - maxGen: "<< maxGen<<endl;
 		gen = gen + 1; 				// número de gerações 
-		cout<<"Entrou em Geração" <<endl;
+		cout<<"Entrou em Geracao" <<endl;
 		geracao(gen);
-		cout<<"Saiu de Geração" <<endl; 
+		cout<<"Saiu de Geracao" <<endl; 
 		cout<<"Entrou em Estatistica" <<endl;
 		estatistica( &popNova , gen );
 		cout<<"Saiu de Estatistica" <<endl; 
@@ -131,6 +133,7 @@ void algGen (int nroExec, int op) {
 		//arq_saida(nroExec);
 	} while ( gen < maxGen );
 	cout<<"Entrou no while do calcTrajeto" << endl;
+	cout<<"Geracao: " << gen << " maxGen: "<< maxGen<<endl;
 	calcTrajeto (popVelha.indiv[popVelha.melhorIndividuo].cromossomo, nroExec, gen);		//Calcula e salva a trajetoria do melhor indiv da ultima geração
 	cout<<"Salvando Arquivos do AlgGen..." <<endl;
 	arq_saida(nroExec);					// salva dados
@@ -143,7 +146,7 @@ void algGen (int nroExec, int op) {
 
 int main(void) {
 	
-	//bool dynamicEnvironment = false;
+	bool dynamicEnvironment = false;
 	//int maxGen = 10; //1
 	int gen = 0;
 	
@@ -230,28 +233,19 @@ int main(void) {
 				esn->addTrainSet(sensores, acao_v); // modificacao R
 			} 		
 		}
-		cout<< "* * FIM RODADA: " << rodadaAtual << " * *" << endl;
-		cout<<endl;   
+		cout<< "* * FIM RODADA: " << rodadaAtual << " * *" << endl; 
 		cout<<"TREINAMENTO"<<endl;
 		cout<<endl;
 		esn->ESNTrain();
-		//esn->printESN();
-		//salv_esn(rodadaAtual);
-		//salv_esn_sup(rodadaAtual);
 					
-//		if(rodadaAtual == nrRodadas - 1){
-//			//cout<<"Fim ESN"<<endl;
-//			//cout<<"ESN-TREINAMENTO: "<<esn<<endl;
-//			//esn->printESN();
-//			
-//			//salv_esn(99);
-//			
-//			//delete esn;		
-//		}
-		
-
+		if(rodadaAtual == nrRodadas - 1){
+			//cout<<"Fim ESN"<<endl;
+			//esn->printESN();
+			//salv_esn_sup(rodadaAtual);		
+		}	
 	} //FIM TREINAMENTO ESN
-
+	
+	
 	
 	//ALGORITMO GENÉTICO
 		
@@ -287,7 +281,7 @@ int main(void) {
 		delete randon;								// chama a execucao do AG para uma semente aleatoria
 	}//for
 	
-
+	cout<<"Desalocando Memoria do AG..."<<endl;
 	// Desalocacao de Memoria
 	delete [] arq_media_fitness;
 	delete [] arq_melhor_fitness;

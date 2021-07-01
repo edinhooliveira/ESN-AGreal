@@ -177,7 +177,7 @@ ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius
 void ESNbp::ESNActivationHid(double *x, double *h_new){
 		int k;
 		double u;	      
-        cout<<"Entrou no ESNActivationHid"<<endl;
+        //cout<<"Entrou no ESNActivationHid"<<endl;
 		for (int j=0;j<n_hid;j++){
 			u=0.0;
 			for (int i=0;i<n_inp+1;i++)
@@ -189,7 +189,7 @@ void ESNbp::ESNActivationHid(double *x, double *h_new){
 			h_new[j]=tanh(1.0*u);							// Tangent hiperbolic with half-slope a=2						          			
 		}
 		h_new[n_hid]=1.0;									// bias
-		cout<<"Saiu no ESNActivationHid"<<endl;
+		//cout<<"Saiu no ESNActivationHid"<<endl;
 }
 
 /**********************************************************************************************\
@@ -201,17 +201,24 @@ void ESNbp::ESNActivationOut(double *x, double *h, double *y){
 	for (int j=0;j<n_out;j++){
 			u=0.0;
 			for (int i=0;i<n_hid+1;i++){
-				cout<< "i: "<< i << " "<<"j: "<< j <<endl;
 				u += h[i] * W_out[i][j];
-				cout<< "h: "<< h[i] << " "<<"u: "<< u <<endl;
-				cout<<"W_out: " << W_out[i][j]<<endl;		
+				//cout<< "i: "<< i << " "<<"j: "<< j <<endl;
+				//cout<< "h: "<< h[i] << " "<<"u: "<< u <<endl;
+				//cout<<"W_out: "<< W_out[i][j]<<endl;		
 			}
 			//cout<<"ANTES" << endl;	
 			y[j]=u;							// linear
-			cout<<"y: " << y[j];
+			
+			//cout<<"u: " << u<<endl;
+			cout<<"y: " << y[j]<<endl;
+			
+			//cout<<"W_out: " << W_out[i][j]<<endl;
 			//cout<<"DEPOIS" << endl;				
-	}
+	}	
 	cout<<"Terminou na ESNActivationOut" <<endl;	
+
+//Quando está na ultima geração e vai passar de i=50, j=0, para i=0, j=1, trava com erro de acesso a memória.
+
 	
 }
 
@@ -222,11 +229,11 @@ void ESNbp::ESNActivationOut(double *x, double *h, double *y){
 void ESNbp::ESNoutput(double *x, double *y){
 	double *h_new;
 	h_new=aloc_vectord(n_hid+1);
-	cout<<"Funcoes de Ativacao:" <<endl;	
+	//cout<<"Funcoes de Ativacao:" <<endl;	
 	ESNActivationHid(x, h_new);				// compute the hidden layer (reservoir) activations
-	cout<<"Passou da Ativacao do Reservatorio:" <<endl;
+	//cout<<"Passou Ativacao do Reservatorio:" <<endl;
 	ESNActivationOut(x, h_new,y);					// compute the output layer activations
-	cout<<"Passou da Saida:" <<endl;
+	//cout<<"Passou Ativacao da Saida:" <<endl;
 	//printESNOperation(x,h_new,y);
 	//printESN();
 	for (int j=0;j<n_hid;j++)
@@ -487,27 +494,6 @@ void ESNbp::setResWeight (double *weight) //modificação Eder
 	//contador++;
 	//cout<<"contador: " << contador << endl;
 	
-	
-//		for (int j=0;j<n_out;j++){
-//			cout<<" Neuron: " <<j<<endl;
-//			cout<<"  W_out: ";	
-//			for (int i=0;i<n_hid+1;i++)
-//					cout<< W_out[i][j] << ", ";
-//			cout<<endl;
-	
-	//cout<<"Terminou setResWeight.."<<endl;
-	
-//void ESN::setResWeight (double *weight)
-//{	
-//	for(int i = 0; i < outputSize; i++)
-//		for(int j = 0; j < repSize + 1; j++)
-//			Wout[i][j] = weight[i*repSize + j];		
-//						
-//	for(int i = 0; i < repSize; i++)
-//		recorrence[i] = 0;
-//			
-//}//setResWeight
-					
 						
 	// não faz sentido alterar o valor das recorrências obtidas no treinamento
 	//for(int i = 0; i < n_hid; i++) //alteração de repSize para n_hid	

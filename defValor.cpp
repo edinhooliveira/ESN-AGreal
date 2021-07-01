@@ -23,7 +23,7 @@ int size_stab = 50; //modificação Eder
 
 // Parametros da simulacao
 int nroMaxExec = 2; // 25								// numero de repeticoes do AG
-int maxGen = 10;//2200								// numero maximo de geracoes 
+int maxGen = 2;//10 //2200								// numero maximo de geracoes 
 
 // Parametros do AG
 int tamPop = 10;//100								// tamanho da pop. 
@@ -37,7 +37,7 @@ int tamTorneio = 3;									// tamanho do torneio (usado na selecao por torneio)
 
 //Hipermutação
 bool hipermutacao = false;							// true: hipermutacao ; false: sem hipermutacao
-int tamCiclo = 10;    //maxGen/100;					// tamanho do ciclo de hipermutação
+int tamCiclo = 10; //10   //maxGen/100;					// tamanho do ciclo de hipermutação
 double taxaR = 3;									//porcentagem de acrescimo na taxa de mutação (1 + taxaR)*tavaMut
 bool cicloHipermutacao = false;						//determina se acabou de ocorrer um ciclo de hipermutação - NÃO ALTERAR
 

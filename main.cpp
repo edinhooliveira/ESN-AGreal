@@ -150,9 +150,9 @@ int main(void) {
 	//Parametros do Treinamento da ESN
 	//double** conjunto_stab;
 	
-	int nrRodadas = 2;//500  // modificacao R
-	//int size_stab = 50; //50  // modificacao R
-	//int nrMov = 500;//500 //10  // modificacao R
+	//int nrRodadas = 2;//500  // modificacao R -mover para defValor
+	//int size_stab = 50; //50  // modificacao R -mover para defValor
+	//int nrMov = 500;//500 //10  // modificacao R -mover para defValor
 	
 	//ESN - Treinamento	
 	double** inputs = new double*[numMov * nrRodadas]; //nrMov

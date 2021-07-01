@@ -50,6 +50,8 @@ extern double spectral_radius_d, con_density; 			//Parametros ESN
 extern int numMov, batterry, numSimulacao;				//Parametros Simulação
 extern bool dynamicEnvironment;
 
+extern int nrRodadas;
+
 extern int size_stab;
 
 /*Declaração das funções */

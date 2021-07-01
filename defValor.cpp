@@ -50,6 +50,10 @@ double taxaMigracao = 0.05;							// taxa de imigrantes
 int numMov = 100; //300
 int batterry = 80; //80
 bool dynamicEnvironment = true;
-int numSimulacao = 5; //10
+int numSimulacao = 1; //10
+
+//Parametros Treinamento ESN
+int nrRodadas = 2; //500  // modificacao R
+
 
 

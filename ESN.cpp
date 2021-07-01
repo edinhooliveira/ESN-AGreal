@@ -129,7 +129,7 @@ ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius
 	cout<<"ALOCANDO W..." <<endl;		
 	W=aloc_matrixd (n_hid,n_hid);
 	cout<<"ALOCANDO Wout..." <<endl;
-	W_out=aloc_matrixd (n_hid+1,n_out);
+	W_out=aloc_matrixd (n_hid+1,n_out); //n_hid - reservarótiro 50+1 e n_out - saídas 4
 	//cout<<"ALOCANDO D ESN..." <<endl;
 	//D=aloc_matrixd(n_train,n_out);
 	cout<<"ALOCANDO Reservatorio..." <<endl;
@@ -202,9 +202,9 @@ void ESNbp::ESNActivationOut(double *x, double *h, double *y){
 			u=0.0;
 			for (int i=0;i<n_hid+1;i++){
 				u += h[i] * W_out[i][j];
-				//cout<< "i: "<< i << " "<<"j: "<< j <<endl;
+				cout<< "i: "<< i << " "<<"j: "<< j <<endl;
 				//cout<< "h: "<< h[i] << " "<<"u: "<< u <<endl;
-				//cout<<"W_out: "<< W_out[i][j]<<endl;		
+				cout<<"W_out: "<< W_out[i][j]<<endl;		
 			}
 			//cout<<"ANTES" << endl;	
 			y[j]=u;							// linear
@@ -212,7 +212,7 @@ void ESNbp::ESNActivationOut(double *x, double *h, double *y){
 			//cout<<"u: " << u<<endl;
 			cout<<"y: " << y[j]<<endl;
 			
-			//cout<<"W_out: " << W_out[i][j]<<endl;
+			
 			//cout<<"DEPOIS" << endl;				
 	}	
 	cout<<"Terminou na ESNActivationOut" <<endl;	

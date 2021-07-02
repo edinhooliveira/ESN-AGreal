@@ -90,7 +90,7 @@ void inicializacao(int nroExec, int op) {
 				numIndiv++;
 				//system("pause");
 			}
-			cout<<"Entrando em estatistica..."<<endl;
+			//cout<<"Entrando em estatistica..."<<endl;
 			estatistica( &popVelha,0);
 			break;
 		}
@@ -109,32 +109,34 @@ void inicializacao(int nroExec, int op) {
 *				  	Execução Algoritimo Genetico							 			 *
 \******************************************************************************/
 void algGen(int nroExec, int op) {
-	int gen = 0; 
+	int gen = 1; 
 	inicializacao(nroExec, op);				// procedimento para inicialização das variáveis e da população 
 	
 	do {	
 		
-		cout<<"Do - Geracao: " << gen << " Do - maxGen: "<< maxGen<<endl;
+		//cout<<"Do - Geracao: " << gen << " Do - maxGen: "<< maxGen<<endl;
 		gen = gen + 1; 				// número de gerações 
-		cout<<"Entrou em Geracao" <<endl;
+		//cout<<"Entrou em Geracao" <<endl;
 		geracao(gen);
-		cout<<"Saiu de Geracao" <<endl; 
-		cout<<"Entrou em Estatistica" <<endl;
+		//cout<<"Saiu de Geracao" <<endl; 
+		//cout<<"Entrou em Estatistica" <<endl;
 		estatistica( &popNova , gen );
-		cout<<"Saiu de Estatistica" <<endl; 
+		//cout<<"Saiu de Estatistica" <<endl; 
 
 		individuo *aux;
 		aux = popVelha.indiv;
 		popVelha = popNova;
 		popNova.indiv = aux;
-		
-		cout<<"Impressão do Resultados da Exec: "<<nroExec << endl;
+		cout<<endl;
+		cout<<"Impressao do Resultados da Exec: "<<nroExec << endl;
 		impressao(&popVelha,gen);
-		//arq_saida(nroExec);
+		arq_saida(nroExec);
 	} while ( gen < maxGen );
-	cout<<"Entrou no while do calcTrajeto" << endl;
-	cout<<"Geracao: " << gen << " maxGen: "<< maxGen<<endl;
+	//cout<<"While - Geracao: " << gen << " While - maxGen: "<< maxGen<<endl;
+	//cout<<"Entrou no while do calcTrajeto" << endl;
+	//cout<<"Geracao: " << gen << " maxGen: "<< maxGen<<endl;
 	calcTrajeto (popVelha.indiv[popVelha.melhorIndividuo].cromossomo, nroExec, gen);		//Calcula e salva a trajetoria do melhor indiv da ultima geração
+	//cout<<"********Saiu do calcTrajeto" << endl;
 	cout<<"Salvando Arquivos do AlgGen..." <<endl;
 	arq_saida(nroExec);					// salva dados
 }
@@ -204,12 +206,12 @@ int main(void) {
 			if(!simulador->execute(acao, 10 ,0)){
 				break;
 			}
-			cout << "Movimento: " << mov << endl;
-			cout << "Acao: " << acao << endl;
-			printRobot(simulador);
+			//cout << "Movimento: " << mov << endl;
+			//cout << "Acao: " << acao << endl;
+			//printRobot(simulador);
 			//sensores = simulador->readSensor(10, gen); //distancia medida sensor = 10	// modificacao R
 			sensores = simulador->readSensor(10, 0); //distancia medida sensor = 10	// modificacao R
-			printSensor(simulador);
+			//printSensor(simulador);
 									
 			//cout << (rodadaAtual+1) * (mov)  <<  endl;
         	//inputs[(rodadaAtual+1) * (mov+1)] = simulador->readSensor(10, gen); // modificacao R
@@ -217,7 +219,6 @@ int main(void) {
         	//cout<< inputs[(rodadaAtual+1) * (mov+1)][1] << endl;
 			outputs[(rodadaAtual+1) * (mov+1)] = acao; 
 			//cout<< outputs[(rodadaAtual+1) * (mov+1)] << endl; 
-			
 			//if( rodadaAtual <= size_stab) { //definir tamanho de estabilização // modificacao R
 			
 			if( mov <= size_stab) { //definir tamanho de estabilização // modificacao R
@@ -235,13 +236,14 @@ int main(void) {
 		}
 		cout<< "* * FIM RODADA: " << rodadaAtual << " * *" << endl; 
 		cout<<"TREINAMENTO"<<endl;
+		//cout<<"ESN-TREINAMENTO: "<<esn << endl;
 		cout<<endl;
 		esn->ESNTrain();
 					
 		if(rodadaAtual == nrRodadas - 1){
-			//cout<<"Fim ESN"<<endl;
+			cout<<"Fim ESN"<<endl;
 			//esn->printESN();
-			//salv_esn_sup(rodadaAtual);		
+			salv_esn_sup(rodadaAtual);		
 		}	
 	} //FIM TREINAMENTO ESN
 	
@@ -271,11 +273,11 @@ int main(void) {
 		cout<<"\tExecucao: "<<nroExec<<endl<<endl;
 		randon = new Randon(1,nroExec+1);					// semente para gerar os numeros aleatorios
 		srand(nroExec+1); 	// semente para gerar os numeros aleatorios
-		//cout<<"ESN-AG:"<<esn << endl;								
+		//cout<<"ESN-AG: "<<esn << endl;								
 		//esn = new ESNbp(inputSize, repSize, outputSize, spectral_radius_d, con_density);
-		cout<<"Entra no AlgGen:" << endl;	
+		//cout<<"Entra no AlgGen:" << endl;	
 		algGen(nroExec, op);
-		cout<<"Saiu do AlgGen:" << endl;
+		//cout<<"Saiu do AlgGen:" << endl;
 		
 		delete esn;
 		delete randon;								// chama a execucao do AG para uma semente aleatoria

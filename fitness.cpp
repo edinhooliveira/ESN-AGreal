@@ -32,9 +32,11 @@ double calcFitnessSimulador(alelo *indiv, int gen)
 		in = simulador->readSensor(10, gen);			
 		//mov = esn->execute(in);				//Verifica a saída da ESN de acordo com a entrada
 	
+		//cout<<"Executou ESN" << endl;
 		esn->ESNoutput(in, mov);
-		cout<<"Battery: " << j << endl;
-		cout<<"numMov: " << i << endl;
+		//cout<<"Finalizou ESN" << endl;
+		//cout<<"Battery: " << j << endl;
+		//cout<<"numMov: " << i << endl;
 		
 		
 		//Define qual movimento vai ser executado (movimento correspondete ao neuronio de maior ativação)
@@ -71,15 +73,17 @@ double calcFitnessSimulador(alelo *indiv, int gen)
 double calcTrajeto (alelo *indiv, int nroExec, int gen)
 {
 	int Fitness = 0;
-	double *mov;
-	double *in;
+	//double *mov;
+	//double *in;
+	double *in = new double[inputSize]; // Leituras dos sensores
+	double *mov = new double[outputSize];
 	Simulador *simulador = new Simulador(120,200, dynamicEnvironment, maxGen, gen);
 	//ESNbp *esn;
-
+	cout<<"Entrou no calcTrajeto" <<endl;
 	//Pesos do repositório
-	//cout<<"setResWeight - calcTrajeto" << endl;
+	cout<<"setResWeight - calcTrajeto" << endl;
 	esn->setResWeight(indiv); 
-	//cout<<"Terminou setResWeight - calcTrajeto" << endl;
+	cout<<"Terminou setResWeight - calcTrajeto" << endl;
 	
 	int **pos;
 	pos = new int*[2];
@@ -88,8 +92,9 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 	pos[0][0] = simulador->getPosX();
 	pos[1][0] = simulador->getPosY();
 	
-	//cout<<"getPosX: "<< pos[0][0]<<endl;
-	//cout<<"getPosY: "<< pos[0][1]<<endl;
+		
+	cout<<"getPosX: "<< pos[0][0]<<endl;
+	cout<<"getPosY: "<< pos[1][0]<<endl;
 	
 	cout<<"Antes do For -Calculo do Trajeto" << endl;
 	int i, j;
@@ -98,7 +103,7 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 		cout<<"Entrou do For - Calculo do Trajeto" << endl;		
 		
 		//mov = esn->execute(in);	     //Verifica a saída da ESN de acordo com a entrada
-		esn->ESNoutput(in, mov);
+		//esn->ESNoutput(in, mov);
 		cout<<"Executou ESN" << endl;	
 		//Define qual movimento vai ser executado (movimento correspondete ao neuronio de maior ativação)
 		int aux = 0;
@@ -124,8 +129,10 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 			if(aux == 3) //mov 3 corresponde a andar para frente	
 				Fitness++;	
 	
+		cout<<"Terminou For - Calculo do Trajeto" << endl;
 		delete mov;
 		delete in;
+		
 	}
 
 	salv_traj(pos, i, nroExec);

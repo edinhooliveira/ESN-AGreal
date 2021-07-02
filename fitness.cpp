@@ -11,7 +11,7 @@ using namespace std;
 \******************************************************************************/
 double calcFitnessSimulador(alelo *indiv, int gen)
 {
-	cout<<"Entrou no calc de fitness:" <<endl;
+	//cout<<"Entrou no calc de fitness:" <<endl;
 	int Fitness = 0;
 	//double *mov; // Acao tomada
 	double *in = new double[inputSize]; // Leituras dos sensores
@@ -46,7 +46,7 @@ double calcFitnessSimulador(alelo *indiv, int gen)
 				aux = k;
 		//Se o robô bateu, finaliza a simulação
 		if(!simulador->execute(aux, 10, gen)){
-			cout<<"**Robo Bateu**"<<endl;
+			//cout<<"**Robo Bateu**"<<endl;
 			delete mov;
 			delete in;
 			break;
@@ -166,7 +166,7 @@ double calcFitness(alelo *indiv, int gen)
 	double Fitness = 0;	
 	for(int i = 0; i < numSimulacao; i++){
 		Fitness += calcFitnessSimulador(indiv, gen);
-		cout<<" " << "Fitness: " << Fitness << endl;	
+		//cout<<" " << "Fitness: " << Fitness << endl;	
 	}
 		
 	Fitness = Fitness / numSimulacao;

@@ -73,7 +73,7 @@ int menu() {
 *				  	Inicializacao da populacao					 			 *
 \******************************************************************************/
 void inicializacao(int nroExec, int op) {
-	cout<<"Entrou em inicialização..." <<endl;
+	//cout<<"Entrou em inicialização..." <<endl;
 	switch(op)
 	{
 		case 0 : //Reiniciar
@@ -86,11 +86,11 @@ void inicializacao(int nroExec, int op) {
 		     		popVelha.indiv[numIndiv].cromossomo[gene] = randon->nextFloat(-1,1) ; 							
 				}
 		        popVelha.indiv[numIndiv].fitness = calcFitness( popVelha.indiv[numIndiv].cromossomo, 0);	// Armazena Fitness do Individuo
-				cout<<"Saiu do calcFitness"<<endl;
+				//cout<<"Saiu do calcFitness"<<endl;
 				numIndiv++;
 				//system("pause");
 			}
-			cout<<"Entrando em estatistica..."<<endl;
+			//cout<<"Entrando em estatistica..."<<endl;
 			estatistica( &popVelha,0);
 			break;
 		}
@@ -100,9 +100,9 @@ void inicializacao(int nroExec, int op) {
 			ler_esn(nroExec);
 			break;
 	}
-	cout<<"Entrando em Impressão da pop..." <<endl;
+	
 	impressao(&popVelha,0);
-	cout<<"Saiu inicialização..." <<endl;
+	
 
 }
 /******************************************************************************\
@@ -114,14 +114,14 @@ void algGen(int nroExec, int op) {
 	
 	do {	
 		
-		cout<<"Do - Geracao: " << gen << " Do - maxGen: "<< maxGen<<endl;
+		//cout<<"Do - Geracao: " << gen << " Do - maxGen: "<< maxGen<<endl;
 		gen = gen + 1; 				// número de gerações 
-		cout<<"Entrou em Geracao" <<endl;
+		//cout<<"Entrou em Geracao" <<endl;
 		geracao(gen);
-		cout<<"Saiu de Geracao" <<endl; 
-		cout<<"Entrou em Estatistica" <<endl;
+		//cout<<"Saiu de Geracao" <<endl; 
+		//cout<<"Entrou em Estatistica" <<endl;
 		estatistica( &popNova , gen );
-		cout<<"Saiu de Estatistica" <<endl; 
+		//cout<<"Saiu de Estatistica" <<endl; 
 
 		individuo *aux;
 		aux = popVelha.indiv;
@@ -130,12 +130,12 @@ void algGen(int nroExec, int op) {
 		
 		cout<<"Impressão do Resultados da Exec: "<<nroExec << endl;
 		impressao(&popVelha,gen);
-		//arq_saida(nroExec);
+		arq_saida(nroExec);
 	} while ( gen < maxGen );
-	cout<<"Entrou no while do calcTrajeto" << endl;
-	cout<<"Geracao: " << gen << " maxGen: "<< maxGen<<endl;
+	//cout<<"Entrou no while do calcTrajeto" << endl;
+	//cout<<"Geracao: " << gen << " maxGen: "<< maxGen<<endl;
 	calcTrajeto (popVelha.indiv[popVelha.melhorIndividuo].cromossomo, nroExec, gen);		//Calcula e salva a trajetoria do melhor indiv da ultima geração
-	cout<<"Salvando Arquivos do AlgGen..." <<endl;
+	//cout<<"Salvando Arquivos do AlgGen..." <<endl;
 	arq_saida(nroExec);					// salva dados
 }
 
@@ -172,12 +172,12 @@ int main(void) {
 		//Declaração da Rede Neural
 		//ESNbp *ESN = new ESNbp(inputSize, repSize, outputSize, nrMov, con_density, spectral_radius_d, size_stab); //size_stab?
 	
-		cout <<"\t**RODADA**: " << rodadaAtual << endl;
-		cout <<"POSICAO INICIAL" <<endl;
-		cout << "Inicial X: " << simulador->getPosX() << endl;
-		cout << "Inicial Y: "  << simulador->getPosY() << endl;
-		cout << "Angulo: " << simulador->getAngle() << endl;
-		cout<< endl;
+//		cout <<"\t**RODADA**: " << rodadaAtual << endl;
+//		cout <<"POSICAO INICIAL" <<endl;
+//		cout << "Inicial X: " << simulador->getPosX() << endl;
+//		cout << "Inicial Y: "  << simulador->getPosY() << endl;
+//		cout << "Angulo: " << simulador->getAngle() << endl;
+//		cout<< endl;
 			
 		//Vetores para movimentos, posições
 		
@@ -239,7 +239,7 @@ int main(void) {
 		esn->ESNTrain();
 					
 		if(rodadaAtual == nrRodadas - 1){
-			cout<<"Fim ESN"<<endl;
+			//cout<<"Fim ESN"<<endl;
 			//esn->printESN();
 			salv_esn_sup(rodadaAtual);		
 		}	
@@ -275,9 +275,9 @@ int main(void) {
 		//esn = new ESNbp(inputSize, repSize, outputSize, spectral_radius_d, con_density);
 		//cout<<"Entra no AlgGen:" << endl;	
 		algGen(nroExec, op);
-		cout<<"Saiu do AlgGen:" << endl;
+		//cout<<"Saiu do AlgGen:" << endl;
 		
-		delete esn;
+		//delete esn;
 		delete randon;								// chama a execucao do AG para uma semente aleatoria
 	}//for
 	

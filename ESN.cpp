@@ -106,7 +106,7 @@ ESNbp::~ESNbp(void){
 //*								 Constructor2									   *
 //\******************************************************************************/
 ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius_d, double con_density){
-	cout<<"CRIANDO ESN..." <<endl;
+	//cout<<"CRIANDO ESN..." <<endl;
 	double spectral_radius, min_W=-0.6, max_W=0.6;
 
 	// Parameters of the ESN
@@ -119,22 +119,22 @@ ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius
 	//n_train=n_train_par;
 	//i_train=0;
 	
- 	cout<<"ALOCANDO ESN..." <<endl;	
+ 	//cout<<"ALOCANDO ESN..." <<endl;	
 	// Memory Allocation
 	//cout<<"ALOCANDO X DA ESN..." <<endl;	
 	//X=aloc_matrixi(n_train,n_inp);
-	cout<<"ALOCANDO Win..." <<endl;	
+	//cout<<"ALOCANDO Win..." <<endl;	
 	W_in=aloc_matrixd (n_inp+1,n_hid);
-	cout<<"ALOCANDO W..." <<endl;		
+	//cout<<"ALOCANDO W..." <<endl;		
 	W=aloc_matrixd (n_hid,n_hid);
-	cout<<"ALOCANDO Wout..." <<endl;
+	//cout<<"ALOCANDO Wout..." <<endl;
 	W_out=aloc_matrixd (n_hid+1,n_out);
 	//cout<<"ALOCANDO D ESN..." <<endl;
 	//D=aloc_matrixd(n_train,n_out);
-	cout<<"ALOCANDO Reservatorio..." <<endl;
+	//cout<<"ALOCANDO Reservatorio..." <<endl;
 	hid_neurons= new neuron_rec [n_hid];
 	
-	cout<<"INICIALIZANDO Reservatorio..." <<endl;
+	//cout<<"INICIALIZANDO Reservatorio..." <<endl;
 	// Neurons - Hidden Layer (Reservoir)
 	for (int j=0;j<n_hid;j++){
 		// Input weights
@@ -158,7 +158,7 @@ ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius
 			}				
 		}	
 	}
-	cout<<"ESCALANDO RAIO ESPECTRAL EM W" <<endl;
+	//cout<<"ESCALANDO RAIO ESPECTRAL EM W" <<endl;
 	// Scaling W to spectral_radius_d W	
 	spectral_radius=largEig(W, n_hid, n_hid);									// Computing the spectral radius of W_temp
 	if (!isnan(spectral_radius))

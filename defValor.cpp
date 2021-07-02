@@ -22,11 +22,11 @@ int size_stab = 50; //modificação Eder
 
 
 // Parametros da simulacao
-int nroMaxExec = 1; // 25								// numero de repeticoes do AG
-int maxGen = 10;//10 //2200								// numero maximo de geracoes 
+int nroMaxExec = 5; // 25								// numero de repeticoes do AG
+int maxGen = 100;//10 //2200								// numero maximo de geracoes 
 
 // Parametros do AG
-int tamPop = 10;//100								// tamanho da pop. 
+int tamPop = 100;//100								// tamanho da pop. 
 int lcrom = (repSize + 1) * outputSize;				// tamanho do cromossomo 
 
 double taxaCross = 0.6;								// taxa de crossover
@@ -47,10 +47,10 @@ double taxaMigracao = 0.05;							// taxa de imigrantes
 
 
 //Parametros Simulação
-int numMov = 100; //300
+int numMov = 300; //300
 int batterry = 80; //80
 bool dynamicEnvironment = true;
-int numSimulacao = 2; //10
+int numSimulacao = 10; //10
 
 //Parametros Treinamento ESN
 int nrRodadas = 500; //500  // modificacao R

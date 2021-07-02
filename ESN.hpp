@@ -39,8 +39,7 @@ class ESNbp {
 		int i_train;														// index of the example in the training set	
 		int n_stab;										    				// number of interations for the stabilizing period 
 		int n_train;														// size of the current training set  
-		
-		int contador;
+
 		
 		ESNbp(); //construtor vazio
 		ESNbp(int n_inp_par, int n_hid_par, int n_out_par, int n_train_par, double con_density, double spectral_radius_d, int size_stab);

@@ -11,33 +11,26 @@ using namespace std;
 \******************************************************************************/
 double calcFitnessSimulador(alelo *indiv, int gen)
 {
-	//cout<<"Entrou no calc de fitness:" <<endl;
 	int Fitness = 0;
 	//double *mov; // Acao tomada
 	double *in = new double[inputSize]; // Leituras dos sensores
-	double *mov = new double[outputSize];
-	//double *in = new double[inputSize];
+	double *mov = new double[outputSize]; // Acao tomada
 	
 	Simulador *simulador = new Simulador(120,200, dynamicEnvironment, maxGen, gen);
-	//ESNbp *esn;
-	//cout<<"ESN-CALC-FIT: "<<esn<<endl; 
-	
-	//Pesos do repositório -> saída
-	//cout<<"Foi para setResWeight - calcFitnessSimulador" << endl;
+	//ESNbp *esn; //comentei pois em toda a execução a mesma ESN tem que ser usada
+
 	esn->setResWeight(indiv); 
-	//cout<<"Saiu do setResWeight - calcFitnessSimulador" << endl;
+
 	cout<< endl;
 
 	for(int i = 0, j = batterry; i < numMov && j > 0; i++, j--){ // Enquanto ainda tenho mov para realizar (i < numMov) e ainda tenho bateria (j > 0)
 		in = simulador->readSensor(10, gen);			
 		//mov = esn->execute(in);				//Verifica a saída da ESN de acordo com a entrada
 	
-		//cout<<"Executou ESN" << endl;
 		esn->ESNoutput(in, mov);
-		//cout<<"Finalizou ESN" << endl;
 		//cout<<"Battery: " << j << endl;
 		//cout<<"numMov: " << i << endl;
-		
+	
 		
 		//Define qual movimento vai ser executado (movimento correspondete ao neuronio de maior ativação)
 		int aux = 0; // Maior saída é a 0
@@ -68,7 +61,6 @@ double calcFitnessSimulador(alelo *indiv, int gen)
 }
 
 
-
 /******************************************************************************\
 *								Calculo Trajeto					             *
 \******************************************************************************/
@@ -83,11 +75,8 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 	//ESNbp *esn;
 
 	//Pesos do repositório
-	//cout<<"setResWeight - calcTrajeto" << endl;
 	esn->setResWeight(indiv); 
-	//cout<<"Terminou setResWeight - calcTrajeto" << endl;
-	
-	
+
 	int **pos;
 	pos = new int*[2];
 	pos[0] = new int[numMov+1];
@@ -95,19 +84,15 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 	pos[0][0] = simulador->getPosX();
 	pos[1][0] = simulador->getPosY();
 	
-	//cout<<"getPosX: "<< pos[0][0]<<endl;
-	//cout<<"getPosY: "<< pos[0][1]<<endl;
 	
 	cout<<"Antes do For -Calculo do Trajeto" << endl;
 	int i, j;
 	for(i = 0, j = batterry; i < numMov && j > 0; i++, j--){
-		//cout<<"numMov: " << i << " Battery: "<< batterry << endl;
-		in = simulador->readSensor(10, gen);
-		//cout<<"Entrou do For - Calculo do Trajeto" << endl;		
+		in = simulador->readSensor(10, gen);		
 		
 		//mov = esn->execute(in);	     //Verifica a saída da ESN de acordo com a entrada
 		esn->ESNoutput(in, mov);
-		//cout<<"Executou ESN" << endl;	
+		
 		//Define qual movimento vai ser executado (movimento correspondete ao neuronio de maior ativação)
 		int aux = 0;
 		for(int k = 1; k < outputSize; k++){

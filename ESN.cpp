@@ -21,7 +21,7 @@ using namespace std;
 \******************************************************************************/
 
 ESNbp::ESNbp(){
-	cout<<"Criou ESN vazia" << endl;
+	//cout<<"Criou ESN vazia" << endl;
 }
 
 /******************************************************************************\
@@ -106,7 +106,7 @@ ESNbp::~ESNbp(void){
 //*								 Constructor2									   *
 //\******************************************************************************/
 ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius_d, double con_density){
-	//cout<<"CRIANDO ESN..." <<endl;
+	
 	double spectral_radius, min_W=-0.6, max_W=0.6;
 
 	// Parameters of the ESN
@@ -118,23 +118,16 @@ ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius
 	// Parameters of the datasets
 	//n_train=n_train_par;
 	//i_train=0;
-	
- 	//cout<<"ALOCANDO ESN..." <<endl;	
+		
 	// Memory Allocation
-	//cout<<"ALOCANDO X DA ESN..." <<endl;	
-	//X=aloc_matrixi(n_train,n_inp);
-	//cout<<"ALOCANDO Win..." <<endl;	
-	W_in=aloc_matrixd (n_inp+1,n_hid);
-	//cout<<"ALOCANDO W..." <<endl;		
+	//X=aloc_matrixi(n_train,n_inp);	
+	W_in=aloc_matrixd (n_inp+1,n_hid);	
 	W=aloc_matrixd (n_hid,n_hid);
-	//cout<<"ALOCANDO Wout..." <<endl;
 	W_out=aloc_matrixd (n_hid+1,n_out);
-	//cout<<"ALOCANDO D ESN..." <<endl;
 	//D=aloc_matrixd(n_train,n_out);
-	//cout<<"ALOCANDO Reservatorio..." <<endl;
 	hid_neurons= new neuron_rec [n_hid];
 	
-	//cout<<"INICIALIZANDO Reservatorio..." <<endl;
+
 	// Neurons - Hidden Layer (Reservoir)
 	for (int j=0;j<n_hid;j++){
 		// Input weights
@@ -158,7 +151,6 @@ ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius
 			}				
 		}	
 	}
-	//cout<<"ESCALANDO RAIO ESPECTRAL EM W" <<endl;
 	// Scaling W to spectral_radius_d W	
 	spectral_radius=largEig(W, n_hid, n_hid);									// Computing the spectral radius of W_temp
 	if (!isnan(spectral_radius))
@@ -176,7 +168,7 @@ ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius
 void ESNbp::ESNActivationHid(double *x, double *h_new){
 		int k;
 		double u;	      
-        //cout<<"Entrou no ESNActivationHid"<<endl;
+
 		for (int j=0;j<n_hid;j++){
 			u=0.0;
 			for (int i=0;i<n_inp+1;i++)
@@ -188,7 +180,6 @@ void ESNbp::ESNActivationHid(double *x, double *h_new){
 			h_new[j]=tanh(1.0*u);							// Tangent hiperbolic with half-slope a=2						          			
 		}
 		h_new[n_hid]=1.0;									// bias
-		//cout<<"Saiu no ESNActivationHid"<<endl;
 }
 
 /**********************************************************************************************\
@@ -201,23 +192,11 @@ void ESNbp::ESNActivationOut(double *x, double *h, double *y){
 			u=0.0;
 			for (int i=0;i<n_hid+1;i++){
 				u += h[i] * W_out[i][j];
-				//cout<< "i: "<< i << " "<<"j: "<< j <<endl;
-				//cout<< "h: "<< h[i] << " "<<"u: "<< u <<endl;
-				//cout<<"W_out: "<< W_out[i][j]<<endl;		
-			}
-			//cout<<"ANTES" << endl;	
+		}	
 			y[j]=u;							// linear
 			
-			//cout<<"u: " << u<<endl;
-			//cout<<"y: " << y[j]<<endl;
 			
-			//cout<<"W_out: " << W_out[i][j]<<endl;
-			//cout<<"DEPOIS" << endl;				
 	}	
-	//cout<<"Terminou na ESNActivationOut" <<endl;	
-
-//Quando está na ultima geração e vai passar de i=50, j=0, para i=0, j=1, trava com erro de acesso a memória.
-
 	
 }
 
@@ -228,11 +207,8 @@ void ESNbp::ESNActivationOut(double *x, double *h, double *y){
 void ESNbp::ESNoutput(double *x, double *y){
 	double *h_new;
 	h_new=aloc_vectord(n_hid+1);
-	//cout<<"Funcoes de Ativacao:" <<endl;	
 	ESNActivationHid(x, h_new);				// compute the hidden layer (reservoir) activations
-	//cout<<"Passou Ativacao do Reservatorio:" <<endl;
 	ESNActivationOut(x, h_new,y);					// compute the output layer activations
-	//cout<<"Passou Ativacao da Saida:" <<endl;
 	//printESNOperation(x,h_new,y);
 	//printESN();
 	for (int j=0;j<n_hid;j++)
@@ -248,12 +224,10 @@ void ESNbp::ESNoutput(double *x, double *y){
 double* ESNbp::execute(double *x){
 	double *h_new, *y;
 	
-	h_new=aloc_vectord(n_hid+1);
-	//cout<<"Funcoes de Ativacao:" <<endl;	
+	h_new=aloc_vectord(n_hid+1);	
 	ESNActivationHid(x, h_new);				// compute the hidden layer (reservoir) activations
 	//cout<<"Passou da Ativação do Reservatório:" <<endl;
-	ESNActivationOut(x, h_new,y);					// compute the output layer activations
-	//cout<<"Passou da Saída:" <<endl;
+	ESNActivationOut(x, h_new,y);			// compute the output layer activations
 	//printESNOperation(x,h_new,y);
 	for (int j=0;j<n_hid;j++)
 		hid_neurons[j].h=h_new[j];
@@ -425,7 +399,6 @@ void ESNbp::printESNOperation(double *x, double *h, double *y){
 	for (int i=0;i<n_out;i++)
 		cout<< y[i] << ", ";
 	cout<<endl;
-	//system("pause");
 	
 }
 
@@ -465,34 +438,15 @@ void ESNbp::printTrainSet(double **H){
 */
 void ESNbp::setResWeight (double *weight) //modificação Eder
 {	
-	//cout<<"Entrou no setResWeight.."<<endl;
-//	int rows =  sizeof weight / sizeof weight[0]; // 2 rows  
-//    int cols = sizeof weight[0] / sizeof(double); // 5 cols
-//    cout<<"rows: "<< rows << " cols: "<< cols <<endl;
-    
-//	for(int i = 0; i < n_hid + 1; i++){ //alteração de outputSize para n_out
-//		for(int j = 0; j < n_out; j++){ //alteração de repSize para n_hid
-//			//cout<<"i: " << i << "j: "<< j<< " : ";
-//			//cout<<"W_out: " << W_out[i][j] << " weight: " << weight[i*n_hid + j] << endl;
-//			W_out[i][j] = weight[i*n_hid+1 + j];	//alteração de repSize para n_hid	e Wout para W_out
-//			
-//		}
-//	}
-	//cout<<"Entrou no setResWeight.."<<endl;
+
 	for (int j=0;j<n_out;j++){
 		for (int i=0;i<n_hid+1;i++){ //era n_hid+1
-			//cout<<"weight: " << weight[j*n_hid + i] <<endl;
-			//cout<<"W_out ANTES: " << W_out[i][j] <<endl;
+
      		W_out[i][j] = weight[j*n_hid + i];
-			//cout<<"W_out DEPOIS: " << W_out[i][j] <<endl;
-			//cout<<"n_hid: " << n_hid << "	n_out: " << n_out <<endl;
-			//cout<<"j: " << j <<"	i: " << i <<"	j*n_hid + i: " << j*n_hid + i << endl;
-			//cout<<"W_out: " << W_out[i][j] << " weight: " << weight[j*n_hid + i] << endl;			
+	
 		}
 	}
-	//contador++;
-	//cout<<"contador: " << contador << endl;
-	
+
 						
 	// não faz sentido alterar o valor das recorrências obtidas no treinamento
 	//for(int i = 0; i < n_hid; i++) //alteração de repSize para n_hid	
@@ -538,7 +492,6 @@ void ESNbp::setWin (double **weight)
 */
 double** ESNbp::getW ()
 {
-	//cout<<"Entrou no getW" << endl;
 	return W;
 }//getW
 
@@ -554,56 +507,3 @@ void ESNbp::setW (double **weight)
 	
 	W = weight;
 }//setW
-
-
-
-
-
-
-
-
-
-
-
-//
-////-----------------	execute -----------------//
-///* 
-//* in[] é o vetor de entrada
-//* return a saída da rede
-//*/
-//double* ESNbp::Executar(double *in)
-//{	
-//	double sum;
-//	for(int i = 0; i < n_hid; i++){
-//		sum = W_in[i][0]; // bias
-//		for(int j = 1; j < n_inp + 1; j++)
-//			sum += W_in[i][j] * in[j-1];
-//		for(int j = 0; j < n_hid; j++)
-//			sum += W[i][j] * recorrence[i];
-//		outRep[i] = FuncAtivacao(sum);
-//	}
-//			
-//	double *out = new double[n_out];
-//	for(int i = 0; i < n_out; i++){
-//		sum = W_out[i][0];
-//		for(int j = 1; j < repSize + 1; j++)
-//			sum += W_out[i][j] * outRep[j-1]; 
-//		out[i] = sum;
-//	}
-//
-//	double *aux;
-//	aux = recorrence;
-//	recorrence = outRep;
-//	outRep = aux;
-//
-//	return out;
-//}//Execute
-//
-////-----------------	FuncAtivacao -----------------//
-///*
-//* retorna o valor da tangente hiperbolica de x
-//*/
-//double ESNbp::FuncAtivacao (double x)
-//{
-//	return ( (exp(x) - exp(-x)) / (exp(x) + exp(-x)));	
-//}//FuncAtivacao

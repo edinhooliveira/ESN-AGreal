@@ -88,9 +88,9 @@ void inicializacao(int nroExec, int op) {
 		        popVelha.indiv[numIndiv].fitness = calcFitness( popVelha.indiv[numIndiv].cromossomo, 0);	// Armazena Fitness do Individuo
 				//cout<<"Saiu do calcFitness"<<endl;
 				numIndiv++;
-				//system("pause");
+				
 			}
-			//cout<<"Entrando em estatistica..."<<endl;
+
 			estatistica( &popVelha,0);
 			break;
 		}
@@ -113,29 +113,21 @@ void algGen(int nroExec, int op) {
 	inicializacao(nroExec, op);				// procedimento para inicialização das variáveis e da população 
 	
 	do {	
-		
-		//cout<<"Do - Geracao: " << gen << " Do - maxGen: "<< maxGen<<endl;
 		gen = gen + 1; 				// número de gerações 
-		//cout<<"Entrou em Geracao" <<endl;
+
 		geracao(gen);
-		//cout<<"Saiu de Geracao" <<endl; 
-		//cout<<"Entrou em Estatistica" <<endl;
-		estatistica( &popNova , gen );
-		//cout<<"Saiu de Estatistica" <<endl; 
+		estatistica( &popNova , gen ); 
 
 		individuo *aux;
 		aux = popVelha.indiv;
 		popVelha = popNova;
 		popNova.indiv = aux;
 		
-		cout<<"Impressão do Resultados da Exec: "<<nroExec << endl;
+		cout<<"Impressao do Resultados da Exec: "<< nroExec << endl;
 		impressao(&popVelha,gen);
 		arq_saida(nroExec);
 	} while ( gen < maxGen );
-	//cout<<"Entrou no while do calcTrajeto" << endl;
-	//cout<<"Geracao: " << gen << " maxGen: "<< maxGen<<endl;
 	calcTrajeto (popVelha.indiv[popVelha.melhorIndividuo].cromossomo, nroExec, gen);		//Calcula e salva a trajetoria do melhor indiv da ultima geração
-	//cout<<"Salvando Arquivos do AlgGen..." <<endl;
 	arq_saida(nroExec);					// salva dados
 }
 
@@ -153,9 +145,9 @@ int main(void) {
 	//Parametros do Treinamento da ESN
 	//double** conjunto_stab;
 	
-	//int nrRodadas = 2;//500  // modificacao R -mover para defValor
-	//int size_stab = 50; //50  // modificacao R -mover para defValor
-	//int nrMov = 500;//500 //10  // modificacao R -mover para defValor
+	//int nrRodadas = 2;//500  // modificacao R -movido para defValor
+	//int size_stab = 50; //50  // modificacao R -movido para defValor
+	//int nrMov = 500;//500 //10  // modificacao R -movido para defValor
 	
 	//ESN - Treinamento	
 	double** inputs = new double*[numMov * nrRodadas]; //nrMov
@@ -228,13 +220,11 @@ int main(void) {
 				for(int j = 0; j < outputSize; j++)
 					acao_v[j]=0.0;
 				acao_v[acao]=1.0;
-
 				esn->addTrainSet(sensores, acao_v); // modificacao R
 			} 		
 		}
 		cout<< "* * FIM RODADA: " << rodadaAtual << " * *" << endl; 
 		cout<<"TREINAMENTO"<<endl;
-		//cout<<"ESN-TREINAMENTO: "<<esn << endl;
 		cout<<endl;
 		esn->ESNTrain();
 					
@@ -244,8 +234,6 @@ int main(void) {
 			salv_esn_sup(rodadaAtual);		
 		}	
 	} //FIM TREINAMENTO ESN
-	
-	
 	
 	//ALGORITMO GENÉTICO
 		
@@ -270,12 +258,9 @@ int main(void) {
 		// Visualizacao
 		cout<<"\tExecucao: "<<nroExec<<endl<<endl;
 		randon = new Randon(1,nroExec+1);					// semente para gerar os numeros aleatorios
-		srand(nroExec+1); 	// semente para gerar os numeros aleatorios
-		//cout<<"ESN-AG: "<<esn << endl;								
+		srand(nroExec+1); 	// semente para gerar os numeros aleatorios								
 		//esn = new ESNbp(inputSize, repSize, outputSize, spectral_radius_d, con_density);
-		//cout<<"Entra no AlgGen:" << endl;	
 		algGen(nroExec, op);
-		//cout<<"Saiu do AlgGen:" << endl;
 		
 		//delete esn;
 		delete randon;								// chama a execucao do AG para uma semente aleatoria

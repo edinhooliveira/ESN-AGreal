@@ -67,6 +67,8 @@ double calcFitnessSimulador(alelo *indiv, int gen)
 	return Fitness / (double)numMov;
 }
 
+
+
 /******************************************************************************\
 *								Calculo Trajeto					             *
 \******************************************************************************/
@@ -79,11 +81,12 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 	double *mov = new double[outputSize];
 	Simulador *simulador = new Simulador(120,200, dynamicEnvironment, maxGen, gen);
 	//ESNbp *esn;
-	cout<<"Entrou no calcTrajeto" <<endl;
+
 	//Pesos do repositório
-	cout<<"setResWeight - calcTrajeto" << endl;
+	//cout<<"setResWeight - calcTrajeto" << endl;
 	esn->setResWeight(indiv); 
-	cout<<"Terminou setResWeight - calcTrajeto" << endl;
+	//cout<<"Terminou setResWeight - calcTrajeto" << endl;
+	
 	
 	int **pos;
 	pos = new int*[2];
@@ -92,46 +95,52 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 	pos[0][0] = simulador->getPosX();
 	pos[1][0] = simulador->getPosY();
 	
-		
-	cout<<"getPosX: "<< pos[0][0]<<endl;
-	cout<<"getPosY: "<< pos[1][0]<<endl;
+	//cout<<"getPosX: "<< pos[0][0]<<endl;
+	//cout<<"getPosY: "<< pos[0][1]<<endl;
 	
 	cout<<"Antes do For -Calculo do Trajeto" << endl;
 	int i, j;
 	for(i = 0, j = batterry; i < numMov && j > 0; i++, j--){
+		//cout<<"numMov: " << i << " Battery: "<< batterry << endl;
 		in = simulador->readSensor(10, gen);
-		cout<<"Entrou do For - Calculo do Trajeto" << endl;		
+		//cout<<"Entrou do For - Calculo do Trajeto" << endl;		
 		
 		//mov = esn->execute(in);	     //Verifica a saída da ESN de acordo com a entrada
-		//esn->ESNoutput(in, mov);
-		cout<<"Executou ESN" << endl;	
+		esn->ESNoutput(in, mov);
+		//cout<<"Executou ESN" << endl;	
 		//Define qual movimento vai ser executado (movimento correspondete ao neuronio de maior ativação)
 		int aux = 0;
-		for(int k = 1; k < outputSize; k++)
-			if(mov[k] > mov[aux])
-				aux = k;
+		for(int k = 1; k < outputSize; k++){
+			if(mov[k] > mov[aux]){
+				aux = k;				
+			}
+			
+		}	
 		
 		//Se o robô bateu, finaliza a simulação
 		if(!simulador->execute(aux, 10, gen)){
-			cout<<"Robo Bateu"<<endl;
+			//cout<<"Robo Bateu"<<endl;
 			delete mov;
 			delete in;
 			break;
 		}
-		
+		//cout<<"nao bateu"<<endl;
 		pos[0][i+1] = simulador->getPosX();
 		pos[1][i+1] = simulador->getPosY();
+		//cout<<"getPosX: "<< pos[0][i+1]<<endl;
+		//cout<<"getPosY: "<< pos[0][i+1]<<endl;
+		//cout<<"nao bateu"<<endl;
 		
 		//Verifica se o robô está na base
 		if(simulador->isBase())
 			j = batterry;						 //Recarrega a bateria
 		else
-			if(aux == 3) //mov 3 corresponde a andar para frente	
-				Fitness++;	
-	
-		cout<<"Terminou For - Calculo do Trajeto" << endl;
-		delete mov;
-		delete in;
+			if(aux == 3)//mov 3 corresponde a andar para frente
+			 	Fitness++;
+					
+		//cout<<"Finalizou movimento"<<endl;
+		//delete mov;
+		//delete in;
 		
 	}
 
@@ -141,9 +150,12 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 	delete pos[0];
 	delete pos[1];
 	delete pos;
+	delete mov;
+	delete in;
 	
 	return Fitness / (double)numMov;
 }
+
 
 
 /******************************************************************************\

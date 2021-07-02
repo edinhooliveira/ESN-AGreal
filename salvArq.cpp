@@ -98,7 +98,7 @@ void salv_pop(int nroExec)
 
 		int closeResult = fclose(Pop_arq);
 		if(closeResult == 0)
-			cout << "Populacao salva com sucesso!" << endl;
+			cout << "\tPopulacao salva com sucesso!" << endl;
 		else
 			cout << "\nErro ao fechar o arquivo pop.dat!" << endl;
 	}

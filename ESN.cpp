@@ -5,7 +5,6 @@
 *		Jaeger, H. (2001). The “echo state” approach to analysing and training 							*
 *			recurrent neural networks-with an erratum note. Bonn, Germany: German National 				*
 *			Research Center for Information Technology GMD Technical Report, 148(34), 1					*
-
 \*******************************************************************************************************/
 
 //-----------------------------------------	ESN.cpp -----------------------------------------//
@@ -32,6 +31,7 @@ ESNbp::ESNbp(){
 
 ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, int n_train_par, double con_density, double spectral_radius_d, int size_stab){
 	double spectral_radius, min_W=-0.6, max_W=0.6;
+
 	// Parameters of the ESN
 	n_inp=n_inp_par;
 	n_hid=n_hid_par;						// number of hidden neurons
@@ -47,20 +47,6 @@ ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, int n_train_par, doubl
 	W_in=aloc_matrixd (n_inp+1,n_hid);		
 	W=aloc_matrixd (n_hid,n_hid);
 	W_out=aloc_matrixd (n_hid+1,n_out);
-	cout<<"ALOCANDO WOUT:" << endl;
-//	for (int j=0;j<n_out;j++){ //n_out
-//		for (int i=0;i<n_hid+1;i++){ //n_hid	
-//			cout<< "i: "<< i << " "<<"j: "<< j <<endl;
-//			//cout<< "h: "<< h[i] << " "<<"u: "<< u <<endl;
-//			cout<<"W_out: "<< W_out[i][j]<<endl;
-//			cout<< "n_out * n_hid: " << n_out * n_hid << endl;				
-//				}		
-//	}
-//	
-//	system("pause");
-
-	
-	
 	D=aloc_matrixd(n_train,n_out);
 	hid_neurons= new neuron_rec [n_hid]; 
 
@@ -132,7 +118,7 @@ ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius
 	// Parameters of the datasets
 	//n_train=n_train_par;
 	//i_train=0;
-	int xyz;
+	
  	cout<<"ALOCANDO ESN..." <<endl;	
 	// Memory Allocation
 	//cout<<"ALOCANDO X DA ESN..." <<endl;	
@@ -142,8 +128,7 @@ ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius
 	cout<<"ALOCANDO W..." <<endl;		
 	W=aloc_matrixd (n_hid,n_hid);
 	cout<<"ALOCANDO Wout..." <<endl;
-	W_out=aloc_matrixd (n_hid+1,n_out); //n_hid - reservarótiro 50+1 e n_out - saídas 4
-
+	W_out=aloc_matrixd (n_hid+1,n_out);
 	//cout<<"ALOCANDO D ESN..." <<endl;
 	//D=aloc_matrixd(n_train,n_out);
 	cout<<"ALOCANDO Reservatorio..." <<endl;
@@ -212,32 +197,13 @@ void ESNbp::ESNActivationHid(double *x, double *h_new){
 void ESNbp::ESNActivationOut(double *x, double *h, double *y){
 	double u;	      
     //cout<<"Entrou na ESNActivationOut" <<endl;
-	//cout<<"tamanho x: " << sizeof(*W_out) / sizeof(double) << " ";
-	//cout<<"tamanho y: " << sizeof(*W_out[0]) / sizeof(double) << " " <<endl;
-	
-//	cout<<"W_out: " <<sizeof(W_out)<<endl;
-//	cout<<"*W_out: " <<sizeof(*W_out)<<endl;
-//	cout<<"W_out[0]: " <<sizeof(W_out[0])<<endl;
-//	cout<<"*W_out[0]: " <<sizeof(*W_out[0])<<endl;
-//	cout<<"n_out: "<< n_out << endl;
-//	cout<<"n_hid: "<< n_hid << endl;
-//	cout<<endl;
-
-
-	for (int j=0;j<n_out;j++){ //n_out
+	for (int j=0;j<n_out;j++){
 			u=0.0;
-			for (int i=0;i<n_hid+1;i++){ //n_hid
+			for (int i=0;i<n_hid+1;i++){
 				u += h[i] * W_out[i][j];
 				//cout<< "i: "<< i << " "<<"j: "<< j <<endl;
 				//cout<< "h: "<< h[i] << " "<<"u: "<< u <<endl;
-				//cout<<"W_out: "<< W_out[i][j]<<endl;
-				
-//				if(i == 50 && j == 0){
-//				cout<< "i: "<< i << " "<<"j: "<< j <<endl;
-//				cout<< "h: "<< h[i] << " "<<"u: "<< u <<endl;
-//				cout<<"W_out: "<< W_out[i][j]<<endl;
-//					
-//				}			
+				//cout<<"W_out: "<< W_out[i][j]<<endl;		
 			}
 			//cout<<"ANTES" << endl;	
 			y[j]=u;							// linear
@@ -245,7 +211,7 @@ void ESNbp::ESNActivationOut(double *x, double *h, double *y){
 			//cout<<"u: " << u<<endl;
 			//cout<<"y: " << y[j]<<endl;
 			
-			
+			//cout<<"W_out: " << W_out[i][j]<<endl;
 			//cout<<"DEPOIS" << endl;				
 	}	
 	//cout<<"Terminou na ESNActivationOut" <<endl;	
@@ -588,9 +554,6 @@ void ESNbp::setW (double **weight)
 	
 	W = weight;
 }//setW
-
-
-
 
 
 

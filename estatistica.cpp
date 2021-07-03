@@ -32,5 +32,3 @@ void estatistica( populacao *pop , int gen)
 	for(j = 0; j < lcrom; j++)
 		arq_melhor_individuo[gen][j] = pop->indiv[n].cromossomo[j];
 }			
-
-

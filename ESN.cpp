@@ -88,7 +88,7 @@ ESNbp::ESNbp(int n_inp_par, int n_hid_par, int n_out_par, int n_train_par, doubl
 *								 Destructor									   *
 \******************************************************************************/
 ESNbp::~ESNbp(void){
-	//cout<<"DESALOCANDO ESN..." <<endl;
+
 	// Memory Desallocation
 	desaloc_matrixi(X,n_train);
 	desaloc_matrixd(D,n_train);
@@ -187,7 +187,7 @@ void ESNbp::ESNActivationHid(double *x, double *h_new){
 \**********************************************************************************************/
 void ESNbp::ESNActivationOut(double *x, double *h, double *y){
 	double u;	      
-    //cout<<"Entrou na ESNActivationOut" <<endl;
+
 	for (int j=0;j<n_out;j++){
 			u=0.0;
 			for (int i=0;i<n_hid+1;i++){
@@ -214,30 +214,6 @@ void ESNbp::ESNoutput(double *x, double *y){
 	for (int j=0;j<n_hid;j++)
 		hid_neurons[j].h=h_new[j];
 	delete [] h_new; 
-}
-
-
-//copiando ESNoutput o método e alterando nome e colocando como y com retorno
-/******************************************************************************\
-*					 Output (y) of the neural netwok for input x 			   *
-\******************************************************************************/
-double* ESNbp::execute(double *x){
-	double *h_new, *y;
-	
-	h_new=aloc_vectord(n_hid+1);	
-	ESNActivationHid(x, h_new);				// compute the hidden layer (reservoir) activations
-	//cout<<"Passou da Ativação do Reservatório:" <<endl;
-	ESNActivationOut(x, h_new,y);			// compute the output layer activations
-	//printESNOperation(x,h_new,y);
-	for (int j=0;j<n_hid;j++)
-		hid_neurons[j].h=h_new[j];
-		
-	for(int i = 0; i < n_out; i++){
-		cout<<"y: "<< y[i] <<endl;
-	}
-		 
-	delete [] h_new; 
-	return y;
 }
 
 
@@ -426,7 +402,6 @@ void ESNbp::printTrainSet(double **H){
 			for (int j=0;j<n_out;j++)
 					cout<<" "<< D[n][j];
 			cout<<endl;
-			cout<<endl;
 	}
 	system("pause");
 	
@@ -440,10 +415,8 @@ void ESNbp::setResWeight (double *weight) //modificação Eder
 {	
 
 	for (int j=0;j<n_out;j++){
-		for (int i=0;i<n_hid+1;i++){ //era n_hid+1
-
+		for (int i=0;i<n_hid+1;i++){ 
      		W_out[i][j] = weight[j*n_hid + i];
-	
 		}
 	}
 

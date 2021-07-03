@@ -43,18 +43,17 @@ class ESNbp {
 		
 		ESNbp(); //construtor vazio
 		ESNbp(int n_inp_par, int n_hid_par, int n_out_par, int n_train_par, double con_density, double spectral_radius_d, int size_stab);
-		//NOVO CONSTRUTOR
 		ESNbp(int n_inp_par, int n_hid_par, int n_out_par, double spectral_radius_d, double con_density); //novo construtor
 	    ~ESNbp(void); //destrutor
 		void ESNstab(double *sol);												// ESN Stabilization Period	
 		void ESNTrain(void); 												// ESN Training 	
 		//void addTrainSet(int *sol, double *d); // Add example to the training dataset
-		void addTrainSet(double *sol, double *d); 
+		void addTrainSet(double *sol, double *d); 							// Add example to the training dataset
 		void printESN(void);												// Print ESN
 		void printESNOperation(double *x, double *h, double *y);			// Print ESN operation information	
 		void printTrainSet(double **H);										// Print Training Set	
 		void ESNoutput(double *x, double *y); 								// Output (y) of the neural netwok for input x 
-		double* execute(double *x);									// // Output (y) of the neural netwok for input x 
+		//double* execute(double *x);											// Output (y) of the neural netwok for input x 
 		
 		//modificação Eder
 		double** getWin(); //* retorna a matriz Win, contendo os pesos da camada de entrada
@@ -64,10 +63,6 @@ class ESNbp {
 		void setResWeight(double *weight); //* weight[] é o novo vetor de pesos do reservatório para a camada de saída atualizado pelo AG
 		double** getWout();  //* retorna a matriz Win, contendo os pesos da camada de saída
 		
-		
-		//modificação 
-		double* Executar(double *in); //exe
-		double* FuncAtivacao (double x);
 		
 		
 }; // class ESNbp

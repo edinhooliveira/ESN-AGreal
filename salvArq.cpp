@@ -98,7 +98,7 @@ void salv_pop(int nroExec)
 
 		int closeResult = fclose(Pop_arq);
 		if(closeResult == 0)
-			cout << "\tPopulacao salva com sucesso!" << endl;
+			cout << "Populacao salva com sucesso!" << endl;
 		else
 			cout << "\nErro ao fechar o arquivo pop.dat!" << endl;
 	}
@@ -118,15 +118,11 @@ void salv_esn(int nroExec)
 	
 	if(ESN_arq != NULL)
 	{
-		//cout<<"ESN-SalvArq.cpp: " << esn << endl;
-		//Salva pesos camada de entrada - Win
-		//cout<<"getWin-SalvArq.cpp: " << esn->getWin() << endl;
-		double **Win = esn->getWin(); //Entra no getWin, não sai e finaliza o programa	e arquivo fica vazio	
-		for(int i = 0; i < repSize; i++){ //repSize
-			for(int j = 0; j < inputSize + 1; j++){ //aparentemente tem algum erro no Win / getWin
-				fprintf(ESN_arq, "%lf ", Win[j][i]);//Win[i][j]);
-				//cout<<i<<" "<< j<<" "<< Win[j][i] << endl;	//colocando um print aqui print alguns pesos, porém apenas 25, deveriam ser 250 que aparecem no printESN()
-							
+
+		double **Win = esn->getWin(); 	
+		for(int i = 0; i < repSize; i++){
+			for(int j = 0; j < inputSize + 1; j++){
+				fprintf(ESN_arq, "%lf ", Win[j][i]);						
 			}
 		}	
 				 			
@@ -161,15 +157,11 @@ void salv_esn_sup(int nroExec)
 	
 	if(ESN_arq != NULL)
 	{
-		//cout<<"ESN-SalvArq.cpp: " << esn << endl;
 		//Salva pesos camada de entrada - Win
-		//cout<<"getWin-SalvArq.cpp: " << esn->getWin() << endl;
-		double **Win = esn->getWin(); //Entra no getWin, não sai e finaliza o programa	e arquivo fica vazio	
-		for(int i = 0; i < repSize; i++){ //repSize
-			for(int j = 0; j < inputSize + 1; j++){ //aparentemente tem algum erro no Win / getWin
-				fprintf(ESN_arq, "%lf ", Win[j][i]);//Win[i][j]);
-				//cout<<i<<" "<< j<<" "<< Win[j][i] << endl;	//colocando um print aqui print alguns pesos, porém apenas 25, deveriam ser 250 que aparecem no printESN()
-							
+		double **Win = esn->getWin();	
+		for(int i = 0; i < repSize; i++){
+			for(int j = 0; j < inputSize + 1; j++){ 
+				fprintf(ESN_arq, "%lf ", Win[j][i]);			
 			}
 		}	
 				 			

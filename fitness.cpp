@@ -28,9 +28,6 @@ double calcFitnessSimulador(alelo *indiv, int gen)
 		//mov = esn->execute(in);				//Verifica a saída da ESN de acordo com a entrada
 	
 		esn->ESNoutput(in, mov);
-		//cout<<"Battery: " << j << endl;
-		//cout<<"numMov: " << i << endl;
-	
 		
 		//Define qual movimento vai ser executado (movimento correspondete ao neuronio de maior ativação)
 		int aux = 0; // Maior saída é a 0
@@ -39,7 +36,6 @@ double calcFitnessSimulador(alelo *indiv, int gen)
 				aux = k;
 		//Se o robô bateu, finaliza a simulação
 		if(!simulador->execute(aux, 10, gen)){
-			//cout<<"**Robo Bateu**"<<endl;
 			delete mov;
 			delete in;
 			break;
@@ -85,7 +81,6 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 	pos[1][0] = simulador->getPosY();
 	
 	
-	cout<<"Antes do For -Calculo do Trajeto" << endl;
 	int i, j;
 	for(i = 0, j = batterry; i < numMov && j > 0; i++, j--){
 		in = simulador->readSensor(10, gen);		
@@ -98,23 +93,18 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 		for(int k = 1; k < outputSize; k++){
 			if(mov[k] > mov[aux]){
 				aux = k;				
-			}
-			
+			}	
 		}	
 		
 		//Se o robô bateu, finaliza a simulação
 		if(!simulador->execute(aux, 10, gen)){
-			//cout<<"Robo Bateu"<<endl;
 			delete mov;
 			delete in;
 			break;
 		}
-		//cout<<"nao bateu"<<endl;
 		pos[0][i+1] = simulador->getPosX();
 		pos[1][i+1] = simulador->getPosY();
-		//cout<<"getPosX: "<< pos[0][i+1]<<endl;
-		//cout<<"getPosY: "<< pos[0][i+1]<<endl;
-		//cout<<"nao bateu"<<endl;
+
 		
 		//Verifica se o robô está na base
 		if(simulador->isBase())
@@ -123,10 +113,8 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 			if(aux == 3)//mov 3 corresponde a andar para frente
 			 	Fitness++;
 					
-		//cout<<"Finalizou movimento"<<endl;
 		//delete mov;
-		//delete in;
-		
+		//delete in;		
 	}
 
 	salv_traj(pos, i, nroExec);
@@ -142,7 +130,6 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 }
 
 
-
 /******************************************************************************\
 *								Calculo Fitness 							 *
 \******************************************************************************/
@@ -150,8 +137,7 @@ double calcFitness(alelo *indiv, int gen)
 {	
 	double Fitness = 0;	
 	for(int i = 0; i < numSimulacao; i++){
-		Fitness += calcFitnessSimulador(indiv, gen);
-		//cout<<" " << "Fitness: " << Fitness << endl;	
+		Fitness += calcFitnessSimulador(indiv, gen);	
 	}
 		
 	Fitness = Fitness / numSimulacao;

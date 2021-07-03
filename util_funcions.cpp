@@ -20,7 +20,6 @@ int *indx;
 int **aloc_matrixi(int lines , int collums)
 {
 	int i, **Matrix;
-	cout<< lines << " " << collums << endl;
 	Matrix = new int*[lines];
 	for (i=0;i<lines;i++) {
 		Matrix[i] = new int[collums];

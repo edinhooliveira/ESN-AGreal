@@ -197,13 +197,8 @@ bool Simulador::isBase(){
 	 return false;
 }//isBase
 
-
 //-----------------	getPosX -----------------//
 int Simulador::getPosX(){
-	/*std:cout<<"DENTRO DA FUNÇÃO POSX"<<std::endl;
-	std::cout<<"posX:"<<posX<<std::endl;
-	std::cout<<"posY:"<<posY<<std::endl;
-	std::cout<<"ANGULO:"<<ang <<std::endl;
 	//std::cout<<"SENO:"<<sin(ang * PI / 180.0) * dist<<std::endl; */
 	return posX;
 }//getPosX

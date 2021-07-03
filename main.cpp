@@ -73,7 +73,7 @@ int menu() {
 *				  	Inicializacao da populacao					 			 *
 \******************************************************************************/
 void inicializacao(int nroExec, int op) {
-	//cout<<"Entrou em inicialização..." <<endl;
+	
 	switch(op)
 	{
 		case 0 : //Reiniciar
@@ -99,10 +99,6 @@ void inicializacao(int nroExec, int op) {
 			ler_pop(nroExec);
 			ler_esn(nroExec);
 			break;
-		
-		//case 2 : //utilizar esn para avaliação.
-		
-		//
 	}
 	
 	impressao(&popVelha,0);
@@ -143,7 +139,6 @@ void algGen(int nroExec, int op) {
 int main(void) {
 	
 	bool dynamicEnvironment = false;
-	//int maxGen = 10; //1
 	int gen = 0;
 	
 	//Parametros do Treinamento da ESN
@@ -154,8 +149,8 @@ int main(void) {
 	//int nrMov = 500;//500 //10  // modificacao R -movido para defValor
 	
 	//ESN - Treinamento	
-	double** inputs = new double*[numMov * nrRodadas]; //nrMov
-	double* outputs = new double[numMov * nrRodadas]; //nrMov
+	double** inputs = new double*[numMov * nrRodadas];
+	double* outputs = new double[numMov * nrRodadas];
 	
 	//TREINAMENTO DA ESN	
 	cout<<"***** Treinamento da ESN *****"<<endl;
@@ -183,7 +178,7 @@ int main(void) {
 		int *posicoesY = new int [numMov]; //nrMov
 		//int *acoes = new int [nrMov];
 		double *sensores = simulador->readSensor(10,0);
-		
+	
 		//Declaração da Rede Neural
 		/*ESNbp * */
 		esn = new ESNbp(inputSize, repSize, outputSize, numMov-size_stab-1, con_density, spectral_radius_d, size_stab);  // modificacao R
@@ -191,6 +186,7 @@ int main(void) {
 		//esn = new ESN(inputSize, repSize, outputSize, spectral_radius_d, con_density);
 		int acao;
 		double acao_v[4];
+		
 		for(int mov = 0; mov < numMov; mov++ ) { //nrMov
 			//acao = acoes[mov];	 // modificacao R
 			acao = programaUsuario(sensores);	// modificacao R
@@ -227,13 +223,18 @@ int main(void) {
 				esn->addTrainSet(sensores, acao_v); // modificacao R
 			} 		
 		}
-		cout<< "* * FIM RODADA: " << rodadaAtual << " * *" << endl; 
-		cout<<"TREINAMENTO"<<endl;
-		cout<<endl;
+		
+		//cout<< "* * FIM RODADA: " << rodadaAtual << " * *" << endl; 
+		//cout<<"TREINAMENTO"<<endl;
 		esn->ESNTrain();
+		
+		//if(rodadaAtual == nrRodadas/100)
+		//	cout<<".";
+		
 					
 		if(rodadaAtual == nrRodadas - 1){
-			//cout<<"Fim ESN"<<endl;
+			cout<<"Finalizou treinamento da ESN"<<endl;
+			cout<<"Numero de Rodadas: "<< rodadaAtual<< endl;
 			//esn->printESN();
 			salv_esn_sup(rodadaAtual);		
 		}	

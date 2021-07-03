@@ -99,6 +99,10 @@ void inicializacao(int nroExec, int op) {
 			ler_pop(nroExec);
 			ler_esn(nroExec);
 			break;
+		
+		//case 2 : //utilizar esn para avaliação.
+		
+		//
 	}
 	
 	impressao(&popVelha,0);

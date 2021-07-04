@@ -43,7 +43,7 @@ double calcFitnessSimulador(alelo *indiv, int gen)
 	
 		//Verifica se o robô está na base
 		if(simulador->isBase())
-			j = batterry;						 //Recarrega a bateria
+			j = batterry;				//Recarrega a bateria
 		else
 			if(aux == 3) //mov 3 corresponde a andar para frente	
 				Fitness++;	

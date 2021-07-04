@@ -1,7 +1,9 @@
+//Author Rafael Del Lama
+//Modificado por Eder Oliveira
+ 
+//-----------------------------------------	TSimulador.cpp -----------------------------------------//
 #include "Simulador.hpp"
 #include "defTipo.hpp"
-//#include <iostream>
-//#include<cmath>
 
 
 double arred(double x){
@@ -11,7 +13,6 @@ double arred(double x){
 	return ((double)aux/100.0);
 }
 
-//-----------------------------------------	TSimulador.cpp -----------------------------------------//
 
 //-----------------	simulador -----------------//
 Simulador::Simulador(int tamX, int tamY, bool dynamicEnvironment, int maxGen, int gen){

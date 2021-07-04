@@ -219,7 +219,7 @@ void ler_pop(int nroExec)
 	sprintf(nome,"%s/pop_%d.dat", nameDir, nroExec);
 
 	if ((Pop_arq = fopen(nome,"r"))==NULL) {
-		cout<<"O arquivo de gravacao dos dados da populacao nao pode ser aberto "<<endl;
+		cout<<"O arquivo de gravacao dos dados da populacao nao pode ser aberto "<< endl;
 		exit(1);
 	}
 
@@ -249,7 +249,7 @@ void ler_esn(int nroExec)
 	sprintf(nome,"%s/esn_%d.dat", nameDir, nroExec); 
 	
 	if ((ESN_arq = fopen(nome,"r"))==NULL) {
-		cout<<"O arquivo de gravacao dos dados da ESN nao pode ser aberto "<<endl;
+		cout<<"O arquivo de gravacao dos dados da ESN nao pode ser aberto "<< endl;
 		exit(1);
 	}
 	
@@ -291,7 +291,7 @@ void apaga_arquivos(int nroExec)
 	remove(nome); 
 	sprintf(nome,"%s/esn_%d.dat", nameDir, nroExec); 
 	remove(nome); 
-		sprintf(nome,"%s/traj_%d.dat", nameDir, nroExec); 
+	sprintf(nome,"%s/traj_%d.dat", nameDir, nroExec); 
 	remove(nome); 
-	cout << "Arquivos apagados com sucesso!" << endl << endl;
+	cout << "Arquivos apagados com sucesso!" << endl;
 }

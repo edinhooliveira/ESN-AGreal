@@ -4,8 +4,8 @@
 CPP      = g++.exe -D__DEBUG__
 CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = algGen.o defValor.o estatistica.o fitness.o geracao.o reproducao.o salvArq.o selecao.o util_funcions.o TEsn.o nr_ran.o Randon.o main.o Simulador.o ESN.o
-LINKOBJ  = algGen.o defValor.o estatistica.o fitness.o geracao.o reproducao.o salvArq.o selecao.o util_funcions.o TEsn.o nr_ran.o Randon.o main.o Simulador.o ESN.o
+OBJ      = defValor.o estatistica.o fitness.o geracao.o reproducao.o salvArq.o selecao.o util_funcions.o nr_ran.o Randon.o main.o Simulador.o ESN.o
+LINKOBJ  = defValor.o estatistica.o fitness.o geracao.o reproducao.o salvArq.o selecao.o util_funcions.o nr_ran.o Randon.o main.o Simulador.o ESN.o
 LIBS     = -L"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -pg -g3
 INCS     = -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Programas/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
@@ -23,9 +23,6 @@ clean: clean-custom
 
 $(BIN): $(OBJ)
 	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
-
-algGen.o: algGen.cpp
-	$(CPP) -c algGen.cpp -o algGen.o $(CXXFLAGS)
 
 defValor.o: defValor.cpp
 	$(CPP) -c defValor.cpp -o defValor.o $(CXXFLAGS)
@@ -50,9 +47,6 @@ selecao.o: selecao.cpp
 
 util_funcions.o: util_funcions.cpp
 	$(CPP) -c util_funcions.cpp -o util_funcions.o $(CXXFLAGS)
-
-TEsn.o: TEsn.cpp
-	$(CPP) -c TEsn.cpp -o TEsn.o $(CXXFLAGS)
 
 nr_ran.o: nr_ran.cpp
 	$(CPP) -c nr_ran.cpp -o nr_ran.o $(CXXFLAGS)

@@ -1,4 +1,5 @@
 //Author Rafael Del Lama
+//Modificado por Eder Oliveira
  
 //-----------------------------------------	TSimulador.hpp -----------------------------------------//
 #pragma once

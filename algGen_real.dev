@@ -24,12 +24,12 @@ HostApplication=
 UseCustomMakefile=0
 CustomMakefile=
 CommandLine=
-Folders=ESN,ESN/old-esn,Random
+Folders=ESN,Random,Simulador
 IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000101000000
-UnitCount=22
+UnitCount=18
 
 [VersionInfo]
 Major=1
@@ -50,27 +50,7 @@ ProductVersion=1.0.0.0
 AutoIncBuildNr=0
 SyncProduct=1
 
-[Unit1]
-FileName=algGen.cpp
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
 [Unit2]
-FileName=defTipo.hpp
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit3]
 FileName=defValor.cpp
 CompileCpp=1
 Folder=
@@ -80,7 +60,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit4]
+[Unit3]
 FileName=estatistica.cpp
 CompileCpp=1
 Folder=
@@ -90,7 +70,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit5]
+[Unit4]
 FileName=fitness.cpp
 CompileCpp=1
 Folder=
@@ -100,7 +80,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit6]
+[Unit5]
 FileName=geracao.cpp
 CompileCpp=1
 Folder=
@@ -110,7 +90,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit7]
+[Unit6]
 FileName=reproducao.cpp
 CompileCpp=1
 Folder=
@@ -120,7 +100,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit8]
+[Unit7]
 FileName=salvArq.cpp
 CompileCpp=1
 Folder=
@@ -130,7 +110,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit9]
+[Unit8]
 FileName=selecao.cpp
 CompileCpp=1
 Folder=
@@ -140,7 +120,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit10]
+[Unit9]
 FileName=util_funcions.cpp
 CompileCpp=1
 Folder=
@@ -150,10 +130,10 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit12]
-FileName=TEsn.hpp
+[Unit10]
+FileName=Simulador.hpp
 CompileCpp=1
-Folder=ESN/old-esn
+Folder=Simulador
 Compile=1
 Link=1
 Priority=1000
@@ -161,36 +141,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit13]
-FileName=Simulador.hpp
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit14]
-FileName=nr_ran.cpp
-CompileCpp=1
-Folder=Random
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit11]
-FileName=TEsn.cpp
-CompileCpp=1
-Folder=ESN/old-esn
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit16]
 FileName=Randon.cpp
 CompileCpp=1
 Folder=Random
@@ -200,7 +150,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit17]
+[Unit14]
 FileName=Randon.hpp
 CompileCpp=1
 Folder=Random
@@ -210,10 +160,20 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit18]
-FileName=main.cpp
+[Unit16]
+FileName=Simulador.cpp
 CompileCpp=1
-Folder=
+Folder=Simulador
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit17]
+FileName=ESN.hpp
+CompileCpp=1
+Folder=ESN
 Compile=1
 Link=1
 Priority=1000
@@ -231,9 +191,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit15]
-FileName=nr_ran.hpp
+FileName=main.cpp
 CompileCpp=1
-Folder=Random
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -272,6 +232,46 @@ BuildCmd=
 
 [Unit21]
 FileName=ESN.hpp
+CompileCpp=1
+Folder=ESN
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit1]
+FileName=defTipo.hpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit11]
+FileName=nr_ran.cpp
+CompileCpp=1
+Folder=Random
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit12]
+FileName=nr_ran.hpp
+CompileCpp=1
+Folder=Random
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit18]
+FileName=ESN.cpp
 CompileCpp=1
 Folder=ESN
 Compile=1

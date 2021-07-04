@@ -22,7 +22,7 @@ int size_stab = 50; //modificação Eder
 
 
 // Parametros da simulacao
-int nroMaxExec = 2; // 25								// numero de repeticoes do AG
+int nroMaxExec = 1; // 25								// numero de repeticoes do AG
 int maxGen = 1000;//10 //2200							// numero maximo de geracoes 
 
 // Parametros do AG

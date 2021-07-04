@@ -10,7 +10,7 @@ using namespace std;
 //Funções de Print
 void printRobot(Simulador *simulador) {
 		
-	cout <<"POSICAO" <<endl;
+	cout <<"POSICAO" << endl;
 	cout << "posicao X: " << simulador->getPosX() << endl;
 	cout << "posicao Y: " << simulador->getPosY() << endl;
 	cout << "Angulo: "  << simulador->getAngle() << endl;
@@ -20,7 +20,7 @@ void printRobot(Simulador *simulador) {
 void printSensor(Simulador *simulador){
 	
 	double *sensores = simulador->readSensor(10,0);
-	cout <<"SENSORES" <<endl;
+	cout <<"SENSORES" << endl;
 	for(int j = 0; j < 4; j ++){
 		cout<< "Sensor " << j <<": "<< *(sensores + j) << endl;
 	}
@@ -47,12 +47,12 @@ int programaUsuario(double *sensores) {
 *				  	Impressao na tela							 			 *
 \******************************************************************************/
 void impressao(populacao *pop , int gen) {
-	cout <<"Geracao: "<< gen<<endl;
+	cout <<"Geracao: "<< gen <<endl;
 	cout <<"Individuo com melhor fitness: "<<pop->melhorIndividuo<<endl;
 	cout <<"Fitness do melhor Individuo: "<<pop->maxFitness<<endl;
     cout <<"Media do Fitness da geracao: "<<pop->mediaFitness<<endl;
     cout <<"Taxa mutacao: "<< taxaMut <<endl;
-    cout <<"Taxa crossover: "<< taxaCross <<endl<<endl<<endl;
+    cout <<"Taxa crossover: "<< taxaCross <<endl;
 }//impressao
 
 /******************************************************************************\
@@ -86,9 +86,7 @@ void inicializacao(int nroExec, int op) {
 		     		popVelha.indiv[numIndiv].cromossomo[gene] = randon->nextFloat(-1,1) ; 							
 				}
 		        popVelha.indiv[numIndiv].fitness = calcFitness( popVelha.indiv[numIndiv].cromossomo, 0);	// Armazena Fitness do Individuo
-				//cout<<"Saiu do calcFitness"<<endl;
-				numIndiv++;
-				
+				numIndiv++;		
 			}
 
 			estatistica( &popVelha,0);
@@ -128,7 +126,7 @@ void algGen(int nroExec, int op) {
 		arq_saida(nroExec);
 	} while ( gen < maxGen );
 	calcTrajeto (popVelha.indiv[popVelha.melhorIndividuo].cromossomo, nroExec, gen);		//Calcula e salva a trajetoria do melhor indiv da ultima geração
-	arq_saida(nroExec);					// salva dados
+	arq_saida(nroExec);				// salva dados
 }
 
 

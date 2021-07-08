@@ -127,6 +127,7 @@ void algGen(int nroExec, int op) {
 	} while ( gen < maxGen );
 	calcTrajeto (popVelha.indiv[popVelha.melhorIndividuo].cromossomo, nroExec, gen);		//Calcula e salva a trajetoria do melhor indiv da ultima geração
 	arq_saida(nroExec);				// salva dados
+	cout<<endl;
 }
 
 
@@ -234,8 +235,10 @@ int main(void) {
 			cout<<"Finalizou treinamento da ESN"<<endl;
 			cout<<"Numero de Rodadas: "<< rodadaAtual<< endl;
 			//esn->printESN();
-			salv_esn_sup(rodadaAtual);		
+			salv_esn_sup(rodadaAtual);
+			cout<<endl;		
 		}	
+	
 	} //FIM TREINAMENTO ESN
 	
 	//ALGORITMO GENÉTICO
@@ -282,6 +285,7 @@ int main(void) {
 	desaloc_matrixd(arq_melhor_individuo,maxGen+1);
 
 	// Visualizacao 
+	cout<<endl;
 	cout<<"\tFim do programa!"<<endl;
  	
 	system("pause");

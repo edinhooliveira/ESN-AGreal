@@ -21,7 +21,6 @@ double calcFitnessSimulador(alelo *indiv, int gen)
 
 	esn->setResWeight(indiv); 
 
-	cout<< endl;
 
 	for(int i = 0, j = batterry; i < numMov && j > 0; i++, j--){ // Enquanto ainda tenho mov para realizar (i < numMov) e ainda tenho bateria (j > 0)
 		in = simulador->readSensor(10, gen);			

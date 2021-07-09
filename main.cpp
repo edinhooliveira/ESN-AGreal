@@ -137,7 +137,6 @@ void algGen(int nroExec, int op) {
 
 int main(void) {
 	
-	bool dynamicEnvironment = false;
 	int gen = 0;
 	
 	//Parametros do Treinamento da ESN
@@ -162,19 +161,13 @@ int main(void) {
 		//Declaração da Rede Neural
 		//ESNbp *ESN = new ESNbp(inputSize, repSize, outputSize, nrMov, con_density, spectral_radius_d, size_stab); //size_stab?
 	
-//		cout <<"\t**RODADA**: " << rodadaAtual << endl;
-//		cout <<"POSICAO INICIAL" <<endl;
-//		cout << "Inicial X: " << simulador->getPosX() << endl;
-//		cout << "Inicial Y: "  << simulador->getPosY() << endl;
-//		cout << "Angulo: " << simulador->getAngle() << endl;
-//		cout<< endl;
-			
+		
 		//Vetores para movimentos, posições
 		
 		//double movimentos[nrMov];
-		int *movimentos = new int [numMov]; //definir passo a passo //nrMov
-		int *posicoesX = new int [numMov]; //nrMov
-		int *posicoesY = new int [numMov]; //nrMov
+		int *movimentos = new int [numMov]; //definir passo a passo
+		int *posicoesX = new int [numMov]; 
+		int *posicoesY = new int [numMov];
 		//int *acoes = new int [nrMov];
 		double *sensores = simulador->readSensor(10,0);
 	
@@ -226,9 +219,6 @@ int main(void) {
 		//cout<< "* * FIM RODADA: " << rodadaAtual << " * *" << endl; 
 		//cout<<"TREINAMENTO"<<endl;
 		esn->ESNTrain();
-		
-		//if(rodadaAtual == nrRodadas/100)
-		//	cout<<".";
 		
 					
 		if(rodadaAtual == nrRodadas - 1){
@@ -287,11 +277,7 @@ int main(void) {
 	// Visualizacao 
 	cout<<endl;
 	cout<<"\tFim do programa!"<<endl;
- 	
-	system("pause");
+
 	return 0;
 }//main
-
-
-
 

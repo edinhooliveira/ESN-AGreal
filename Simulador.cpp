@@ -4,6 +4,8 @@
 //-----------------------------------------	TSimulador.cpp -----------------------------------------//
 #include "Simulador.hpp"
 #include "defTipo.hpp"
+#include <cstdlib>
+#include <iostream>
 
 
 double arred(double x){
@@ -117,6 +119,29 @@ double* Simulador::readSensor(int dist, int gen){
 	return sensores;
 }//readSensor
 
+//-----------------	readSensor + geraFalha -----------------//
+
+//Adicionada função geraFalha - Definir valores para - chanceFalha e percentualFalha
+double* Simulador::readSensor(int dist, int gen, bool falha){
+	double *sensores = new double[6]; // ALTERAR CASO TIVER MAIS SENSORES!!
+	sensores[0] = sensor(geraFalha(dist, 0.5, 0.5), ang - 45, gen); 	//direita
+	sensores[1] = sensor(geraFalha(dist, 0.5, 0.5), ang, gen);			// frontal
+	sensores[2] = sensor(geraFalha(dist, 0.5, 0.5), ang + 45, gen); 	//esquerda
+	//novos sensores
+	//sensores[3] = sensor(geraFalha(dist, 0.5, 0.5), ang + 270, gen); 	// direita 
+	//sensores[4] = sensor(geraFalha(dist, 0.5, 0.5), ang + 90, gen); 		// esquerda
+	
+	if(isBase())
+		sensores[3] = 1;						// cima
+	else
+		sensores[3] = 0;						// cima
+
+	
+	return sensores;
+}//readSensor
+
+
+
 //-----------------	sensor -----------------//
 int Simulador::sensor (int dist, int ang, int gen){
 	double anguloRad = ang * PI / 180.0;
@@ -129,6 +154,7 @@ int Simulador::sensor (int dist, int ang, int gen){
 	
 	if(dynamicEnvironment == true && gen > 0) { 
 		int ambiente = (gen - 1) / ((maxGen -200)/ 10);
+		//std::cout<<"Ambiente: " << ambiente << std::endl;
 
 		switch (ambiente){
 			case 1 : // Ambiente 1

@@ -51,8 +51,12 @@ extern int numMov, batterry, numSimulacao;				//Parametros Simulação
 extern bool dynamicEnvironment;
 
 extern int nrRodadas;
-
 extern int size_stab;
+
+//Parametros Falha
+extern bool falha;
+extern double chanceFalha;
+extern double percentualFalha;
 
 /*Declaração das funções */
 void algGen ( int nroExec, int op);
@@ -94,9 +98,13 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen);
 void salv_traj(int **pos, int n, int nroExec);
 
 void salv_esn_sup(int nroExec);
+void ler_esn_sup(int nroExec);
 
 //ESN
 double largEig(double **M, int l , int c);
+
+//Falha
+int geraFalha(int dist, double chanceFalha, double percentualFalha);
 
 
 //ESN - EDER

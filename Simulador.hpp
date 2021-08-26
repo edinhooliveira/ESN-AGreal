@@ -28,6 +28,7 @@ class Simulador
 		~Simulador();
 		bool execute(int acao, int dist, int gen);
 		double* readSensor(int dist, int gen);
+		double* readSensor(int dist, int gen, bool falha); //readSensor com falha
 		bool isBase();
 		int getPosX();
 		int getPosY();

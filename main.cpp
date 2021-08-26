@@ -52,7 +52,7 @@ void impressao(populacao *pop , int gen) {
 	cout <<"Fitness do melhor Individuo: "<<pop->maxFitness<<endl;
     cout <<"Media do Fitness da geracao: "<<pop->mediaFitness<<endl;
     cout <<"Taxa mutacao: "<< taxaMut <<endl;
-    cout <<"Taxa crossover: "<< taxaCross <<endl;
+    cout <<"Taxa crossover: "<< taxaCross <<endl<<endl<<endl;
 }//impressao
 
 /******************************************************************************\
@@ -69,6 +69,7 @@ int menu() {
 	
 	return op;
 }
+
 /******************************************************************************\
 *				  	Inicializacao da populacao					 			 *
 \******************************************************************************/
@@ -101,33 +102,78 @@ void inicializacao(int nroExec, int op) {
 	
 	impressao(&popVelha,0);
 	
+}
+
+/******************************************************************************\
+*				  	Inicializacao da populacao baseada ESN-SUP 	 			 *
+\******************************************************************************/
+void inicializacao_sup(int nroExec, int op) {
+	
+	switch(op)
+	{
+		case 0 : //Reiniciar
+		{
+			apaga_arquivos(nroExec);
+			int gene, numIndiv = 0;	
+			
+				
+			while(numIndiv < tamPop) {
+			 	for (gene = 0; gene < lcrom; gene++) {
+		     		popVelha.indiv[numIndiv].cromossomo[gene] = randon->nextFloat(-1,1); 							
+				}
+		        popVelha.indiv[numIndiv].fitness = calcFitness( popVelha.indiv[numIndiv].cromossomo, 0);	// Armazena Fitness do Individuo
+				numIndiv++;		
+			}
+			salv_pop(99);
+			ler_pop(99);
+			ler_esn_sup(99);
+			salv_esn(88);
+			cout<<endl;
+			//esn->printESN();		
+		
+			//system("PAUSE");
+			
+			estatistica( &popVelha,0);
+			break;
+		}
+		case 1 : //Continuar de onde parou
+			cout << "Lendo a populacao salva ...\n" << endl;
+			ler_pop(nroExec);
+			ler_esn(nroExec);
+			break;
+	}
+	
+	impressao(&popVelha,0);
 
 }
+
 /******************************************************************************\
 *				  	Execução Algoritimo Genetico							 			 *
 \******************************************************************************/
 void algGen(int nroExec, int op) {
-	int gen = 0; 
-	inicializacao(nroExec, op);				// procedimento para inicialização das variáveis e da população 
+	int gen = 0;
+	
+	//inicializacao(nroExec, op);				// procedimento para inicialização das variáveis e da população 
+	inicializacao_sup(nroExec, op);
+	
 	
 	do {	
 		gen = gen + 1; 				// número de gerações 
 
 		geracao(gen);
-		estatistica( &popNova , gen ); 
+		estatistica( &popNova , gen); 
 
 		individuo *aux;
 		aux = popVelha.indiv;
 		popVelha = popNova;
 		popNova.indiv = aux;
 		
-		cout<<"Impressao do Resultados da Exec: "<< nroExec << endl;
+		//cout<<"Impressao do Resultados da Exec: "<< nroExec << endl;
 		impressao(&popVelha,gen);
-		arq_saida(nroExec);
+		//arq_saida(nroExec);
 	} while ( gen < maxGen );
 	calcTrajeto (popVelha.indiv[popVelha.melhorIndividuo].cromossomo, nroExec, gen);		//Calcula e salva a trajetoria do melhor indiv da ultima geração
 	arq_saida(nroExec);				// salva dados
-	cout<<endl;
 }
 
 

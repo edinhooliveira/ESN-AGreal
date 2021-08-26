@@ -127,6 +127,16 @@ void desaloc_matrixd(double **Matrix , int lines)
 
 }
 
+/******************************************************************************\
+*								 Random Double between L_range and H_range			 *
+\******************************************************************************/
+
+double random_double(double L_range, double H_range)
+{
+    double f = (double)rand() / RAND_MAX;
+    return L_range + f * (H_range - L_range);
+}
+
 
 /******************************************************************************\
 *								 Random Integer between L_range and H_range			     *
@@ -493,4 +503,26 @@ int sign_int(double x)
 	else
         return (0);
 }
+
+
+/******************************************************************************\
+*								 Generate fail randdomly					           *
+\******************************************************************************/
+int geraFalha(int dist, double chanceFalha, double percentualFalha){
+	
+	
+	if (random_dou() < chanceFalha  ) { 
+		int dist_falha;
+		double valor_random = random_double(1-percentualFalha, 1+percentualFalha);
+		dist_falha = dist*(valor_random);
+		cout<<"VALOR RANDOM_DOUBLE: "<<valor_random<<endl;
+		cout<<"HOUVE FALHA de: "<<dist<<" para: "<<dist_falha <<endl;
+		return dist_falha;
+		
+	}else{
+		return dist;
+	}
+	
+}
+
 

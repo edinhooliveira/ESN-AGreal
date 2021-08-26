@@ -194,10 +194,8 @@ void ESNbp::ESNActivationOut(double *x, double *h, double *y){
 				u += h[i] * W_out[i][j];
 		}	
 			y[j]=u;							// linear
-			
-			
-	}	
-	
+					
+	}		
 }
 
 
@@ -451,13 +449,13 @@ double** ESNbp::getWin ()
 */
 void ESNbp::setWin (double **weight)
 {
-	for(int i = 0; i < n_hid; i++) //alteração de repSize para n_hid	
+	//for(int i = 0; i < n_hid; i++)
+	for(int i = 0; i < n_inp+1; i++){ //alteração de repSize para n_hid	
 		delete W_in[i]; //alteração de Win para W_in
+	}
 	delete W_in; //alteração de Win para W_in
-	
 	W_in = weight;
 }//setWin
-
 
 //-----------------	getW -----------------//
 /*
@@ -480,3 +478,4 @@ void ESNbp::setW (double **weight)
 	
 	W = weight;
 }//setW
+

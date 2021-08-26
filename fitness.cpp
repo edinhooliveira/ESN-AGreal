@@ -21,7 +21,6 @@ double calcFitnessSimulador(alelo *indiv, int gen)
 
 	esn->setResWeight(indiv); 
 
-
 	for(int i = 0, j = batterry; i < numMov && j > 0; i++, j--){ // Enquanto ainda tenho mov para realizar (i < numMov) e ainda tenho bateria (j > 0)
 		in = simulador->readSensor(10, gen);			
 		//mov = esn->execute(in);				//Verifica a saída da ESN de acordo com a entrada
@@ -82,7 +81,8 @@ double calcTrajeto (alelo *indiv, int nroExec, int gen)
 	
 	int i, j;
 	for(i = 0, j = batterry; i < numMov && j > 0; i++, j--){
-		in = simulador->readSensor(10, gen);		
+		in = simulador->readSensor(10, gen);	
+		//in = simulador->readSensor(10, gen, falha); //leitura com probabilidade de falhas 	
 		
 		//mov = esn->execute(in);	     //Verifica a saída da ESN de acordo com a entrada
 		esn->ESNoutput(in, mov);

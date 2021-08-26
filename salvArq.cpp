@@ -157,11 +157,11 @@ void salv_esn_sup(int nroExec)
 	
 	if(ESN_arq != NULL)
 	{
-		//Salva pesos camada de entrada - Win
-		double **Win = esn->getWin();	
+
+		double **Win = esn->getWin(); 	
 		for(int i = 0; i < repSize; i++){
-			for(int j = 0; j < inputSize + 1; j++){ 
-				fprintf(ESN_arq, "%lf ", Win[j][i]);			
+			for(int j = 0; j < inputSize + 1; j++){
+				fprintf(ESN_arq, "%lf ", Win[j][i]);						
 			}
 		}	
 				 			
@@ -267,6 +267,8 @@ void ler_esn(int nroExec)
 		for(int j = 0; j < inputSize + 1; j++)
 			fscanf(ESN_arq,"%lf", &Win[i][j]);
 	esn->setWin(Win);
+	
+
 			
 	//Ler pesos do reservatório - W
 	for(int i = 0; i < repSize; i++)
@@ -276,6 +278,47 @@ void ler_esn(int nroExec)
 	
 	fclose(ESN_arq);
 }
+
+void ler_esn_sup(int nroExec)
+{
+	FILE *ESN_arq;
+	char nome[64];
+	sprintf(nome,"%s/esn_sup_%d.dat", nameDir, nroExec); 
+	
+	if ((ESN_arq = fopen(nome,"r"))==NULL) {
+		cout<<"O arquivo de gravacao dos dados da ESN nao pode ser aberto "<< endl;
+		exit(1);
+	}
+	
+	
+	double **W, **Win;
+	Win = new double*[repSize];
+	W = new double*[repSize];
+	
+	for(int i = 0; i < repSize; i++){
+		Win[i] = new double[inputSize + 1]; // +1 = bias
+		W[i] = new double[repSize];
+	}
+	
+	
+	//Ler pesos camada de entrada - Win
+	for(int i = 0; i < repSize; i++)
+		for(int j = 0; j < inputSize + 1; j++)
+			fscanf(ESN_arq,"%lf", &Win[i][j]);
+	esn->setWin(Win);	
+			
+	
+			
+	//Ler pesos do reservatório - W
+	for(int i = 0; i < repSize; i++)
+		for(int j = 0; j < repSize; j++)
+			fscanf(ESN_arq,"%lf", &W[i][j]);
+	esn->setW(W);
+	
+	fclose(ESN_arq);
+}
+
+
 //-----------------------------------------------------------------------/
 void apaga_arquivos(int nroExec)
 {

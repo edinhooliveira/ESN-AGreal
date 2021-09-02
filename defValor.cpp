@@ -22,8 +22,8 @@ int size_stab = 50; //modificação Eder
 
 
 // Parametros da simulacao
-int nroMaxExec = 5; // 25								// numero de repeticoes do AG
-int maxGen = 100;//10 //2200							// numero maximo de geracoes 
+int nroMaxExec = 25; // 25								// numero de repeticoes do AG
+int maxGen = 2200;//10 //2200							// numero maximo de geracoes 
 
 // Parametros do AG
 int tamPop = 100;//100								// tamanho da pop. 
@@ -49,14 +49,14 @@ double taxaMigracao = 0.05;							// taxa de imigrantes
 //Parametros Simulação
 int numMov = 300; //300
 int batterry = 80; //80
-bool dynamicEnvironment = false;
+bool dynamicEnvironment = true;
 int numSimulacao = 10; //10
 
 //Parametros Treinamento ESN
-int nrRodadas = 100; //500  // modificacao R		//rodadas de Treinamento da ESN
+int nrRodadas = 500; //500  // modificacao R		//rodadas de Treinamento da ESN
 
 //Inserir Parametros de Falha
-bool falha = true;
+bool falha = false;
 double chanceFalha = 0.1;
 double percentualFalha = 0.1;
 

@@ -272,6 +272,7 @@ int main(void) {
 			cout<<"Numero de Rodadas: "<< rodadaAtual<< endl;
 			//esn->printESN();
 			salv_esn_sup(rodadaAtual);
+			salv_esn_sup(99);
 			cout<<endl;		
 		}	
 	
